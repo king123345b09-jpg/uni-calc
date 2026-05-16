@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الموقع العالمي لحساب المعدل الجامعي</title>
     <style>
-        /* نظام الألوان الفخم: أزرق ملكي، برتقالي ناري، ولمسات ذهبية */
+        /* نظام الألوان الفخم المعتمد */
         :root {
-            --bg-color: #0B132B; /* أزرق داكن جداً ملكي */
-            --card-bg: #1C2541; /* أزرق متوسط الفخامة */
-            --primary: #FF7B00; /* برتقالي ناري */
-            --accent: #FFD700;  /* ذهبي نقي */
+            --bg-color: #0B132B; 
+            --card-bg: #1C2541; 
+            --primary: #FF7B00; 
+            --accent: #FFD700;  
             --text-main: #FFFFFF;
-            --success: #39FF14; /* أخضر نيون متوهج للنقاط الفوق 10 */
-            --danger: #FF3131;  /* أحمر نيون متوهج للنقاط تحت 10 */
+            --success: #39FF14; 
+            --danger: #FF3131;  
         }
 
         * {
@@ -34,7 +34,7 @@
             overflow-x: hidden;
         }
 
-        /* 🌟 شاشة الترحيب الخرافية عند الدخول للموقع */
+        /* 🌟 شاشة الترحيب الخرافية عند الدخول */
         .intro-screen {
             position: fixed;
             top: 0;
@@ -47,65 +47,106 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            animation: fadeOut 1.5s ease-in-out 3.5s forwards;
+            animation: fadeOut 1.5s ease-in-out 2.5s forwards;
         }
 
         .intro-title {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             color: var(--accent);
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
             margin-bottom: 15px;
             text-align: center;
-            animation: scaleUp 1s ease-out;
         }
 
         .intro-subtitle {
             font-size: 1.1rem;
             color: var(--primary);
-            letter-spacing: 2px;
-            animation: fadeIn 2s ease-in;
         }
 
-        /* 🏢 حاوية الموقع الرئيسية بعد اختفاء الترحيب */
+        /* 🏢 حاوية المراحل والموقع الرئيسية */
         .main-container {
             width: 90%;
             max-width: 650px;
             background: var(--card-bg);
             padding: 30px;
-            border-radius: 20px; /* حواف دائرية فخمة */
-            border: 2px solid var(--accent); /* إطار ذهبي */
+            border-radius: 20px; 
+            border: 2px solid var(--accent); 
             box-shadow: 0 0 30px rgba(255, 123, 0, 0.2);
             margin: 40px 0;
             opacity: 0;
-            animation: fadeInBody 1s ease-in-out 4.5s forwards;
+            animation: fadeInBody 1s ease-in-out 3.5s forwards;
         }
 
-        h1 {
+        /* أنماط الواجهات التفاعلية (المراحل) */
+        .step-panel {
+            display: none; /* إخفاء المراحل افتراضياً والتحكم بها بالـ JS */
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .step-panel.active {
+            display: block; /* إظهار المرحلة النشطة فقط */
+        }
+
+        .step-title {
             color: var(--accent);
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        .university-tag {
-            text-align: center;
-            color: #ffffff;
+        /* أزرار اختيار المواد والسنوات في المراحل */
+        .grid-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .option-btn {
+            padding: 15px;
+            background: #0B132B;
+            border: 2px solid #415A77;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            background: rgba(255, 123, 0, 0.1);
-            padding: 8px;
-            border-radius: 10px;
-            border: 1px solid var(--primary);
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        /* 🗺️ أشرطة خيارات السنوات (شريط التنقل الفخم) */
+        .option-btn:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(255, 123, 0, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* خانة إدخال الاسم الفخمة */
+        .name-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px solid #415A77;
+            background-color: #0B132B;
+            color: white;
+            font-size: 1.2rem;
+            text-align: center;
+            outline: none;
+            margin-bottom: 20px;
+            transition: all 0.4s ease;
+        }
+
+        .name-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* 🗺️ شريط أزرار السنوات في الواجهة الرئيسية */
         .year-navigation {
             display: flex;
             justify-content: space-between;
             gap: 8px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             background: #0B132B;
             padding: 8px;
             border-radius: 15px;
@@ -125,16 +166,32 @@
             transition: all 0.3s ease;
         }
 
-        .year-btn:hover {
-            color: var(--primary);
-            background: rgba(255, 123, 0, 0.05);
-        }
-
-        /* السنة النشطة حالياً تشتعل باللون البرتقالي والذهبي */
         .year-btn.active {
             background: linear-gradient(45deg, var(--primary), var(--accent));
             color: #0B132B;
             box-shadow: 0 0 12px var(--primary);
+        }
+
+        /* رسالة الترحيب المخصصة للمستخدم بالداخل */
+        .user-welcome-tag {
+            text-align: center;
+            color: var(--accent);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .university-tag {
+            text-align: center;
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            background: rgba(255, 123, 0, 0.1);
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid var(--primary);
         }
 
         .subject-row {
@@ -147,10 +204,8 @@
         label {
             font-size: 1.1rem;
             color: #E0E1DD;
-            font-weight: 500;
         }
 
-        /* ⚡ المربعات الدائرية السحرية مع تأثيرات الإدخال */
         .input-wrapper {
             position: relative;
             width: 120px;
@@ -159,7 +214,7 @@
         input[type="number"] {
             width: 100%;
             padding: 12px;
-            border-radius: 12px; /* حواف دائرية للمربعات */
+            border-radius: 12px;
             border: 2px solid #415A77;
             background-color: #0B132B;
             color: white;
@@ -169,14 +224,12 @@
             transition: all 0.4s ease;
         }
 
-        /* تأثير التوهج والشعاع اللوني المتحرك عند الضغط (Focus) */
         input[type="number"]:focus {
             border-color: var(--primary);
             box-shadow: 0 0 15px var(--primary), 0 0 5px var(--accent);
             transform: scale(1.05);
         }
 
-        /* زر الحساب الفخم الأسطوري */
         .btn-calc {
             width: 100%;
             padding: 15px;
@@ -195,10 +248,8 @@
         .btn-calc:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
-            letter-spacing: 1px;
         }
 
-        /* 📊 صندوق النتيجة النهائي */
         .result-box {
             margin-top: 30px;
             padding: 20px;
@@ -221,11 +272,9 @@
             text-shadow: 0 0 15px currentColor;
         }
 
-        /* الألوان الذكية للنقاط (أخضر أو أحمر نيون) */
         .above-ten { color: var(--success) !important; border-color: var(--success) !important; }
         .below-ten { color: var(--danger) !important; border-color: var(--danger) !important; }
 
-        /* 👑 حقوق الحفظ الفخمة بالأسفل */
         footer {
             text-align: center;
             padding: 20px;
@@ -233,31 +282,18 @@
             color: #666;
             width: 100%;
             opacity: 0;
-            animation: fadeInBody 1s ease-in-out 4.5s forwards;
+            animation: fadeInBody 1s ease-in-out 3.5s forwards;
         }
 
-        footer span {
-            color: var(--accent);
-            font-weight: bold;
-        }
+        footer span { color: var(--accent); font-weight: bold; }
 
-        /* 🎬 حركات الأنميشن (Animations) */
-        @keyframes scaleUp {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
         @keyframes fadeOut {
             0% { opacity: 1; }
-            80% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.1); pointer-events: none; visibility: hidden; }
+            80% { opacity: 1; }
+            100% { opacity: 0; pointer-events: none; visibility: hidden; }
         }
-        @keyframes fadeInBody {
-            to { opacity: 1; }
-        }
+        @keyframes fadeInBody { to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -270,68 +306,151 @@
 
     <!-- 🏢 الحاوية الرئيسية للموقع -->
     <div class="main-container">
-        <h1>حساب المعدل الجامعي</h1>
         
-        <!-- 🗺️ شريط التنقل الجديد بين السنوات من 1 إلى 5 -->
-        <div class="year-navigation">
-            <button class="year-btn" onclick="selectYear(1, 'السنة الأولى')">السنة 1</button>
-            <button class="year-btn active" onclick="selectYear(2, 'السنة الثانية فيزياء')">السنة 2</button>
-            <button class="year-btn" onclick="selectYear(3, 'السنة الثالثة')">السنة 3</button>
-            <button class="year-btn" onclick="selectYear(4, 'السنة الرابعة')">السنة 4</button>
-            <button class="year-btn" onclick="selectYear(5, 'السنة الخامسة')">السنة 5</button>
-        </div>
-
-        <!-- خانة عرض السنة المختارة بشكل فخم -->
-        <div class="university-tag" id="currentYearDisplay">جامعة مستغانم - السنة الثانية فيزياء</div>
-
-        <!-- مواد تجريبية متفاعلة -->
-        <div class="subject-row">
-            <label id="sub1-label">مادة علم النفس</label>
-            <div class="input-wrapper">
-                <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+        <!-- 🧩 المرحلة 1: اختيار المادة -->
+        <div class="step-panel active" id="step1">
+            <h3 class="step-title">الخطوة 1: اختر التخصص الدراسي 📚</h3>
+            <div class="grid-options">
+                <button class="option-btn" onclick="goToStep(2, 'subject', 'فيزياء')">فيزياء</button>
+                <button class="option-btn" onclick="goToStep(2, 'subject', 'رياضيات')">رياضيات</button>
+                <button class="option-btn" onclick="goToStep(2, 'subject', 'لغة عربية')">لغة عربية</button>
             </div>
         </div>
 
-        <div class="subject-row">
-            <label id="sub2-label">مادة الميكانيك</label>
-            <div class="input-wrapper">
-                <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+        <!-- 🧩 المرحلة 2: اختيار السنة الدراسية كبداية -->
+        <div class="step-panel" id="step2">
+            <h3 class="step-title">الخطوة 2: في أي سنة تدرس حالياً؟ 🎓</h3>
+            <div class="grid-options">
+                <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الأولى')">السنة الأولى</button>
+                <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الثانية')">السنة الثانية</button>
+                <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الثالثة')">السنة الثالثة</button>
+                <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الرابعة')">السنة الرابعة</button>
+                <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الخامسة')">السنة الخامسة</button>
             </div>
         </div>
 
-        <div class="subject-row">
-            <label id="sub3-label">مادة الإعلام الآلي</label>
-            <div class="input-wrapper">
-                <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+        <!-- 🧩 المرحلة 3: كتابة الاسم لطلب الهوية -->
+        <div class="step-panel" id="step3">
+            <h3 class="step-title">الخطوة 3: يرجى كتابة إسمك الموقر ✍️</h3>
+            <input type="text" id="userNameInput" class="name-input" placeholder="اكتب اسمك هنا..." autocomplete="off">
+            <button class="btn-calc" onclick="finishSteps()">الدخول إلى لوحة التحكم العالمية ⚡</button>
+        </div>
+
+        <!-- 👑 الواجهة الرئيسية النهائية بعد إتمام الخطوات -->
+        <div class="step-panel" id="mainDashboard">
+            
+            <!-- 🗺️ شريط التنقل العلوي الفخم بين السنوات 1-5 -->
+            <div class="year-navigation">
+                <button class="year-btn" id="ybtn1" onclick="selectYear(1, 'السنة الأولى')">السنة 1</button>
+                <button class="year-btn" id="ybtn2" onclick="selectYear(2, 'السنة الثانية')">السنة 2</button>
+                <button class="year-btn" id="ybtn3" onclick="selectYear(3, 'السنة الثالثة')">السنة 3</button>
+                <button class="year-btn" id="ybtn4" onclick="selectYear(4, 'السنة الرابعة')">السنة 4</button>
+                <button class="year-btn" id="ybtn5" onclick="selectYear(5, 'السنة الخامسة')">السنة 5</button>
+            </div>
+
+            <!-- الجملة الأسطورية المخصصة للمستخدم -->
+            <div class="user-welcome-tag" id="userWelcomeMessage">اكتب نتائجك يا هيثم</div>
+
+            <!-- بطاقة عرض معلومات الاختيار الحالي -->
+            <div class="university-tag" id="currentSelectionDisplay">جامعة مستغانم</div>
+
+            <!-- خانات إدخال النقاط التجريبية اللامعة -->
+            <div class="subject-row">
+                <label id="lbl-mod1">المادة الأولى</label>
+                <div class="input-wrapper">
+                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <label id="lbl-mod2">المادة الثانية</label>
+                <div class="input-wrapper">
+                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <label id="lbl-mod3">المادة الثالثة</label>
+                <div class="input-wrapper">
+                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                </div>
+            </div>
+
+            <button class="btn-calc" onclick="calculateAverage()">احسب المعدل النهائي ⚡</button>
+
+            <!-- صندوق النتيجة السحري المتوهج -->
+            <div class="result-box" id="resultBox">
+                <div class="result-title" id="resultStatus">المعدل العام السداسي</div>
+                <div class="result-value" id="finalAverage">00.00</div>
             </div>
         </div>
 
-        <button class="btn-calc" onclick="calculateAverage()">احسب المعدل النهائي ⚡</button>
-
-        <!-- صندوق النتيجة السحري -->
-        <div class="result-box" id="resultBox">
-            <div class="result-title" id="resultStatus">المعدل العام السداسي</div>
-            <div class="result-value" id="finalAverage">00.00</div>
-        </div>
     </div>
 
     <!-- 👑 تذييل الصفحة لحفظ الحقوق -->
     <footer>
-        الموقع العالمي لحساب المعدل | صُمم المبرمج <span>هيثم</span>. كل الحقوق محفوظة © 2026
+        الموقع العالمي لحساب المعدل | صُمم واكتمل بواسطة المطور <span>هيثم</span>. كل الحقوق محفوظة © 2026
     </footer>
 
     <script>
-        // دالة ذكية للتنقل بين السنوات وتغيير محتوى الصفحة
+        // متغيرات لتخزين خيارات المستخدم في الذاكرة
+        let selectedSubject = "";
+        let selectedYearName = "";
+        let username = "";
+
+        // دالة سريعة للتنقل بين المراحل الثلاثة الأولى
+        function goToStep(nextStepId, key, value) {
+            if(key === 'subject') selectedSubject = value;
+            if(key === 'startYear') selectedYearName = value;
+
+            // إخفاء كل الواجهات أولاً
+            document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
+            // إظهار الواجهة المطلوبة
+            document.getElementById('step' + nextStepId).classList.add('active');
+        }
+
+        // دالة إنهاء المراحل وفتح الواجهة الرئيسية المخصصة باسمك
+        function finishSteps() {
+            let nameInput = document.getElementById('userNameInput').value.trim();
+            if(nameInput === "") {
+                alert("من فضلك اكتب اسمك لكي تكتمل هيبة الموقع! 😉");
+                return;
+            }
+            username = nameInput;
+
+            // إخفاء واجهة طلب الاسم وإظهار لوحة التحكم الرئيسية
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('mainDashboard').classList.add('active');
+
+            // طباعة الجملة المطلوبة حرفياً: "اكتب نتائجك يا [اسم المستخدم]"
+            document.getElementById('userWelcomeMessage').innerText = "اكتب نتائجك يا " + username;
+
+            // تفعيل زر السنة المناسبة تلقائياً بناءً على ما اختاره في الخطوة الثانية
+            let indexToActive = 1;
+            if(selectedYearName.includes("الأولى")) indexToActive = 1;
+            if(selectedYearName.includes("الثانية")) indexToActive = 2;
+            if(selectedYearName.includes("الثالثة")) indexToActive = 3;
+            if(selectedYearName.includes("الرابعة")) indexToActive = 4;
+            if(selectedYearName.includes("الخامسة")) indexToActive = 5;
+
+            selectYear(indexToActive, selectedYearName);
+        }
+
+        // دالة التنقل الحر بين أزرار السنوات (1-5) بالداخل مع تغيير أسماء المواد ديناميكياً لتناسب المادة المختارة
         function selectYear(yearNumber, yearText) {
-            // إزالة الحالة النشطة (active) من كل الأزرار
-            let buttons = document.querySelectorAll('.year-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+            // تحديث تصميم أزرار السنوات العلوي
+            document.querySelectorAll('.year-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('ybtn' + yearNumber).classList.add('active');
             
-            // إضافة الحالة النشطة للزر الذي تم الضغط عليه حالياً
-            buttons[yearNumber - 1].classList.add('active');
-            
-           
-            // حركة ذكية: تفريغ الخانات عند تغيير السنة لتبدو احترافية
+            // تغيير نص العرض بالكامل بدون أي جمل إضافية
+            document.getElementById('currentSelectionDisplay').innerText = "جامعة مستغانم - تخصص: " + selectedSubject + " (" + yearText + ")";
+
+            // تغيير أسماء خانات المواد بذكاء لتناسب المادة المختارة بدلاً من الجمل القديمة
+            document.getElementById('lbl-mod1').innerText = "مادة الـ " + selectedSubject + " (الأساسية)";
+            document.getElementById('lbl-mod2').innerText = "مادة الـ " + selectedSubject + " (المنهجية)";
+            document.getElementById('lbl-mod3').innerText = "مادة استكشافية مرافقة";
+
+            // تفريغ الخانات عند تبديل السنوات
             let inputs = document.querySelectorAll('.grade-input');
             inputs.forEach(input => {
                 input.value = "";
@@ -354,7 +473,7 @@
             }
         }
 
-        // دالة حساب المعدل مع رسائل الهيبة والنجاح
+        // دالة حساب المعدل النهائي
         function calculateAverage() {
             let inputs = document.querySelectorAll('.grade-input');
             let sum = 0;
@@ -369,7 +488,7 @@
             });
 
             if (count === 0) {
-                alert("برجاء إدخال نقطة واحدة على الأقل ! 😉");
+                alert("يرجى كتابة نقطة واحدة على الأقل في الخانات لحساب النتيجة! ⚡");
                 return;
             }
 
@@ -383,10 +502,10 @@
 
             if (avg >= 10) {
                 finalAvgElem.className = "result-value above-ten";
-                statusElem.innerHTML = "🎉 تهانينا! لقد تم تحقيق النجاح بسحق المعدل:";
+                statusElem.innerHTML = "🎉 عمل ممتاز! لقد نجحت بمعدل أسطوري:";
             } else {
                 finalAvgElem.className = "result-value below-ten";
-                statusElem.innerHTML = "⚠️ النتيجة تحت الـ 10، روح راجع للإستدراك:";
+                statusElem.innerHTML = "⚠️ النتيجة دون العشرة، بالتوفيق في التعويض مستقبلاً:";
             }
         }
     </script>
