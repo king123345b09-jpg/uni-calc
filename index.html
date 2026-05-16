@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموقع العالمي لحساب المعدل الجامعي</title>
+    <style>
+        /* نظام الألوان الفخم: أزرق ملكي، برتقالي ناري، ولمسات ذهبية */
+        :root {
+            --bg-color: #0B132B; /* أزرق داكن جداً ملكي */
+            --card-bg: #1C2541; /* أزرق متوسط الفخامة */
+            --primary: #FF7B00; /* برتقالي ناري */
+            --accent: #FFD700;  /* ذهبي نقي */
+            --text-main: #FFFFFF;
+            --success: #39FF14; /* أخضر نيون متوهج للنقاط الفوق 10 */
+            --danger: #FF3131;  /* أحمر نيون متوهج للنقاط تحت 10 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* 🌟 شاشة الترحيب الخرافية عند الدخول للموقع */
+        .intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #1c2541 0%, #0b132b 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1.5s ease-in-out 3.5s forwards;
+        }
+
+        .intro-title {
+            font-size: 2.5rem;
+            color: var(--accent);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            margin-bottom: 15px;
+            text-align: center;
+            animation: scaleUp 1s ease-out;
+        }
+
+        .intro-subtitle {
+            font-size: 1.1rem;
+            color: var(--primary);
+            letter-spacing: 2px;
+            animation: fadeIn 2s ease-in;
+        }
+
+        /* 🏢 حاوية الموقع الرئيسية بعد اختفاء الترحيب */
+        .main-container {
+            width: 90%;
+            max-width: 600px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px; /* حواف دائرية فخمة */
+            border: 2px solid var(--accent); /* إطار ذهبي */
+            box-shadow: 0 0 30px rgba(255, 123, 0, 0.2);
+            margin: 40px 0;
+            opacity: 0;
+            animation: fadeInBody 1s ease-in-out 4.5s forwards;
+        }
+
+        h1 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .university-tag {
+            text-align: center;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .subject-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1.1rem;
+            color: #E0E1DD;
+            font-weight: 500;
+        }
+
+        /* ⚡ المربعات الدائرية السحرية مع تأثيرات الإدخال */
+        .input-wrapper {
+            position: relative;
+            width: 120px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px; /* حواف دائرية للمربعات */
+            border: 2px solid #415A77;
+            background-color: #0B132B;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            outline: none;
+            transition: all 0.4s ease;
+        }
+
+        /* تأثير التوهج والشعاع اللوني المتحرك عند الضغط (Focus) */
+        input[type="number"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary), 0 0 5px var(--accent);
+            transform: scale(1.05);
+        }
+
+        /* زر الحساب الفخم الأسطوري */
+        .btn-calc {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border: none;
+            border-radius: 15px;
+            color: #0B132B;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 123, 0, 0.4);
+            margin-top: 15px;
+        }
+
+        .btn-calc:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+            letter-spacing: 1px;
+        }
+
+        /* 📊 صندوق النتيجة النهائي */
+        .result-box {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #0B132B;
+            border: 1px dashed var(--accent);
+            text-align: center;
+            display: none;
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 15px currentColor;
+        }
+
+        /* الألوان الذكية للنقاط (أخضر أو أحمر نيون) */
+        .above-ten { color: var(--success) !important; }
+        .below-ten { color: var(--danger) !important; }
+
+        /* 👑 حقوق الحفظ الفخمة بالأسفل */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            color: #666;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInBody 1s ease-in-out 4.5s forwards;
+        }
+
+        footer span {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* 🎬 حركات الأنميشن (Animations) */
+        @keyframes scaleUp {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.1); pointer-events: none; visibility: hidden; }
+        }
+        @keyframes fadeInBody {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🌟 شاشة الترحيب العالمية -->
+    <div class="intro-screen">
+        <h2 class="intro-title">أهلاً وسهلاً بك في الموقع العالمي لحساب المعدل في الجامعة</h2>
+        <p class="intro-subtitle">من قبل هيثم، كل الحقوق محفوظة ©</p>
+    </div>
+
+    <!-- 🏢 الحاوية الرئيسية للموقع -->
+    <div class="main-container">
+        <h1>حساب المعدل الجامعي</h1>
+        <div class="university-tag">جامعة مستغانم - السنة الثانية فيزياء</div>
+
+        <!-- مواد تجريبية كشكل تمهيدي -->
+        <div class="subject-row">
+            <label>مادة الفيزياء الكمية</label>
+            <div class="input-wrapper">
+                <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+            </div>
+        </div>
+
+        <div class="subject-row">
+            <label>مادة ميكانيك عقلانية</label>
+            <div class="input-wrapper">
+                <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+            </div>
+        </div>
+
+        <div class="subject-row">
+            <label>مادة الديناميكا الحرارية</label>
+            <div class="input-wrapper">
+                <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+            </div>
+        </div>
+
+        <button class="btn-calc" onclick="calculateAverage()">احسب المعدل النهائي ⚡</button>
+
+        <!-- صندوق النتيجة السحري -->
+        <div class="result-box" id="resultBox">
+            <div class="result-title" id="resultStatus">المعدل العام السداسي</div>
+            <div class="result-value" id="finalAverage">00.00</div>
+        </div>
+    </div>
+
+    <!-- 👑 تذييل الصفحة لحفظ الحقوق -->
+    <footer>
+        الموقع العالمي لحساب المعدل | صُمم واكتمل بواسطة المطور <span>هيثم</span>. كل الحقوق محفوظة © 2026
+    </footer>
+
+    <script>
+        // دالة ذكية لتلوين النقاط فورياً أثناء الكتابة (أخضر فوق 10، أحمر تحت 10)
+        function checkColor(input) {
+            let val = parseFloat(input.value);
+            if (isNaN(val) || input.value === "") {
+                input.className = "grade-input"; // افتراضي
+                return;
+            }
+            if (val >= 10) {
+                input.className = "grade-input above-ten";
+            } else {
+                input.className = "grade-input below-ten";
+            }
+        }
+
+        // دالة حساب المعدل مع إضافات بصرية خارقة للعادة
+        function calculateAverage() {
+            let inputs = document.querySelectorAll('.grade-input');
+            let sum = 0;
+            let count = 0;
+
+            inputs.forEach(input => {
+                let val = parseFloat(input.value);
+                if (!isNaN(val)) {
+                    sum += val;
+                    count++;
+                }
+            });
+
+            if (count === 0) {
+                alert("برجاء إدخال نقطة واحدة على الأقل للتفاخر! 😉");
+                return;
+            }
+
+            let avg = sum / count;
+            let resultBox = document.getElementById('resultBox');
+            let finalAvgElem = document.getElementById('finalAverage');
+            let statusElem = document.getElementById('resultStatus');
+
+            // إظهار الصندوق بحركة أنيميشن
+            resultBox.style.display = 'block';
+            finalAvgElem.innerText = avg.toFixed(2);
+
+            // تحديد النتيجة النهائية بلون نيون مذهل + رسالة هيبة
+            if (avg >= 10) {
+                finalAvgElem.className = "result-value above-ten";
+                statusElem.innerHTML = "🎉 تهانينا! لقد تم تحقيق النجاح بسحق المعدل:";
+            } else {
+                finalAvgElem.className = "result-value below-ten";
+                statusElem.innerHTML = "⚠️ النتيجة تحت الـ 10، تحتاج إلى انتفاضة في السداسي القادم:";
+            }
+        }
+    </script>
+</body>
+</html>
