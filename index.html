@@ -47,7 +47,10 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            animation: fadeOut 1.5s ease-in-out 2.5s forwards;
+        }
+
+        .fade-out {
+            animation: fadeOut 1.5s ease-in-out forwards;
         }
 
         .intro-title {
@@ -73,19 +76,18 @@
             border: 2px solid var(--accent); 
             box-shadow: 0 0 30px rgba(255, 123, 0, 0.2);
             margin: 40px 0;
-            opacity: 0;
-            animation: fadeInBody 1s ease-in-out 3.5s forwards;
+            display: none; /* يتم إظهاره بالـ JS بعد شاشة الترحيب */
         }
 
         /* أنماط الواجهات التفاعلية (المراحل) */
         .step-panel {
-            display: none; /* إخفاء المراحل افتراضياً والتحكم بها بالـ JS */
+            display: none; 
             text-align: center;
             animation: fadeIn 0.5s ease-in-out forwards;
         }
 
         .step-panel.active {
-            display: block; /* إظهار المرحلة النشطة فقط */
+            display: block; 
         }
 
         .step-title {
@@ -250,6 +252,24 @@
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
         }
 
+        /* زر إعادة ضبط البيانات لتغيير الإسم والتخصص */
+        .btn-reset {
+            background: transparent;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .btn-reset:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
         .result-box {
             margin-top: 30px;
             padding: 20px;
@@ -281,34 +301,31 @@
             font-size: 0.85rem;
             color: #666;
             width: 100%;
-            opacity: 0;
-            animation: fadeInBody 1s ease-in-out 3.5s forwards;
         }
 
         footer span { color: var(--accent); font-weight: bold; }
 
         @keyframes fadeOut {
             0% { opacity: 1; }
-            80% { opacity: 1; }
             100% { opacity: 0; pointer-events: none; visibility: hidden; }
         }
-        @keyframes fadeInBody { to { opacity: 1; } }
+        @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <!-- 🌟 شاشة الترحيب العالمية -->
-    <div class="intro-screen">
+    <div class="intro-screen" id="introScreen">
         <h2 class="intro-title">أهلاً وسهلاً بك في موقع لحساب المعدل في الجامعة</h2>
         <p class="intro-subtitle">من قبل هيثم، كل الحقوق محفوظة ©</p>
     </div>
 
     <!-- 🏢 الحاوية الرئيسية للموقع -->
-    <div class="main-container">
+    <div class="main-container" id="mainContainer">
         
         <!-- 🧩 المرحلة 1: اختيار المادة -->
-        <div class="step-panel active" id="step1">
+        <div class="step-panel" id="step1">
             <h3 class="step-title">الخطوة 1: اختر التخصص الدراسي 📚</h3>
             <div class="grid-options">
                 <button class="option-btn" onclick="goToStep(2, 'subject', 'فيزياء')">فيزياء</button>
@@ -383,6 +400,9 @@
                 <div class="result-title" id="resultStatus">المعدل العام السداسي</div>
                 <div class="result-value" id="finalAverage">00.00</div>
             </div>
+
+            <!-- زر خروج أو مسح الذاكرة إذا حب شخص آخر يجرب الموقع -->
+            <button class="btn-reset" onclick="clearSavedData()">تغيير الحساب أو الاسم 🔄</button>
         </div>
 
     </div>
@@ -392,24 +412,58 @@
         <span>هيثم</span>. كل الحقوق محفوظة © 2026
     </footer>
 
-    <script>
+    <script {__run_in_browser__}>
         // متغيرات لتخزين خيارات المستخدم في الذاكرة
         let selectedSubject = "";
         let selectedYearName = "";
         let username = "";
+
+        // عند تحميل الصفحة، نتحقق إذا كان المتصفح يعقل على المستخدم من قبل
+        window.onload = function() {
+            const savedName = localStorage.getItem('uni_username');
+            const savedSubject = localStorage.getItem('uni_subject');
+            const savedYear = localStorage.getItem('uni_year');
+
+            const intro = document.getElementById('introScreen');
+            const container = document.getElementById('mainContainer');
+
+            if (savedName && savedSubject && savedYear) {
+                // إذا كان مسجل من قبل، نمرر البيانات مباشرة ونفتح لوحة التحكم
+                username = savedName;
+                selectedSubject = savedSubject;
+                selectedYearName = savedYear;
+
+                setTimeout(() => {
+                    intro.classList.add('fade-out');
+                    container.style.display = 'block';
+                    container.style.animation = 'fadeInBody 1s ease-in-out forwards';
+                    
+                    document.getElementById('mainDashboard').classList.add('active');
+                    document.getElementById('userWelcomeMessage').innerText = "مادابيك تكتب نقاطك يا " + username;
+                    
+                    activateYearButton(selectedYearName);
+                }, 2000); // عرض شاشة الترحيب لمدة ثانيتين فقط
+            } else {
+                // إذا كان مستخدم جديد، نبدأ بالخطوة الأولى بشكل عادي
+                setTimeout(() => {
+                    intro.classList.add('fade-out');
+                    container.style.display = 'block';
+                    container.style.animation = 'fadeInBody 1s ease-in-out forwards';
+                    document.getElementById('step1').classList.add('active');
+                }, 2500);
+            }
+        }
 
         // دالة سريعة للتنقل بين المراحل الثلاثة الأولى
         function goToStep(nextStepId, key, value) {
             if(key === 'subject') selectedSubject = value;
             if(key === 'startYear') selectedYearName = value;
 
-            // إخفاء كل الواجهات أولاً
             document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
-            // إظهار الواجهة المطلوبة
             document.getElementById('step' + nextStepId).classList.add('active');
         }
 
-        // دالة إنهاء المراحل وفتح الواجهة الرئيسية المخصصة باسمك
+        // دالة إنهاء المراحل وحفظ البيانات في الـ localStorage
         function finishSteps() {
             let nameInput = document.getElementById('userNameInput').value.trim();
             if(nameInput === "") {
@@ -418,39 +472,42 @@
             }
             username = nameInput;
 
-            // إخفاء واجهة طلب الاسم وإظهار لوحة التحكم الرئيسية
+            // حفظ في ذاكرة المتصفح المحلية
+            localStorage.setItem('uni_username', username);
+            localStorage.setItem('uni_subject', selectedSubject);
+            localStorage.setItem('uni_year', selectedYearName);
+
             document.getElementById('step3').classList.remove('active');
             document.getElementById('mainDashboard').classList.add('active');
 
-            // طباعة الجملة المطلوبة حرفياً: "اكتب نتائجك يا [اسم المستخدم]"
             document.getElementById('userWelcomeMessage').innerText = "مادابيك تكتب نقاطك يا " + username;
 
-            // تفعيل زر السنة المناسبة تلقائياً بناءً على ما اختاره في الخطوة الثانية
-            let indexToActive = 1;
-            if(selectedYearName.includes("الأولى")) indexToActive = 1;
-            if(selectedYearName.includes("الثانية")) indexToActive = 2;
-            if(selectedYearName.includes("الثالثة")) indexToActive = 3;
-            if(selectedYearName.includes("الرابعة")) indexToActive = 4;
-            if(selectedYearName.includes("الخامسة")) indexToActive = 5;
-
-            selectYear(indexToActive, selectedYearName);
+            activateYearButton(selectedYearName);
         }
 
-        // دالة التنقل الحر بين أزرار السنوات (1-5) بالداخل مع تغيير أسماء المواد ديناميكياً لتناسب المادة المختارة
+        // ميكانيزم تفعيل زر السنة تلقائياً
+        function activateYearButton(yearName) {
+            let indexToActive = 1;
+            if(yearName.includes("الأولى")) indexToActive = 1;
+            if(yearName.includes("الثانية")) indexToActive = 2;
+            if(yearName.includes("الثالثة")) indexToActive = 3;
+            if(yearName.includes("الرابعة")) indexToActive = 4;
+            if(yearName.includes("الخامسة")) indexToActive = 5;
+
+            selectYear(indexToActive, yearName);
+        }
+
+        // دالة التنقل الحر بين أزرار السنوات
         function selectYear(yearNumber, yearText) {
-            // تحديث تصميم أزرار السنوات العلوي
             document.querySelectorAll('.year-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('ybtn' + yearNumber).classList.add('active');
             
-            // تغيير نص العرض بالكامل بدون أي جمل إضافية
             document.getElementById('currentSelectionDisplay').innerText = "جامعة مستغانم - تخصص: " + selectedSubject + " (" + yearText + ")";
 
-            // تغيير أسماء خانات المواد بذكاء لتناسب المادة المختارة بدلاً من الجمل القديمة
             document.getElementById('lbl-mod1').innerText = "مادة الـ " + selectedSubject + " (الأساسية)";
             document.getElementById('lbl-mod2').innerText = "مادة الـ " + selectedSubject + " (المنهجية)";
             document.getElementById('lbl-mod3').innerText = "مادة استكشافية مرافقة";
 
-            // تفريغ الخانات عند تبديل السنوات
             let inputs = document.querySelectorAll('.grade-input');
             inputs.forEach(input => {
                 input.value = "";
@@ -459,7 +516,7 @@
             document.getElementById('resultBox').style.display = 'none';
         }
 
-        // دالة تلوين النقاط فورياً أثناء الكتابة (أخضر فوق 10، أحمر تحت 10)
+        // دالة تلوين النقاط فورياً أثناء الكتابة
         function checkColor(input) {
             let val = parseFloat(input.value);
             if (isNaN(val) || input.value === "") {
@@ -506,6 +563,14 @@
             } else {
                 finalAvgElem.className = "result-value below-ten";
                 statusElem.innerHTML = "⚠️ ديت تحت العشرة روح راجع للإستدراك:";
+            }
+        }
+
+        // دالة حذف البيانات المحفوظة والبدء من جديد
+        function clearSavedData() {
+            if(confirm("هل تريد مسح البيانات المسجلة لتغيير الاسم أو التخصص؟")) {
+                localStorage.clear();
+                location.reload();
             }
         }
     </script>
