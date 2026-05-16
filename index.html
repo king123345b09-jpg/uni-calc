@@ -300,7 +300,7 @@
 
     <!-- 🌟 شاشة الترحيب العالمية -->
     <div class="intro-screen">
-        <h2 class="intro-title">أهلاً وسهلاً بك في الموقع العالمي لحساب المعدل في الجامعة</h2>
+        <h2 class="intro-title">أهلاً وسهلاً بك في موقع لحساب المعدل في الجامعة</h2>
         <p class="intro-subtitle">من قبل هيثم، كل الحقوق محفوظة ©</p>
     </div>
 
@@ -356,21 +356,21 @@
 
             <!-- خانات إدخال النقاط التجريبية اللامعة -->
             <div class="subject-row">
-                <label id="lbl-mod1">المادة الأولى</label>
+                <label id="lbl-mod1"> الفيزياء</label>
                 <div class="input-wrapper">
                     <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
                 </div>
             </div>
 
             <div class="subject-row">
-                <label id="lbl-mod2">المادة الثانية</label>
+                <label id="lbl-mod2">الميكانيك</label>
                 <div class="input-wrapper">
                     <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
                 </div>
             </div>
 
             <div class="subject-row">
-                <label id="lbl-mod3">المادة الثالثة</label>
+                <label id="lbl-mod3">علم النفس </label>
                 <div class="input-wrapper">
                     <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
                 </div>
@@ -389,7 +389,7 @@
 
     <!-- 👑 تذييل الصفحة لحفظ الحقوق -->
     <footer>
-        الموقع العالمي لحساب المعدل | صُمم واكتمل بواسطة المطور <span>هيثم</span>. كل الحقوق محفوظة © 2026
+        <span>هيثم</span>. كل الحقوق محفوظة © 2026
     </footer>
 
     <script>
@@ -413,7 +413,7 @@
         function finishSteps() {
             let nameInput = document.getElementById('userNameInput').value.trim();
             if(nameInput === "") {
-                alert("من فضلك اكتب اسمك لكي تكتمل هيبة الموقع! 😉");
+                alert("من فضلك اكتب اسمك ! 😉");
                 return;
             }
             username = nameInput;
@@ -423,7 +423,7 @@
             document.getElementById('mainDashboard').classList.add('active');
 
             // طباعة الجملة المطلوبة حرفياً: "اكتب نتائجك يا [اسم المستخدم]"
-            document.getElementById('userWelcomeMessage').innerText = "اكتب نتائجك يا " + username;
+            document.getElementById('userWelcomeMessage').innerText = "مادابيك تكتب نقاطك يا " + username;
 
             // تفعيل زر السنة المناسبة تلقائياً بناءً على ما اختاره في الخطوة الثانية
             let indexToActive = 1;
@@ -502,10 +502,10 @@
 
             if (avg >= 10) {
                 finalAvgElem.className = "result-value above-ten";
-                statusElem.innerHTML = "🎉 عمل ممتاز! لقد نجحت بمعدل أسطوري:";
+                statusElem.innerHTML = "🎉 بصحتك!:";
             } else {
                 finalAvgElem.className = "result-value below-ten";
-                statusElem.innerHTML = "⚠️ النتيجة دون العشرة، بالتوفيق في التعويض مستقبلاً:";
+                statusElem.innerHTML = "⚠️ ديت تحت العشرة روح راجع للإستدراك:";
             }
         }
     </script>
