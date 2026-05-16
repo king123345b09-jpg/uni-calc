@@ -326,7 +326,7 @@
         
         <!-- 🧩 المرحلة 1: اختيار المادة -->
         <div class="step-panel" id="step1">
-            <h3 class="step-title">الخطوة 1: اختر التخصص الدراسي 📚</h3>
+            <h3 class="step-title">الخطوة 1: شاو هو التخصص نتاعك 📚</h3>
             <div class="grid-options">
                 <button class="option-btn" onclick="goToStep(2, 'subject', 'فيزياء')">فيزياء</button>
                 <button class="option-btn" onclick="goToStep(2, 'subject', 'رياضيات')">رياضيات</button>
@@ -336,7 +336,7 @@
 
         <!-- 🧩 المرحلة 2: اختيار السنة الدراسية كبداية -->
         <div class="step-panel" id="step2">
-            <h3 class="step-title">الخطوة 2: في أي سنة تدرس حالياً؟ 🎓</h3>
+            <h3 class="step-title">الخطوة 2: وين راك سنة؟ 🎓</h3>
             <div class="grid-options">
                 <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الأولى')">السنة الأولى</button>
                 <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الثانية')">السنة الثانية</button>
@@ -348,7 +348,7 @@
 
         <!-- 🧩 المرحلة 3: كتابة الاسم لطلب الهوية -->
         <div class="step-panel" id="step3">
-            <h3 class="step-title">الخطوة 3: يرجى كتابة إسمك الموقر ✍️</h3>
+            <h3 class="step-title">الخطوة 3: إ:تب إسمك  ✍️</h3>
             <input type="text" id="userNameInput" class="name-input" placeholder="اكتب اسمك هنا..." autocomplete="off">
             <button class="btn-calc" onclick="finishSteps()">الدخول إلى لوحة التحكم العالمية ⚡</button>
         </div>
@@ -402,7 +402,7 @@
             </div>
 
             <!-- زر خروج أو مسح الذاكرة إذا حب شخص آخر يجرب الموقع -->
-            <button class="btn-reset" onclick="clearSavedData()">تغيير الحساب أو الاسم 🔄</button>
+            <button class="btn-reset" onclick="clearSavedData()">إذا راك باغي تبدل إسمك والتخصص 🔄</button>
         </div>
 
     </div>
@@ -545,7 +545,7 @@
             });
 
             if (count === 0) {
-                alert("يرجى كتابة نقطة واحدة على الأقل في الخانات لحساب النتيجة! ⚡");
+                alert("مادابيك تكتب نقطة واحدة على الأقل باه نحسبلك! ⚡");
                 return;
             }
 
@@ -568,7 +568,7 @@
 
         // دالة حذف البيانات المحفوظة والبدء من جديد
         function clearSavedData() {
-            if(confirm("هل تريد مسح البيانات المسجلة لتغيير الاسم أو التخصص؟")) {
+            if(confirm("هل راك متأكد بلي راك رايح تبدل الإسم والتخصص؟")) {
                 localStorage.clear();
                 location.reload();
             }
