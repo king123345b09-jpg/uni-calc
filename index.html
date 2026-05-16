@@ -3,251 +3,414 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جيم في المنزل - Home Gym</title>
+    <title>⚡ HOME GYM PRO | نظام اللياقة المتكامل</title>
     <style>
-        /* تنسيقات عامة - الطابع الداكن والأصفر */
+        /* التنسيق الفخم - النيون الأصفر والأسود العميق */
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #141414;
+            --primary-color: #ffcc00;
+            --primary-glow: rgba(255, 204, 0, 0.2);
+            --text-color: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #111111;
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        .container {
-            background-color: #1a1a1a;
-            border: 2px solid #ffcc00; /* لمسة صفراء جمالية */
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(255, 204, 0, 0.15);
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            transition: all 0.3s ease;
+        .main-container {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 0 30px var(--primary-glow);
+            padding: 40px;
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
+            transition: all 0.5s ease-in-out;
         }
 
+        /* العناوين والتأثيرات البصرية */
         h1 {
-            color: #ffcc00; /* عنوان باللون الأصفر */
-            margin-bottom: 25px;
-            font-size: 2rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--primary-glow);
+            font-weight: 800;
         }
 
-        p {
-            color: #cccccc;
+        p.description {
+            text-align: center;
+            color: var(--text-muted);
             font-size: 1.1rem;
-            line-height: 1.6;
+            margin-bottom: 30px;
         }
 
-        /* تنسيق خطوات الأسئلة */
+        /* إخفاء وإظهار الخطوات بتأثير فخم */
         .step {
-            display: none; /* إخفاء الخطوات افتراضياً وتبديلها بالـ JS */
+            display: none;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.4s ease-in-out;
         }
 
         .step.active {
             display: block;
-            animation: fadeIn 0.5s ease;
+            opacity: 1;
+            transform: scale(1);
         }
 
-        /* تحريك ظهور العناصر */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* الحقول والمدخلات الاحترافية */
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        /* تنسيق حقول الإدخال */
+        label {
+            display: block;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
         input, select {
             width: 100%;
-            padding: 12px;
-            margin: 15px 0;
-            box-sizing: border-box;
-            background-color: #2b2b2b;
-            border: 1px solid #444;
-            border-radius: 8px;
+            padding: 14px;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 10px;
             color: #fff;
             font-size: 1rem;
-            text-align: center;
-            transition: border-color 0.3s;
+            box-sizing: border-box;
+            transition: all 0.3s;
         }
 
         input:focus, select:focus {
-            border-color: #ffcc00;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 12px var(--primary-glow);
             outline: none;
-            box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
         }
 
         .row {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
-        /* تنسيق الأزرار الصفراء */
+        /* الأزرار الفخمة وتأثير الارتداد */
         button {
-            background-color: #ffcc00;
-            color: #111111;
+            background: linear-gradient(135deg, #ffcc00, #b38f00);
+            color: #000;
             border: none;
-            padding: 12px 25px;
-            font-size: 1rem;
+            padding: 15px 30px;
+            font-size: 1.1rem;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
             transition: all 0.3s ease;
         }
 
         button:hover {
-            background-color: #e6b800;
-            transform: scale(1.02);
-            box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 204, 0, 0.5);
         }
 
-        /* تنسيق النتيجة النهائية */
-        .result-box {
-            background-color: #222;
-            border-right: 4px solid #ffcc00;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: right;
-            border-radius: 4px;
+        /* بطاقة التقرير والنتائج */
+        .report-card {
+            background: #1a1a1a;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .report-item {
+            background: #222;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
         }
 
         .highlight {
-            color: #ffcc00;
+            color: var(--primary-color);
             font-weight: bold;
+        }
+
+        /* جدول التمارين الذكي والأيام */
+        .workout-section {
+            margin-top: 35px;
+        }
+
+        .day-card {
+            background: #181818;
+            border: 1px solid #292929;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .day-card:hover {
+            border-color: var(--primary-color);
+        }
+
+        .day-title {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .exercise-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .exercise-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed #222;
+            color: #dddddd;
+        }
+
+        .exercise-item:last-child {
+            border-bottom: none;
+        }
+
+        .badge {
+            background-color: #252525;
+            color: var(--primary-color);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 204, 0, 0.3);
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- الخطوة 1: الإسم -->
+<div class="main-container" id="mainBox">
+    <!-- الخطوة 1: البيانات الشخصية -->
     <div class="step active" id="step1">
-        <h1>مرحباً بك كابتن! 👋</h1>
-        <p>جاهز لتبدأ رحلة تغيير جسمك من البيت؟ أولاً، ما هو اسمك؟</p>
-        <input type="text" id="userName" placeholder="اكتب اسمك هنا..." required>
-        <button onclick="nextStep(1, 2)">التالي</button>
-    </div>
-
-    <!-- الخطوة 2: تاريخ الميلاد (الشهر والسنة) -->
-    <div class="step" id="step2">
-        <h1>تاريخ الميلاد 🗓️</h1>
-        <p>في أي عام وشهر ولدت؟ لنحسب عمرك بدقة.</p>
-        <div class="row">
-            <select id="birthMonth">
-                <option value="1">جانفي (1)</option>
-                <option value="2">فيفري (2)</option>
-                <option value="3">مارس (3)</option>
-                <option value="4">أفريل (4)</option>
-                <option value="5">ماي (5)</option>
-                <option value="6">جوان (6)</option>
-                <option value="7">جويلية (7)</option>
-                <option value="8">أوت (8)</option>
-                <option value="9">سبتمبر (9)</option>
-                <option value="10">أكتوبر (10)</option>
-                <option value="11">نوفمبر (11)</option>
-                <option value="12">ديسمبر (12)</option>
-            </select>
-            <input type="number" id="birthYear" placeholder="السنة (مثال: 2010)" min="1950" max="2026">
-        </div>
-        <button onclick="nextStep(2, 3)">التالي</button>
-    </div>
-
-    <!-- الخطوة 3: الوزن والطول -->
-    <div class="step" id="step3">
-        <h1>الوزن والطول ⚖️</h1>
-        <p>أدخل بياناتك الحالية لتحليل كتلة الجسم وسرعة الحرق:</p>
-        <input type="number" id="userWeight" placeholder="الوزن بالكيلوغرام (مثال: 65)" min="30">
-        <input type="number" id="userHeight" placeholder="الطول بالسنتيمتر (مثال: 170)" min="100">
-        <button onclick="calculateAndShowResult()">تحليل النتائج وعرض الترحيب ✨</button>
-    </div>
-
-    <!-- الخطوة 4: النتيجة والترحيب النهائي -->
-    <div class="step" id="step4">
-        <h1 id="welcomeTitle">أهلاً بك في جيم في المنزل معنا!</h1>
-        <p>تم تحليل بياناتك بنجاح، وإليك تقرير حالتك البدنية الحالية:</p>
+        <h1>⚡ HOME GYM PRO</h1>
+        <p class="description">مرحباً بك في نظام التدريب المنزلي الذكي والمخصص بالكامل لجسمك وعمرك.</p>
         
-        <div class="result-box">
-            <p>👤 الاسم: <span id="resName" class="highlight"></span></p>
-            <p>🎂 العمر الحالي: <span id="resAge" class="highlight"></span></p>
-            <p>📊 مؤشر كتلة الجسم (BMI): <span id="resBMI" class="highlight"></span></p>
-            <p>🎯 حالة الجسم: <span id="resStatus" class="highlight"></span></p>
+        <div class="form-group">
+            <label for="userName">الاسم أو اللقب</label>
+            <input type="text" id="userName" placeholder="ادخل اسمك كابتن..." required>
         </div>
 
-        <p style="font-size: 1.2rem; color: #ffcc00; font-weight: bold;">🔥 خطتك التدريبية بالوزن الذاتي جاهزة، فلنبدأ العمل!</p>
-        <button onclick="location.reload()">إعادة الإدخال 🔄</button>
+        <div class="form-group">
+            <label>تاريخ الميلاد (الشهر والسنة)</label>
+            <div class="row">
+                <select id="birthMonth">
+                    <option value="1">جانفي (01)</option>
+                    <option value="2">فيفري (02)</option>
+                    <option value="3">مارس (03)</option>
+                    <option value="4">أفريل (04)</option>
+                    <option value="5">ماي (05)</option>
+                    <option value="6">جوان (06)</option>
+                    <option value="7">جويلية (07)</option>
+                    <option value="8">أوت (08)</option>
+                    <option value="9">سبتمبر (09)</option>
+                    <option value="10">أكتوبر (10)</option>
+                    <option value="11">نوفمبر (11)</option>
+                    <option value="12">ديسمبر (12)</option>
+                </select>
+                <input type="number" id="birthYear" placeholder="سنة الميلاد (مثال: 2011)" min="1950" max="2026" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>المقاييس الحالية للجسم</label>
+            <div class="row">
+                <input type="number" id="userWeight" placeholder="الوزن (كيلوغرام)" min="30" required>
+                <input type="number" id="userHeight" placeholder="الطول (سنتيمتر)" min="100" required>
+            </div>
+        </div>
+
+        <button onclick="generateDashboard()">توليد النظام التدريبي المخصص 🚀</button>
+    </div>
+
+    <!-- الخطوة 2: لوحة التحكم والبرنامج الرياضي الفخم -->
+    <div class="step" id="dashboardStep">
+        <h1 id="welcomeTitle">أهلاً بك في جيم في المنزل معنا يا بطل!</h1>
+        <p class="description">تم تحليل بياناتك الفيزيولوجية وبناء جدول التمارين المنزلي المخصص لك بالكامل.</p>
+
+        <!-- كرت التقرير البدني -->
+        <div class="report-card">
+            <h3 style="margin-top: 0; color: var(--primary-color);">📊 تقرير الحالة البدنية المكتشف:</h3>
+            <div class="report-grid">
+                <div class="report-item">👤 الكابتن: <span id="resName" class="highlight"></span></div>
+                <div class="report-item">🎂 العمر: <span id="resAge" class="highlight"></span></div>
+                <div class="report-item">⚖️ مؤشر الـ BMI: <span id="resBMI" class="highlight"></span></div>
+                <div class="report-item">🎯 تصنيف الجسم: <span id="resStatus" class="highlight"></span></div>
+            </div>
+        </div>
+
+        <!-- قسم تقسيم الأيام والتمارين الذكي -->
+        <div class="workout-section">
+            <h2 style="color: #fff; border-right: 3px solid var(--primary-color); padding-right: 10px; font-size: 1.4rem;">🗓️ خطتك التدريبية الأسبوعية (وزن الجسم):</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">* تم ضبط تكرارات التمارين (الـ Push-ups والـ Squats) تلقائياً لتناسب عمرك وكتلة جسمك الحالية.</p>
+            
+            <div id="workoutContainer">
+                <!-- سيتم ملؤه ديناميكياً بواسطة الجافاسكريبت -->
+            </div>
+        </div>
+
+        <button onclick="location.reload()" style="background: #222; color: #fff; border: 1px solid #444; margin-top: 30px;">إعادة تعيين البيانات 🔄</button>
     </div>
 </div>
 
 <script>
-    // الانتقال بين الخطوات
-    function nextStep(current, next) {
-        // التحقق من أن الحقول ليست فارغة قبل الانتقال
-        if (current === 1 && document.getElementById('userName').value.trim() === "") {
-            alert("من فضلك اكتب اسمك أولاً!");
-            return;
-        }
-        if (current === 2 && document.getElementById('birthYear').value === "") {
-            alert("من فضلك أدخل سنة ميلادك!");
-            return;
-        }
-
-        document.getElementById('step' + current).classList.remove('active');
-        document.getElementById('step' + next).classList.add('active');
-    }
-
-    // حساب العمر، مؤشر كتلة الجسم وعرض النتيجة النهائية
-    function calculateAndShowResult() {
-        const name = document.getElementById('userName').value;
+    function generateDashboard() {
+        // جلب المدخلات
+        const name = document.getElementById('userName').value.trim();
         const birthYear = parseInt(document.getElementById('birthYear').value);
         const birthMonth = parseInt(document.getElementById('birthMonth').value);
         const weight = parseFloat(document.getElementById('userWeight').value);
         const heightCm = parseFloat(document.getElementById('userHeight').value);
 
-        if (!weight || !heightCm) {
-            alert("من فضلك أدخل الوزن والطول بشكل صحيح!");
+        // التحقق من صحة المدخلات
+        if (!name || !birthYear || !weight || !heightCm) {
+            alert("من فضلك املأ جميع الحقول الفراغة لتوليد نظامك البدني!");
             return;
         }
 
-        // 1. حساب العمر بناءً على السنة الحالية (2026) والشهر الحالي
+        // 1. حساب العمر بدقة بناءً على سنة 2026
         const currentYear = 2026;
-        const currentMonth = 5; // شهر ماي
+        const currentMonth = 5; 
         let age = currentYear - birthYear;
-        if (currentMonth < birthMonth) {
-            age--; // لم يكتمل عامه بعد في هذا الشهر
-        }
+        if (currentMonth < birthMonth) age--;
 
-        // 2. حساب مؤشر كتلة الجسم (BMI = الوزن / الطول بالمتر مربع)
+        // 2. حساب الـ BMI (مؤشر كتلة الجسم)
         const heightM = heightCm / 100;
         const bmi = (weight / (heightM * heightM)).toFixed(1);
 
-        // 3. تحديد حالة الجسم بناءً على الـ BMI
+        // 3. تحديد حالة الجسم ومستوى التكرارات للتمارين (بوش أب وسكوات)
         let status = "";
+        let pushupReps = "3 جولات × 10 تكرارات";
+        let squatReps = "3 جولات × 15 تكرار";
+        let plankDuration = "30 ثانية";
+
         if (bmi < 18.5) {
-            status = "وزن تحت الطبيعي (تحتاج زيادة الكتلة العضلية) 💪";
+            status = "وزن تحت الطبيعي (تحتاج بناء عضل)";
+            pushupReps = "3 جولات × 8 تكرارات (تركيز على النزول البطيء)";
+            squatReps = "3 جولات × 12 تكرار";
+            plankDuration = "35 ثانية";
         } else if (bmi >= 18.5 && bmi < 25) {
-            status = "وزن مثالي ومتناسق! حافظ على لياقتك وتطوير قوتك ⚡";
+            status = "وزن مثالي ومتناسق ✨";
+            pushupReps = "4 جولات × 12 تكرار";
+            squatReps = "4 جولات × 20 تكرار";
+            plankDuration = "45 ثانية";
         } else if (bmi >= 25 && bmi < 30) {
-            status = "زيادة طفيفة في الوزن (تمارين الكارديو والمقاومة ستصنع فارقاً) 🔥";
+            status = "زيادة طفيفة (تحتاج حرق وبناء)";
+            pushupReps = "3 جولات × 10 تكرارات";
+            squatReps = "4 جولات × 15 تكرار";
+            plankDuration = "40 ثانية";
         } else {
-            status = "سمنة (تحدي ممتاز لتبدأ بحرق الدهون وبناء صحتك معنا) 🚀";
+            status = "سمنة (تركيز على الحرق والتحمل)";
+            pushupReps = "3 جولات × 6 تكرارات (أو بوش أب على الركبة)";
+            squatReps = "3 جولات × 10 تكرارات";
+            plankDuration = "25 ثانية";
         }
 
-        // 4. عرض البيانات في الواجهة وتخصيص الترحيب بالاسم
-        document.getElementById('welcomeTitle').innerText = `أهلاً بك في جيم في المنزل معنا يا ${name}! 🏋️‍♂️`;
+        // تعديل التكرارات حسب الفئة العمرية للشباب لضمان السلامة الميكانيكية للمفاصل
+        if (age <= 16) {
+            pushupReps = "3 جولات × 10 تكرارات نقيّة وبشكل صحيح";
+            squatReps = "3 جولات × 15 تكرار بوزن الجسم";
+            plankDuration = "40 ثانية كحد أقصى للتحمل";
+        }
+
+        // 4. تعبئة كرت التقرير البدني
+        document.getElementById('welcomeTitle').innerHTML = `أهلاً بك في جيم في المنزل معنا يا <span style="color:#fff;">${name}</span>! 🏋️‍♂️`;
         document.getElementById('resName').innerText = name;
-        document.getElementById('resAge').innerText = `${age} سنة`;
+        document.getElementById('resAge').innerText = age + " سنة";
         document.getElementById('resBMI').innerText = bmi;
         document.getElementById('resStatus').innerText = status;
 
-        // الانتقال للخطوة الأخيرة
-        document.getElementById('step3').remove('active');
-        document.getElementById('step4').classList.add('active');
+        // 5. توليد جدول الأيام والتمارين المخصص بشكل متكامل فخم
+        const workoutContainer = document.getElementById('workoutContainer');
+        
+        const programHTML = `
+            <!-- اليوم الأول -->
+            <div class="day-card">
+                <div class="day-title"><span>الدروس واليوم 1: دفع وصدر (Push Day)</span> <span class="badge">عضلات علوية</span></div>
+                <ul class="exercise-list">
+                    <li class="exercise-item"><span>1. تمارين الضغط القياسية (Push-ups)</span> <span class="highlight">${pushupReps}</span></li>
+                    <li class="exercise-item"><span>2. ضغط ضيق لتشغيل الترايسبس (Diamond/Narrow)</span> <span class="highlight">3 جولات × 8 تكرارات</span></li>
+                    <li class="exercise-item"><span>3. بلانك ثبات لتقوية الكور (Plank)</span> <span class="highlight">${plankDuration}</span></li>
+                </ul>
+            </div>
+
+            <!-- اليوم الثاني -->
+            <div class="day-card">
+                <div class="day-title"><span>اليوم 2: أرجل وبطن (Legs & Core)</span> <span class="badge">عضلات سفلية</span></div>
+                <ul class="exercise-list">
+                    <li class="exercise-item"><span>1. تمارين القرفصاء الحر (Squats)</span> <span class="highlight">${squatReps}</span></li>
+                    <li class="exercise-item"><span>2. طعن ديناميكي للمقاعد والفخذ (Lunges)</span> <span class="highlight">3 جولات × 10 لكل رجل</span></li>
+                    <li class="exercise-item"><span>3. تمارين بطن البطن (Crunches)</span> <span class="highlight">3 جولات × 15 تكرار</span></li>
+                </ul>
+            </div>
+
+            <!-- اليوم الثالث -->
+            <div class="day-card" style="border-right: 4px solid #555;">
+                <div class="day-title" style="color: #aaa;"><span>اليوم 3: راحة إيجابية واستشفاء (Rest Day)</span> <span class="badge" style="color:#aaa; border-color:#444;">استشفاء</span></div>
+                <p style="margin: 0; color: #888; font-size: 0.95rem;">تجنب تمارين المقاومة العنيفة اليوم. قم بعمل إطالات (Stretching) وشرب كميات كافية من الماء لمساعدة أليافك العضلية على النمو والترميم.</p>
+            </div>
+
+            <!-- اليوم الرابع -->
+            <div class="day-card">
+                <div class="day-title"><span>اليوم 4: ظهر وبايسبس (Pull Day - سحب منزلي)</span> <span class="badge">عضلات علوية</span></div>
+                <ul class="exercise-list">
+                    <li class="exercise-item"><span>1. سحب منزلي (مثل التجديف باستخدام طاولة أو حقيبة ظهر)</span> <span class="highlight">4 جولات × 12 تكرار</span></li>
+                    <li class="exercise-item"><span>2. سوبرمان لأسفل الظهر (Superman Exercise)</span> <span class="highlight">3 جولات × 15 ثانية ثبات</span></li>
+                    <li class="exercise-item"><span>3. رفع الساقين لعضلات السيكس باك السفلية</span> <span class="highlight">3 جولات × 12 تكرار</span></li>
+                </ul>
+            </div>
+
+            <!-- اليوم الخامس -->
+            <div class="day-card">
+                <div class="day-title"><span>اليوم 5: أكتاف وفول بادي (Shoulders & HIIT)</span> <span class="badge">لياقة شاملة</span></div>
+                <ul class="exercise-list">
+                    <li class="exercise-item"><span>1. بوش أب أكتاف مرتفع (Pike Push-ups)</span> <span class="highlight">3 جولات × 8 تكرارات</span></li>
+                    <li class="exercise-item"><span>2. القفز مع فتح الرجلين (Jumping Jacks)</span> <span class="highlight">3 جولات × 45 ثانية متواصلة</span></li>
+                    <li class="exercise-item"><span>3. بلانك جانبى (Side Plank)</span> <span class="highlight">جولتين × 20 ثانية لكل جانب</span></li>
+                </ul>
+            </div>
+        `;
+        
+        workoutContainer.innerHTML = programHTML;
+
+        // 6. الانتقال بحركة فخمة وتغيير حجم الحاوية الرئيسية
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('dashboardStep').classList.add('active');
+        document.getElementById('mainBox').style.maxWidth = "750px"; // توسيع الصندوق ليناسب الجدول الفخم
     }
 </script>
 
