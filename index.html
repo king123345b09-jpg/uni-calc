@@ -190,68 +190,53 @@
             border: 1px solid var(--primary);
         }
 
-        /* تصميم كرت المادة المتطور المتوافق مع الموقع المرفق */
-        .subject-card {
-            background: rgba(11, 19, 43, 0.7);
-            border: 1px solid #415A77;
-            border-radius: 15px;
-            padding: 15px 20px;
+        /* 📊 التنسيق الجديد للمواد على شكل جدول منظم */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
             margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            border-radius: 12px;
+            border: 1px solid #415A77;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            background: rgba(11, 19, 43, 0.7);
+        }
+
+        th, td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(65, 90, 119, 0.4);
+            font-size: 1rem;
+        }
+
+        th {
+            background-color: #0B132B;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        td.subject-name {
             text-align: right;
-        }
-
-        .subject-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px dashed rgba(65, 90, 119, 0.5);
-            padding-bottom: 8px;
-        }
-
-        .subject-title {
-            font-size: 1.2rem;
+            font-weight: bold;
             color: #FFF;
+        }
+
+        .coef-number {
             font-weight: bold;
-        }
-
-        .subject-badge {
-            background: var(--primary);
-            color: #0B132B;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-
-        .inputs-container {
-            display: flex;
-            gap: 15px;
-            justify-content: space-between;
-        }
-
-        .input-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .input-group label {
-            font-size: 0.9rem;
-            color: #A0AEC0;
+            color: var(--primary);
         }
 
         input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 10px;
+            width: 85px;
+            padding: 8px;
+            border-radius: 8px;
             border: 2px solid #415A77;
             background-color: #0B132B;
             color: white;
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-align: center;
             outline: none;
             transition: all 0.3s ease;
@@ -377,7 +362,7 @@
             <button class="btn-calc" onclick="finishSteps()">الدخول إلى لوحة التحكم العالمية ⚡</button>
         </div>
 
-        <!-- لوحة التحكم الاحترافية المماثلة للموقع المطلوب -->
+        <!-- لوحة التحكم الاحترافية المنظمة على شكل جدول -->
         <div class="step-panel" id="mainDashboard">
             
             <div class="year-navigation">
@@ -391,98 +376,58 @@
             <div class="user-welcome-tag" id="userWelcomeMessage">اكتب نتائجك يا هيثم</div>
             <div class="university-tag" id="currentSelectionDisplay">جامعة مستغانم</div>
 
-            <!-- 📦 كروت المواد المتكاملة (امتحان + أعمال موجهة) -->
-            <!-- مادة 1 -->
-            <div class="subject-card" data-coef="2">
-                <div class="subject-header">
-                    <span class="subject-title">مادة علم النفس</span>
-                    <span class="subject-badge">المعامل: 2</span>
-                </div>
-                <div class="inputs-container">
-                    <div class="input-group">
-                        <label>علامة الامتحان (60%)</label>
-                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                    <div class="input-group">
-                        <label>علامة الـ TD (40%)</label>
-                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                </div>
+            <!-- 📊 الجدول المنظم للمواد والتقييمات -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>المادة</th>
+                            <th>المعامل</th>
+                            <th>الامتحان (60%)</th>
+                            <th>الأعمال TD (40%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- مادة 1 -->
+                        <tr class="subject-row-item" data-coef="2">
+                            <td class="subject-name">علم النفس</td>
+                            <td class="coef-number">2</td>
+                            <td><input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                            <td><input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                        </tr>
+                        <!-- مادة 2 -->
+                        <tr class="subject-row-item" data-coef="3">
+                            <td class="subject-name">الميكانيك</td>
+                            <td class="coef-number">3</td>
+                            <td><input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                            <td><input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                        </tr>
+                        <!-- مادة 3 -->
+                        <tr class="subject-row-item" data-coef="2">
+                            <td class="subject-name">الإعلام الآلي</td>
+                            <td class="coef-number">2</td>
+                            <td><input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                            <td><input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                        </tr>
+                        <!-- مادة 4 -->
+                        <tr class="subject-row-item" data-coef="3">
+                            <td class="subject-name">الرياضيات</td>
+                            <td class="coef-number">3</td>
+                            <td><input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                            <td><input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                        </tr>
+                        <!-- مادة 5 -->
+                        <tr class="subject-row-item" data-coef="1">
+                            <td class="subject-name">اللغة العربية</td>
+                            <td class="coef-number">1</td>
+                            <td><input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                            <td><input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <!-- مادة 2 -->
-            <div class="subject-card" data-coef="3">
-                <div class="subject-header">
-                    <span class="subject-title">مادة الميكانيك</span>
-                    <span class="subject-badge">المعامل: 3</span>
-                </div>
-                <div class="inputs-container">
-                    <div class="input-group">
-                        <label>علامة الامتحان (60%)</label>
-                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                    <div class="input-group">
-                        <label>علامة الـ TD (40%)</label>
-                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                </div>
-            </div>
-
-            <!-- مادة 3 -->
-            <div class="subject-card" data-coef="2">
-                <div class="subject-header">
-                    <span class="subject-title">مادة الإعلام الآلي</span>
-                    <span class="subject-badge">المعامل: 2</span>
-                </div>
-                <div class="inputs-container">
-                    <div class="input-group">
-                        <label>علامة الامتحان (60%)</label>
-                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                    <div class="input-group">
-                        <label>علامة الـ TD (40%)</label>
-                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                </div>
-            </div>
-
-            <!-- mada 4 -->
-            <div class="subject-card" data-coef="3">
-                <div class="subject-header">
-                    <span class="subject-title">مادة الرياضيات</span>
-                    <span class="subject-badge">المعامل: 3</span>
-                </div>
-                <div class="inputs-container">
-                    <div class="input-group">
-                        <label>علامة الامتحان (60%)</label>
-                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                    <div class="input-group">
-                        <label>علامة الـ TD (40%)</label>
-                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                </div>
-            </div>
-
-            <!-- مادة 5 -->
-            <div class="subject-card" data-coef="1">
-                <div class="subject-header">
-                    <span class="subject-title">مادة اللغة العربية</span>
-                    <span class="subject-badge">المعامل: 1</span>
-                </div>
-                <div class="inputs-container">
-                    <div class="input-group">
-                        <label>علامة الامتحان (60%)</label>
-                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                    <div class="input-group">
-                        <label>علامة الـ TD (40%)</label>
-                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn-calc" onclick="calculateAdvancedAverage()">احسب المعدل الكلي المركب ⚡</button>
+            <button class="btn-calc" onclick="calculateTableAverage()">احسب المعدل الكلي الفصلي ⚡</button>
 
             <div class="result-box" id="resultBox">
                 <div class="result-title" id="resultStatus">المعدل العام السداسي الحالي</div>
@@ -598,31 +543,27 @@
             }
         }
 
-        /* 👑 دالة الحساب المتطورة المماثلة تماماً للموقع المرفق */
-        function calculateAdvancedAverage() {
-            let cards = document.querySelectorAll('.subject-card');
+        /* 👑 دالة الحساب المتوافقة مع هيكلة الجدول الجديدة */
+        function calculateTableAverage() {
+            let rows = document.querySelectorAll('.subject-row-item');
             let totalWeightedGrades = 0; 
             let totalCoefficients = 0;   
 
-            cards.forEach(card => {
-                let coef = parseFloat(card.getAttribute('data-coef'));
-                let examVal = parseFloat(card.querySelector('.exam-input').value);
-                let tdVal = parseFloat(card.querySelector('.td-input').value);
+            rows.forEach(row => {
+                let coef = parseFloat(row.getAttribute('data-coef'));
+                let examVal = parseFloat(row.querySelector('.exam-input').value);
+                let tdVal = parseFloat(row.querySelector('.td-input').value);
 
-                // التحقق الذكي: إذا أدخل المستخدم الامتحان فقط أو الـ TD فقط أو كلاهما
                 let subjectAverage = 0;
                 let hasValidData = false;
 
                 if (!isNaN(examVal) && !isNaN(tdVal)) {
-                    // إذا تم إدخال الاثنين: الامتحان 60% والـ TD 40%
                     subjectAverage = (examVal * 0.6) + (tdVal * 0.4);
                     hasValidData = true;
                 } else if (!isNaN(examVal) && isNaN(tdVal)) {
-                    // إذا أدخل الامتحان فقط، تحتسب علامته كاملة بنسبة 100% للمادة
                     subjectAverage = examVal;
                     hasValidData = true;
                 } else if (isNaN(examVal) && !isNaN(tdVal)) {
-                    // إذا أدخل الـ TD فقط
                     subjectAverage = tdVal;
                     hasValidData = true;
                 }
