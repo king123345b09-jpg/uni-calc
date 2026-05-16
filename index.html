@@ -504,10 +504,10 @@
             
             document.getElementById('currentSelectionDisplay').innerText = "جامعة مستغانم - تخصص: " + selectedSubject + " (" + yearText + ")";
 
-            document.getElementById('lbl-mod1').innerText = "مادة الـ " + selectedSubject + " ";
-            document.getElementById('lbl-mod2').innerText = "مادة الـ " + selectedSubject + " ";
-            document.getElementById('lbl-mod3').innerText = "علم النفس";
-
+            // تغيير أسماء خانات المواد لتصبح ثابتة دائمًا كما طلبت
+document.getElementById('lbl-mod1').innerText = "مادة علم النفس";
+document.getElementById('lbl-mod2').innerText = "مادة الميكانيك";
+document.getElementById('lbl-mod3').innerText = "مادة الإعلام الآلي";
             let inputs = document.querySelectorAll('.grade-input');
             inputs.forEach(input => {
                 input.value = "";
