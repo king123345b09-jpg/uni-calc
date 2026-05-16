@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموقع العالمي لحساب المعدل الجامعي</title>
+    <title>الموقع العالمي لحساب المعدل الجامعي المطور</title>
     <style>
-        /* نظام الألوان الفخم المعتمد */
         :root {
             --bg-color: #0B132B; 
             --card-bg: #1C2541; 
@@ -34,7 +33,7 @@
             overflow-x: hidden;
         }
 
-        /* 🌟 شاشة الترحيب الخرافية عند الدخول */
+        /* شاشة الترحيب */
         .intro-screen {
             position: fixed;
             top: 0;
@@ -66,20 +65,19 @@
             color: var(--primary);
         }
 
-        /* 🏢 حاوية المراحل والموقع الرئيسية */
+        /* الحاوية الرئيسية */
         .main-container {
-            width: 90%;
-            max-width: 650px;
+            width: 95%;
+            max-width: 750px;
             background: var(--card-bg);
             padding: 30px;
             border-radius: 20px; 
             border: 2px solid var(--accent); 
             box-shadow: 0 0 30px rgba(255, 123, 0, 0.2);
             margin: 40px 0;
-            display: none; /* يتم إظهاره بالـ JS بعد شاشة الترحيب */
+            display: none;
         }
 
-        /* أنماط الواجهات التفاعلية (المراحل) */
         .step-panel {
             display: none; 
             text-align: center;
@@ -97,7 +95,6 @@
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        /* أزرار اختيار المواد والسنوات في المراحل */
         .grid-options {
             display: flex;
             flex-direction: column;
@@ -123,7 +120,6 @@
             transform: scale(1.02);
         }
 
-        /* خانة إدخال الاسم الفخمة */
         .name-input {
             width: 100%;
             padding: 15px;
@@ -143,7 +139,6 @@
             box-shadow: 0 0 15px var(--accent);
         }
 
-        /* 🗺️ شريط أزرار السنوات في الواجهة الرئيسية */
         .year-navigation {
             display: flex;
             justify-content: space-between;
@@ -174,7 +169,6 @@
             box-shadow: 0 0 12px var(--primary);
         }
 
-        /* رسالة الترحيب المخصصة للمستخدم بالداخل */
         .user-welcome-tag {
             text-align: center;
             color: var(--accent);
@@ -196,40 +190,76 @@
             border: 1px solid var(--primary);
         }
 
-        .subject-row {
+        /* تصميم كرت المادة المتطور المتوافق مع الموقع المرفق */
+        .subject-card {
+            background: rgba(11, 19, 43, 0.7);
+            border: 1px solid #415A77;
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: right;
+        }
+
+        .subject-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            border-bottom: 1px dashed rgba(65, 90, 119, 0.5);
+            padding-bottom: 8px;
         }
 
-        label {
-            font-size: 1.1rem;
-            color: #E0E1DD;
+        .subject-title {
+            font-size: 1.2rem;
+            color: #FFF;
+            font-weight: bold;
         }
 
-        .input-wrapper {
-            position: relative;
-            width: 120px;
+        .subject-badge {
+            background: var(--primary);
+            color: #0B132B;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .inputs-container {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+        }
+
+        .input-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            color: #A0AEC0;
         }
 
         input[type="number"] {
             width: 100%;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 10px;
+            border-radius: 10px;
             border: 2px solid #415A77;
             background-color: #0B132B;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-align: center;
             outline: none;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
         }
 
         input[type="number"]:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 15px var(--primary), 0 0 5px var(--accent);
-            transform: scale(1.05);
+            box-shadow: 0 0 10px var(--primary);
         }
 
         .btn-calc {
@@ -252,7 +282,6 @@
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
         }
 
-        /* زر إعادة ضبط البيانات لتغيير الإسم والتخصص */
         .btn-reset {
             background: transparent;
             border: 1px solid var(--danger);
@@ -305,26 +334,21 @@
 
         footer span { color: var(--accent); font-weight: bold; }
 
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; pointer-events: none; visibility: hidden; }
-        }
+        @keyframes fadeOut { 0% { opacity: 1; } 100% { opacity: 0; pointer-events: none; visibility: hidden; } }
         @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <!-- 🌟 شاشة الترحيب العالمية -->
     <div class="intro-screen" id="introScreen">
         <h2 class="intro-title">أهلاً وسهلاً بك في موقع لحساب المعدل في الجامعة</h2>
         <p class="intro-subtitle">من قبل هيثم، كل الحقوق محفوظة ©</p>
     </div>
 
-    <!-- 🏢 الحاوية الرئيسية للموقع -->
     <div class="main-container" id="mainContainer">
         
-        <!-- 🧩 المرحلة 1: اختيار المادة -->
+        <!-- الخطوة 1 -->
         <div class="step-panel" id="step1">
             <h3 class="step-title">الخطوة 1: شاو هو التخصص نتاعك 📚</h3>
             <div class="grid-options">
@@ -334,7 +358,7 @@
             </div>
         </div>
 
-        <!-- 🧩 المرحلة 2: اختيار السنة الدراسية كبداية -->
+        <!-- الخطوة 2 -->
         <div class="step-panel" id="step2">
             <h3 class="step-title">الخطوة 2: وين راك سنة؟ 🎓</h3>
             <div class="grid-options">
@@ -346,17 +370,16 @@
             </div>
         </div>
 
-        <!-- 🧩 المرحلة 3: كتابة الاسم لطلب الهوية -->
+        <!-- الخطوة 3 -->
         <div class="step-panel" id="step3">
-            <h3 class="step-title">الخطوة 3: إكتب إسمك  ✍️</h3>
+            <h3 class="step-title">الخطوة 3: إكتب إسمك ✍️</h3>
             <input type="text" id="userNameInput" class="name-input" placeholder="اكتب اسمك هنا..." autocomplete="off">
             <button class="btn-calc" onclick="finishSteps()">الدخول إلى لوحة التحكم العالمية ⚡</button>
         </div>
 
-        <!-- 👑 الواجهة الرئيسية النهائية بعد إتمام الخطوات -->
+        <!-- لوحة التحكم الاحترافية المماثلة للموقع المطلوب -->
         <div class="step-panel" id="mainDashboard">
             
-            <!-- 🗺️ شريط التنقل العلوي الفخم بين السنوات 1-5 -->
             <div class="year-navigation">
                 <button class="year-btn" id="ybtn1" onclick="selectYear(1, 'السنة الأولى')">السنة 1</button>
                 <button class="year-btn" id="ybtn2" onclick="selectYear(2, 'السنة الثانية')">السنة 2</button>
@@ -365,74 +388,121 @@
                 <button class="year-btn" id="ybtn5" onclick="selectYear(5, 'السنة الخامسة')">السنة 5</button>
             </div>
 
-            <!-- الجملة الأسطورية المخصصة للمستخدم -->
             <div class="user-welcome-tag" id="userWelcomeMessage">اكتب نتائجك يا هيثم</div>
-
-            <!-- بطاقة عرض معلومات الاختيار الحالي -->
             <div class="university-tag" id="currentSelectionDisplay">جامعة مستغانم</div>
 
-            <!-- خانات إدخال النقاط التجريبية اللامعة (تعديل 5 مواد ثابتة) -->
-            <div class="subject-row">
-                <label id="lbl-mod1">مادة علم النفس</label>
-                <div class="input-wrapper">
-                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+            <!-- 📦 كروت المواد المتكاملة (امتحان + أعمال موجهة) -->
+            <!-- مادة 1 -->
+            <div class="subject-card" data-coef="2">
+                <div class="subject-header">
+                    <span class="subject-title">مادة علم النفس</span>
+                    <span class="subject-badge">المعامل: 2</span>
+                </div>
+                <div class="inputs-container">
+                    <div class="input-group">
+                        <label>علامة الامتحان (60%)</label>
+                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
+                    <div class="input-group">
+                        <label>علامة الـ TD (40%)</label>
+                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
                 </div>
             </div>
 
-            <div class="subject-row">
-                <label id="lbl-mod2">مادة الميكانيك</label>
-                <div class="input-wrapper">
-                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+            <!-- مادة 2 -->
+            <div class="subject-card" data-coef="3">
+                <div class="subject-header">
+                    <span class="subject-title">مادة الميكانيك</span>
+                    <span class="subject-badge">المعامل: 3</span>
+                </div>
+                <div class="inputs-container">
+                    <div class="input-group">
+                        <label>علامة الامتحان (60%)</label>
+                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
+                    <div class="input-group">
+                        <label>علامة الـ TD (40%)</label>
+                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
                 </div>
             </div>
 
-            <div class="subject-row">
-                <label id="lbl-mod3">مادة الإعلام الآلي</label>
-                <div class="input-wrapper">
-                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+            <!-- مادة 3 -->
+            <div class="subject-card" data-coef="2">
+                <div class="subject-header">
+                    <span class="subject-title">مادة الإعلام الآلي</span>
+                    <span class="subject-badge">المعامل: 2</span>
+                </div>
+                <div class="inputs-container">
+                    <div class="input-group">
+                        <label>علامة الامتحان (60%)</label>
+                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
+                    <div class="input-group">
+                        <label>علامة الـ TD (40%)</label>
+                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
                 </div>
             </div>
 
-            <div class="subject-row">
-                <label id="lbl-mod4">مادة الرياضيات</label>
-                <div class="input-wrapper">
-                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+            <!-- mada 4 -->
+            <div class="subject-card" data-coef="3">
+                <div class="subject-header">
+                    <span class="subject-title">مادة الرياضيات</span>
+                    <span class="subject-badge">المعامل: 3</span>
+                </div>
+                <div class="inputs-container">
+                    <div class="input-group">
+                        <label>علامة الامتحان (60%)</label>
+                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
+                    <div class="input-group">
+                        <label>علامة الـ TD (40%)</label>
+                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
                 </div>
             </div>
 
-            <div class="subject-row">
-                <label id="lbl-mod5">مادة اللغة العربية</label>
-                <div class="input-wrapper">
-                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+            <!-- مادة 5 -->
+            <div class="subject-card" data-coef="1">
+                <div class="subject-header">
+                    <span class="subject-title">مادة اللغة العربية</span>
+                    <span class="subject-badge">المعامل: 1</span>
+                </div>
+                <div class="inputs-container">
+                    <div class="input-group">
+                        <label>علامة الامتحان (60%)</label>
+                        <input type="number" class="exam-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
+                    <div class="input-group">
+                        <label>علامة الـ TD (40%)</label>
+                        <input type="number" class="td-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                    </div>
                 </div>
             </div>
 
-            <button class="btn-calc" onclick="calculateAverage()">احسب المعدل النهائي ⚡</button>
+            <button class="btn-calc" onclick="calculateAdvancedAverage()">احسب المعدل الكلي المركب ⚡</button>
 
-            <!-- صندوق النتيجة السحري المتوهج -->
             <div class="result-box" id="resultBox">
-                <div class="result-title" id="resultStatus">المعدل العام السداسي</div>
+                <div class="result-title" id="resultStatus">المعدل العام السداسي الحالي</div>
                 <div class="result-value" id="finalAverage">00.00</div>
             </div>
 
-            <!-- زر خروج أو مسح الذاكرة إذا حب شخص آخر يجرب الموقع -->
             <button class="btn-reset" onclick="clearSavedData()">إذا راك باغي تبدل إسمك والتخصص 🔄</button>
         </div>
 
     </div>
 
-    <!-- 👑 تذييل الصفحة لحفظ الحقوق -->
     <footer>
         <span>هيثم</span>. كل الحقوق محفوظة © 2026
     </footer>
 
     <script>
-        // متغيرات لتخزين خيارات المستخدم في الذاكرة
         let selectedSubject = "";
         let selectedYearName = "";
         let username = "";
 
-        // عند تحميل الصفحة، نتحقق إذا كان المتصفح يعقل على المستخدم من قبل
         window.onload = function() {
             const savedName = localStorage.getItem('uni_username');
             const savedSubject = localStorage.getItem('uni_subject');
@@ -442,7 +512,6 @@
             const container = document.getElementById('mainContainer');
 
             if (savedName && savedSubject && savedYear) {
-                // إذا كان مسجل من قبل، نمرر البيانات مباشرة ونفتح لوحة التحكم
                 username = savedName;
                 selectedSubject = savedSubject;
                 selectedYearName = savedYear;
@@ -451,14 +520,11 @@
                     intro.classList.add('fade-out');
                     container.style.display = 'block';
                     container.style.animation = 'fadeInBody 1s ease-in-out forwards';
-                    
                     document.getElementById('mainDashboard').classList.add('active');
                     document.getElementById('userWelcomeMessage').innerText = "مادابيك تكتب نقاطك يا " + username;
-                    
                     activateYearButton(selectedYearName);
-                }, 2000); // عرض شاشة الترحيب لمدة ثانيتين فقط
+                }, 2000);
             } else {
-                // إذا كان مستخدم جديد، نبدأ بالخطوة الأولى بشكل عادي
                 setTimeout(() => {
                     intro.classList.add('fade-out');
                     container.style.display = 'block';
@@ -468,7 +534,6 @@
             }
         }
 
-        // دالة سريعة للتنقل بين المراحل الثلاثة الأولى
         function goToStep(nextStepId, key, value) {
             if(key === 'subject') selectedSubject = value;
             if(key === 'startYear') selectedYearName = value;
@@ -477,7 +542,6 @@
             document.getElementById('step' + nextStepId).classList.add('active');
         }
 
-        // دالة إنهاء المراحل وحفظ البيانات في الـ localStorage
         function finishSteps() {
             let nameInput = document.getElementById('userNameInput').value.trim();
             if(nameInput === "") {
@@ -486,20 +550,16 @@
             }
             username = nameInput;
 
-            // حفظ في ذاكرة المتصفح المحلية
             localStorage.setItem('uni_username', username);
             localStorage.setItem('uni_subject', selectedSubject);
             localStorage.setItem('uni_year', selectedYearName);
 
             document.getElementById('step3').classList.remove('active');
             document.getElementById('mainDashboard').classList.add('active');
-
             document.getElementById('userWelcomeMessage').innerText = "مادابيك تكتب نقاطك يا " + username;
-
             activateYearButton(selectedYearName);
         }
 
-        // ميكانيزم تفعيل زر السنة تلقائياً
         function activateYearButton(yearName) {
             let indexToActive = 1;
             if(yearName.includes("الأولى")) indexToActive = 1;
@@ -511,79 +571,90 @@
             selectYear(indexToActive, yearName);
         }
 
-        // دالة التنقل الحر بين أزرار السنوات
         function selectYear(yearNumber, yearText) {
             document.querySelectorAll('.year-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('ybtn' + yearNumber).classList.add('active');
             
             document.getElementById('currentSelectionDisplay').innerText = "جامعة مستغانم - تخصص: " + selectedSubject + " (" + yearText + ")";
 
-            // تغيير أسماء خانات المواد لتصبح ثابتة دائمًا كما طلبت (تمت إضافة المادتين الجديدتين)
-            document.getElementById('lbl-mod1').innerText = "مادة علم النفس";
-            document.getElementById('lbl-mod2').innerText = "مادة الميكانيك";
-            document.getElementById('lbl-mod3').innerText = "مادة الإعلام الآلي";
-            document.getElementById('lbl-mod4').innerText = "مادة الرياضيات";
-            document.getElementById('lbl-mod5').innerText = "مادة اللغة العربية";
-
-            let inputs = document.querySelectorAll('.grade-input');
+            let inputs = document.querySelectorAll('input[type="number"]');
             inputs.forEach(input => {
                 input.value = "";
-                input.className = "grade-input";
+                input.className = "";
             });
             document.getElementById('resultBox').style.display = 'none';
         }
 
-        // دالة تلوين النقاط فورياً أثناء الكتابة
         function checkColor(input) {
             let val = parseFloat(input.value);
             if (isNaN(val) || input.value === "") {
-                input.className = "grade-input"; 
+                input.className = ""; 
                 return;
             }
             if (val >= 10) {
-                input.className = "grade-input above-ten";
+                input.className = "above-ten";
             } else {
-                input.className = "grade-input below-ten";
+                input.className = "below-ten";
             }
         }
 
-        // دالة حساب المعدل النهائي
-        function calculateAverage() {
-            let inputs = document.querySelectorAll('.grade-input');
-            let sum = 0;
-            let count = 0;
+        /* 👑 دالة الحساب المتطورة المماثلة تماماً للموقع المرفق */
+        function calculateAdvancedAverage() {
+            let cards = document.querySelectorAll('.subject-card');
+            let totalWeightedGrades = 0; 
+            let totalCoefficients = 0;   
 
-            inputs.forEach(input => {
-                let val = parseFloat(input.value);
-                if (!isNaN(val)) {
-                    sum += val;
-                    count++;
+            cards.forEach(card => {
+                let coef = parseFloat(card.getAttribute('data-coef'));
+                let examVal = parseFloat(card.querySelector('.exam-input').value);
+                let tdVal = parseFloat(card.querySelector('.td-input').value);
+
+                // التحقق الذكي: إذا أدخل المستخدم الامتحان فقط أو الـ TD فقط أو كلاهما
+                let subjectAverage = 0;
+                let hasValidData = false;
+
+                if (!isNaN(examVal) && !isNaN(tdVal)) {
+                    // إذا تم إدخال الاثنين: الامتحان 60% والـ TD 40%
+                    subjectAverage = (examVal * 0.6) + (tdVal * 0.4);
+                    hasValidData = true;
+                } else if (!isNaN(examVal) && isNaN(tdVal)) {
+                    // إذا أدخل الامتحان فقط، تحتسب علامته كاملة بنسبة 100% للمادة
+                    subjectAverage = examVal;
+                    hasValidData = true;
+                } else if (isNaN(examVal) && !isNaN(tdVal)) {
+                    // إذا أدخل الـ TD فقط
+                    subjectAverage = tdVal;
+                    hasValidData = true;
+                }
+
+                if (hasValidData) {
+                    totalWeightedGrades += (subjectAverage * coef);
+                    totalCoefficients += coef;
                 }
             });
 
-            if (count === 0) {
-                alert("مادابيك تكتب نقطة واحدة على الأقل باه نحسبلك! ⚡");
+            if (totalCoefficients === 0) {
+                alert("يجب إدخال علامة واحدة على الأقل لحساب المعدل الفصلي! ⚡");
                 return;
             }
 
-            let avg = sum / count;
+            let finalAvg = totalWeightedGrades / totalCoefficients;
             let resultBox = document.getElementById('resultBox');
             let finalAvgElem = document.getElementById('finalAverage');
             let statusElem = document.getElementById('resultStatus');
 
             resultBox.style.display = 'block';
-            finalAvgElem.innerText = avg.toFixed(2);
+            finalAvgElem.innerText = finalAvg.toFixed(2);
 
-            if (avg >= 10) {
+            if (finalAvg >= 10) {
                 finalAvgElem.className = "result-value above-ten";
-                statusElem.innerHTML = "🎉 بصحتك!:";
+                statusElem.innerHTML = "🎉 مبروك! السداسي مبلع بنجاح تخلصت منه:";
             } else {
                 finalAvgElem.className = "result-value below-ten";
-                statusElem.innerHTML = "⚠️ ديت تحت العشرة روح راجع للإستدراك:";
+                statusElem.innerHTML = "⚠️ المعدل أقل من 10، بالتوفيق في الدورة الاستدراكية:";
             }
         }
 
-        // دالة حذف البيانات المحفوظة والبدء من جديد
         function clearSavedData() {
             if(confirm("هل راك متأكد بلي راك رايح تبدل الإسم والتخصص؟")) {
                 localStorage.clear();
