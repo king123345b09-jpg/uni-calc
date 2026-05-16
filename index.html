@@ -348,7 +348,7 @@
 
         <!-- 🧩 المرحلة 3: كتابة الاسم لطلب الهوية -->
         <div class="step-panel" id="step3">
-            <h3 class="step-title">الخطوة 3: إ:تب إسمك  ✍️</h3>
+            <h3 class="step-title">الخطوة 3: إكتب إسمك  ✍️</h3>
             <input type="text" id="userNameInput" class="name-input" placeholder="اكتب اسمك هنا..." autocomplete="off">
             <button class="btn-calc" onclick="finishSteps()">الدخول إلى لوحة التحكم العالمية ⚡</button>
         </div>
@@ -371,23 +371,37 @@
             <!-- بطاقة عرض معلومات الاختيار الحالي -->
             <div class="university-tag" id="currentSelectionDisplay">جامعة مستغانم</div>
 
-            <!-- خانات إدخال النقاط التجريبية اللامعة -->
+            <!-- خانات إدخال النقاط التجريبية اللامعة (تعديل 5 مواد ثابتة) -->
             <div class="subject-row">
-                <label id="lbl-mod1"> الفيزياء</label>
+                <label id="lbl-mod1">مادة علم النفس</label>
                 <div class="input-wrapper">
                     <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
                 </div>
             </div>
 
             <div class="subject-row">
-                <label id="lbl-mod2">الميكانيك</label>
+                <label id="lbl-mod2">مادة الميكانيك</label>
                 <div class="input-wrapper">
                     <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
                 </div>
             </div>
 
             <div class="subject-row">
-                <label id="lbl-mod3">علم النفس </label>
+                <label id="lbl-mod3">مادة الإعلام الآلي</label>
+                <div class="input-wrapper">
+                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <label id="lbl-mod4">مادة الرياضيات</label>
+                <div class="input-wrapper">
+                    <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <label id="lbl-mod5">مادة اللغة العربية</label>
                 <div class="input-wrapper">
                     <input type="number" class="grade-input" min="0" max="20" step="0.01" placeholder="00.00" oninput="checkColor(this)">
                 </div>
@@ -412,7 +426,7 @@
         <span>هيثم</span>. كل الحقوق محفوظة © 2026
     </footer>
 
-    <script {__run_in_browser__}>
+    <script>
         // متغيرات لتخزين خيارات المستخدم في الذاكرة
         let selectedSubject = "";
         let selectedYearName = "";
@@ -504,10 +518,13 @@
             
             document.getElementById('currentSelectionDisplay').innerText = "جامعة مستغانم - تخصص: " + selectedSubject + " (" + yearText + ")";
 
-            // تغيير أسماء خانات المواد لتصبح ثابتة دائمًا كما طلبت
-document.getElementById('lbl-mod1').innerText = "مادة علم النفس";
-document.getElementById('lbl-mod2').innerText = "مادة الميكانيك";
-document.getElementById('lbl-mod3').innerText = "مادة الإعلام الآلي";
+            // تغيير أسماء خانات المواد لتصبح ثابتة دائمًا كما طلبت (تمت إضافة المادتين الجديدتين)
+            document.getElementById('lbl-mod1').innerText = "مادة علم النفس";
+            document.getElementById('lbl-mod2').innerText = "مادة الميكانيك";
+            document.getElementById('lbl-mod3').innerText = "مادة الإعلام الآلي";
+            document.getElementById('lbl-mod4').innerText = "مادة الرياضيات";
+            document.getElementById('lbl-mod5').innerText = "مادة اللغة العربية";
+
             let inputs = document.querySelectorAll('.grade-input');
             inputs.forEach(input => {
                 input.value = "";
