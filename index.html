@@ -3,654 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الموقع العالمي لحساب المعدل الجامعي المطور</title>
+    <title>المنصة العالمية لحساب معدل الـ L2 فيزياء | نسخة هيثم المدمرة</title>
     <style>
         :root {
-            --bg-color: #0B132B; 
-            --card-bg: #1C2541; 
-            --primary: #FF7B00; 
-            --accent: #FFD700;  
-            --text-main: #FFFFFF;
-            --success: #39FF14; 
-            --danger: #FF3131;  
+            --bg-dark: #060B19;
+            --panel-bg: #0F172A;
+            --primary-neon: #FF7B00;
+            --accent-gold: #FFD700;
+            --text-white: #FFFFFF;
+            --neon-green: #39FF14;
+            --neon-red: #FF3131;
+            --border-color: #1E293B;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-dark);
+            color: var(--text-white);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             overflow-x: hidden;
+            padding: 20px 10px;
         }
 
-        /* شاشة الترحيب */
-        .intro-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* الهيدر الاحترافي */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            margin-top: 10px;
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, #1c2541 0%, #0b132b 100%);
+            max-width: 850px;
+        }
+
+        .main-title {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--primary-neon);
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* حاوية التحكم والسداسيات */
+        .wrapper {
+            width: 100%;
+            max-width: 850px;
+            background: var(--panel-bg);
+            border-radius: 24px;
+            border: 2px solid #1E293B;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            padding: 25px;
+            transition: border-color 0.4s ease;
+        }
+
+        .wrapper:hover {
+            border-color: var(--primary-neon);
+        }
+
+        /* أزرار السداسيات نتاع الـ L2 فيزياء */
+        .semesters-tabs {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .fade-out {
-            animation: fadeOut 1.5s ease-in-out forwards;
-        }
-
-        .intro-title {
-            font-size: 2.3rem;
-            color: var(--accent);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .intro-subtitle {
-            font-size: 1.1rem;
-            color: var(--primary);
-        }
-
-        /* الحاوية الرئيسية */
-        .main-container {
-            width: 95%;
-            max-width: 800px;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px; 
-            border: 2px solid var(--accent); 
-            box-shadow: 0 0 30px rgba(255, 123, 0, 0.2);
-            margin: 40px 0;
-            display: none;
-        }
-
-        .step-panel {
-            display: none; 
-            text-align: center;
-            animation: fadeIn 0.5s ease-in-out forwards;
-        }
-
-        .step-panel.active {
-            display: block; 
-        }
-
-        .step-title {
-            color: var(--accent);
-            margin-bottom: 25px;
-            font-size: 1.6rem;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        .grid-options {
-            display: flex;
-            flex-direction: column;
             gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .option-btn {
-            padding: 15px;
-            background: #0B132B;
-            border: 2px solid #415A77;
-            border-radius: 12px;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .option-btn:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(255, 123, 0, 0.3);
-            transform: scale(1.02);
-        }
-
-        .name-input {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 2px solid #415A77;
-            background-color: #0B132B;
-            color: white;
-            font-size: 1.2rem;
-            text-align: center;
-            outline: none;
-            margin-bottom: 20px;
-            transition: all 0.4s ease;
-        }
-
-        .name-input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        /* نافيجيشن التبديل بين السنوات والسداسيات */
-        .dashboard-header {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
             margin-bottom: 25px;
-        }
-
-        .year-navigation, .semester-navigation {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            background: #0B132B;
+            background: #090D16;
             padding: 8px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
         }
 
-        .year-btn, .sem-btn {
+        .tab-btn {
             flex: 1;
-            padding: 10px 5px;
+            padding: 14px;
             background: transparent;
             border: none;
-            color: #A0AEC0;
+            color: #64748B;
+            font-size: 1.1rem;
             font-weight: bold;
-            font-size: 0.95rem;
             cursor: pointer;
-            border-radius: 10px;
-            transition: all 0.3s ease;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .year-btn.active, .sem-btn.active {
-            background: linear-gradient(45deg, var(--primary), var(--accent));
-            color: #0B132B;
-            box-shadow: 0 0 12px var(--primary);
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary-neon) 0%, #CC6200 100%);
+            color: #060B19;
+            box-shadow: 0 0 15px rgba(255, 123, 0, 0.4);
         }
 
-        .user-welcome-tag {
-            text-align: center;
-            color: var(--accent);
-            font-size: 1.3rem;
+        /* تصنيف الوحدات (هنا فتنا المنافس) */
+        .unit-section {
+            margin-bottom: 25px;
+            background: rgba(6, 11, 25, 0.5);
+            border-radius: 16px;
+            padding: 15px;
+            border: 1px solid #1E293B;
+        }
+
+        .unit-title {
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            padding-right: 10px;
+            border-right: 4px solid var(--primary-neon);
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
-            margin-bottom: 5px;
         }
 
-        .info-tag {
-            text-align: center;
-            color: #A0AEC0;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        /* 📊 جدول عرض المواد (نفس ستايل الموقع المستهدف) */
-        .table-container {
+        /* الجداول الذكية */
+        .table-responsive {
             width: 100%;
             overflow-x: auto;
-            margin-bottom: 25px;
-            border-radius: 12px;
-            border: 1px solid #415A77;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0 8px;
             text-align: center;
-            background: rgba(11, 19, 43, 0.7);
-        }
-
-        th, td {
-            padding: 14px 10px;
-            border-bottom: 1px solid rgba(65, 90, 119, 0.4);
-            font-size: 1rem;
         }
 
         th {
-            background-color: #0B132B;
-            color: var(--accent);
-            font-weight: bold;
+            padding: 12px;
+            color: #94A3B8;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
         }
 
-        .subject-title {
-            text-align: right;
-            font-weight: bold;
-            color: #FFFFFF;
-            padding-right: 15px;
+        tr.subject-row {
+            background: #0F172A;
+            transition: all 0.3s ease;
         }
 
-        .coef-badge {
-            font-weight: bold;
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        /* خانات إدخال النقاط الحية */
-        .grade-input {
-            width: 85px;
-            padding: 8px;
-            border-radius: 8px;
-            border: 2px solid #415A77;
-            background-color: #0B132B;
-            color: white;
+        td {
+            padding: 12px 8px;
             font-size: 1rem;
+            border-top: 1px solid #1E293B;
+            border-bottom: 1px solid #1E293B;
+        }
+
+        td:first-child {
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+            border-left: none;
+            text-align: right;
+            padding-right: 15px;
+            font-weight: 600;
+            width: 40%;
+        }
+
+        td:last-child {
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            border-right: none;
+        }
+
+        .coef-display {
+            font-weight: bold;
+            color: #38BDF8;
+        }
+
+        /* خانات النقاط المتوهجة حركياً */
+        .input-box {
+            width: 85px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #334155;
+            background: #060B19;
+            color: #FFF;
+            font-size: 1rem;
+            font-weight: bold;
             text-align: center;
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
-        .grade-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(255, 123, 0, 0.5);
+        .input-box:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
         }
 
-        /* تلوين أسطر المواد حسب الحالة (ناجح/راسب) */
-        tr.row-passed {
-            background-color: rgba(57, 255, 20, 0.07);
-        }
-        tr.row-failed {
-            background-color: rgba(255, 49, 49, 0.07);
+        /* تأثيرات النيون عند الإدخال (تكسير المنافس) */
+        tr.passed-row { background: rgba(57, 255, 20, 0.04) !important; }
+        tr.failed-row { background: rgba(255, 49, 49, 0.04) !important; }
+
+        .input-passed { border-color: var(--neon-green) !important; color: var(--neon-green) !important; text-shadow: 0 0 8px rgba(57, 255, 20, 0.3); }
+        .input-failed { border-color: var(--neon-red) !important; color: var(--neon-red) !important; text-shadow: 0 0 8px rgba(255, 49, 49, 0.3); }
+
+        /* بانل عرض النتيجة العملاق اللحظي (The Live Dashboard Card) */
+        .score-board {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 20px;
+            background: radial-gradient(circle at top right, #152244 0%, #0B132B 100%);
+            border: 2px solid #1E293B;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
         }
 
-        /* خانات الادخال تتلون أيضاً */
-        .input-passed { border-color: var(--success) !important; color: var(--success) !important; }
-        .input-failed { border-color: var(--danger) !important; color: var(--danger) !important; }
+        .score-board::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--primary-neon), var(--accent-gold));
+        }
 
-        /* صندوق عرض المعدل الثابت في الأسفل لحساب فوري */
-        .live-result-panel {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #0B132B 0%, #152244 100%);
-            border: 2px dashed var(--accent);
+        .score-title {
+            font-size: 1.1rem;
+            color: #94A3B8;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .score-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #FFF;
+            transition: transform 0.3s ease;
+        }
+
+        .status-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            background: #1E293B;
+            color: #64748B;
+        }
+
+        .badge-passed { background: rgba(57, 255, 20, 0.15); color: var(--neon-green); border: 1px solid var(--neon-green); }
+        .badge-failed { background: rgba(255, 49, 49, 0.15); color: var(--neon-red); border: 1px solid var(--neon-red); }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: #475569;
             text-align: center;
         }
-
-        .live-result-title {
-            font-size: 1.1rem;
-            color: #A0AEC0;
-            margin-bottom: 8px;
-        }
-
-        .live-result-value {
-            font-size: 2.8rem;
-            font-weight: bold;
-            color: #FFFFFF;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .btn-reset {
-            background: transparent;
-            border: 1px solid var(--danger);
-            color: var(--danger);
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 25px;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-        .btn-reset:hover { background: var(--danger); color: #fff; }
-
-        footer { text-align: center; padding: 20px; font-size: 0.85rem; color: #666; width: 100%; }
-        footer span { color: var(--accent); font-weight: bold; }
-
-        @keyframes fadeOut { 0% { opacity: 1; } 100% { opacity: 0; pointer-events: none; visibility: hidden; } }
-        @keyframes fadeInBody { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        footer span { color: var(--primary-neon); font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="intro-screen" id="introScreen">
-        <h2 class="intro-title">أهلاً وسهلاً بك في موقع لحساب المعدل في الجامعة</h2>
-        <p class="intro-subtitle">من قبل هيثم، كل الحقوق محفوظة ©</p>
-    </div>
+    <header>
+        <h1 class="main-title">المنصة الملوكية الحية لحساب معدل الـ L2 فيزياء</h1>
+        <p class="subtitle">DEVELOPED BY HAITHEM • VERSION 2.0 ⚡</p>
+    </header>
 
-    <div class="main-container" id="mainContainer">
-        
-        <!-- الخطوة 1 -->
-        <div class="step-panel" id="step1">
-            <h3 class="step-title">الخطوة 1: شاو هو التخصص نتاعك 📚</h3>
-            <div class="grid-options">
-                <button class="option-btn" onclick="goToStep(2, 'subject', 'فيزياء')">فيزياء</button>
-                <button class="option-btn" onclick="goToStep(2, 'subject', 'رياضيات')">رياضيات</button>
-                <button class="option-btn" onclick="goToStep(2, 'subject', 'لغة عربية')">لغة عربية</button>
-            </div>
+    <div class="wrapper">
+        <!-- أزرار اختيار السداسيات الخاصة بالسنة الثانية فيزياء جامعة -->
+        <div class="semesters-tabs">
+            <button class="tab-btn active" id="btn-s3" onclick="switchSemester(3)">السداسي الثالث (Semester 3)</button>
+            <button class="tab-btn" id="btn-s4" onclick="switchSemester(4)">السداسي الرابع (Semester 4)</button>
         </div>
 
-        <!-- الخطوة 2 -->
-        <div class="step-panel" id="step2">
-            <h3 class="step-title">الخطوة 2: وين راك سنة؟ 🎓</h3>
-            <div class="grid-options">
-                <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الأولى')">السنة الأولى</button>
-                <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الثانية')">السنة الثانية</button>
-                <button class="option-btn" onclick="goToStep(3, 'startYear', 'السنة الثالثة')">السنة الثالثة</button>
-            </div>
+        <!-- مكان توليد جداول الوحدات والمواد ديناميكياً -->
+        <div id="dynamic-tables-container"></div>
+
+        <!-- لوحة عرض النتيجة الأوتوماتيكية اللحظية الذكية -->
+        <div class="score-board" id="scoreBoardPanel">
+            <div class="score-title">معدلك العام الحالي للسداسي</div>
+            <div class="score-number" id="globalAverageDisplay">00.00</div>
+            <div class="status-badge" id="statusBadgeDisplay">في انتظار إدخال النقاط...</div>
         </div>
-
-        <!-- الخطوة 3 -->
-        <div class="step-panel" id="step3">
-            <h3 class="step-title">الخطوة 3: إكتب إسمك ✍️</h3>
-            <input type="text" id="userNameInput" class="name-input" placeholder="اكتب اسمك هنا..." autocomplete="off">
-            <button class="option-btn" style="background: var(--primary); color: #0B132B; width: 100%;" onclick="finishSteps()">دخول إلى لوحة التحكم الحية ⚡</button>
-        </div>
-
-        <!-- لوحة التحكم الاحترافية (نفس سيستم وحساب الموقع تماماً) -->
-        <div class="step-panel" id="mainDashboard">
-            
-            <div class="dashboard-header">
-                <div class="year-navigation">
-                    <button class="year-btn" id="ybtn1" onclick="selectYear(1, 'السنة الأولى')">السنة 1</button>
-                    <button class="year-btn" id="ybtn2" onclick="selectYear(2, 'السنة الثانية')">السنة 2</button>
-                    <button class="year-btn" id="ybtn3" onclick="selectYear(3, 'السنة الثالثة')">السنة 3</button>
-                </div>
-                
-                <div class="semester-navigation">
-                    <button class="sem-btn active" id="sbtn1" onclick="selectSemester(1)">السداسي الأول (S1)</button>
-                    <button class="sem-btn" id="sbtn2" onclick="selectSemester(2)">السداسي الثاني (S2)</button>
-                </div>
-            </div>
-
-            <div class="user-welcome-tag" id="userWelcomeMessage">مرحباً</div>
-            <div class="info-tag" id="currentSelectionDisplay">جامعة مستغانم</div>
-
-            <!-- 📊 الجدول الثابت للمواد (يتغير محتواه تلقائياً حسب السداسي والتخصص) -->
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>المادة</th>
-                            <th>المعامل</th>
-                            <th>الامتحان (60%)</th>
-                            <th>الأعمال TD (40%)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="subjectsTableBody">
-                        <!-- الخلايا تنزل برمجياً هنا بناءً على تخصص السداسي المختار -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- 👑 لوحة عرض النتيجة وحسابها فوري تلقائي بدون أزرار -->
-            <div class="live-result-panel">
-                <div class="live-result-title" id="liveStatusText">المعدل العام للسداسي الحالي</div>
-                <div class="live-result-value" id="liveAverageValue">00.00</div>
-            </div>
-
-            <button class="btn-reset" onclick="clearSavedData()">🔄 تغيير التخصص أو الإسم</button>
-        </div>
-
     </div>
 
     <footer>
-        <span>هيثم</span>. كل الحقوق محفوظة © 2026
+        مطور بكل فخر من طرف البطل <span>هيثم</span> وتفوقنا على الجميع © 2026
     </footer>
 
     <script>
-        let selectedSubject = "";
-        let selectedYearName = "";
-        let currentSemester = 1;
-        let username = "";
-
-        // 📚 بنك المواد والمعاملات الثابتة الجاهزة لكل تخصص وسنة وسداسي (مثل الموقع)
-        const staticSubjectsDatabase = {
-            "فيزياء": {
-                "السنة الأولى": {
-                    1: [ {name: "ميكانيك نقطة مادية", coef: 3}, {name: "ترموديناميك", coef: 3}, {name: "رياضيات 1", coef: 2}, {name: "كيمياء 1", coef: 2}, {name: "إعلام آلي 1", coef: 1}, {name: "لغة أجنبية", coef: 1} ],
-                    2: [ {name: "كهرباء ساكنة", coef: 3}, {name: "بنية المادة", coef: 3}, {name: "رياضيات 2", coef: 2}, {name: "كيمياء 2", coef: 2}, {name: "إعلام آلي 2", coef: 1}, {name: "تاريخ العلوم", coef: 1} ]
+        // 📚 بنك البيانات الحقيقي والمنظم لوحدات ومواد الـ L2 فيزياء الجامعي (المعاملات الرسمية)
+        const physicsDatabase = {
+            3: [
+                {
+                    unitName: "الوحدة التعليمية الأساسية (Unité Fondamentale)",
+                    subjects: [
+                        { name: "ميكانيك عقلاني (Mécanique Rationnelle)", coef: 3 },
+                        { name: "اهتزازات وأمواج (Vibrations et Ondes)", coef: 3 },
+                        { name: "رياضيات 3 (Mathématiques 3)", coef: 2 }
+                    ]
                 },
-                "السنة الثانية": {
-                    1: [ {name: "ميكانيك عقلاني", coef: 3}, {name: "اهتزازات وامواج", coef: 3}, {name: "رياضيات 3", coef: 2}, {name: "بصريات هندسية", coef: 2}, {name: "إنجليزية تقنية", coef: 1} ],
-                    2: [ {name: "ميكانيك الكم", coef: 3}, {name: "ديناميك حرارية 2", coef: 3}, {name: "فيزياء إحصائية", coef: 2}, {name: "الكترونيك", coef: 2}, {name: "أخلاقيات المهنة", coef: 1} ]
+                {
+                    unitName: "الوحدة التعليمية المنهجية (Unité Méthodologique)",
+                    subjects: [
+                        { name: "بصريات هندسية (Optique Géométrique)", coef: 2 },
+                        { name: "أعمال تطبيقية: اهتزازات وبصريات", coef: 2 },
+                        { name: "برمجة وحساب عددي (Informatique)", coef: 2 }
+                    ]
+                },
+                {
+                    unitName: "الوحدات الاستكشافية والأفقية (Découverte & Transversale)",
+                    subjects: [
+                        { name: "ترموديناميك وبنية المادة", coef: 1 },
+                        { name: "لغة إنجليزية تقنية", coef: 1 }
+                    ]
                 }
-            },
-            "رياضيات": {
-                "السنة الأولى": {
-                    1: [ {name: "تحليل رياضيات 1", coef: 4}, {name: "جبر 1", coef: 3}, {name: "خوارزميات 1", coef: 2}, {name: "فيزياء 1", coef: 2}, {name: "إنجليزية", coef: 1} ],
-                    2: [ {name: "تحليل رياضيات 2", coef: 4}, {name: "جبر 2", coef: 3}, {name: "خوارزميات 2", coef: 2}, {name: "فيزياء 2", coef: 2}, {name: "إحصاء وصفي", coef: 1} ]
+            ],
+            4: [
+                {
+                    unitName: "الوحدة التعليمية الأساسية (Unité Fondamentale)",
+                    subjects: [
+                        { name: "ميكانيك الكم (Mécanique Quantique)", coef: 3 },
+                        { name: "ديناميك حرارية 2 (Thermodynamique 2)", coef: 3 },
+                        { name: "فيزياء إحصائية (Physique Statistique)", coef: 2 }
+                    ]
+                },
+                {
+                    unitName: "الوحدة التعليمية المنهجية (Unité Méthodologique)",
+                    subjects: [
+                        { name: "إلكترونيك عامة (Électronique Générale)", coef: 2 },
+                        { name: "أعمال تطبيقية: إلكترونيك وقسم الفيزياء", coef: 2 },
+                        { name: "طرق الحساب الرقمي", coef: 2 }
+                    ]
+                },
+                {
+                    unitName: "الوحدات الاستكشافية والأفقية (Découverte & Transversale)",
+                    subjects: [
+                        { name: "تاريخ فيزياء / أخلاقيات", coef: 1 },
+                        { name: "لغة أجنبية 2", coef: 1 }
+                    ]
                 }
-            },
-            "لغة عربية": {
-                "السنة الأولى": {
-                    1: [ {name: "النحو العربي", coef: 3}, {name: "الأدب الجاهلي", coef: 3}, {name: "البلاغة", coef: 2}, {name: "علم اللسانيات", coef: 2}, {name: "لغة فرنسية", coef: 1} ],
-                    2: [ {name: "الصرف العربي", coef: 3}, {name: "الأدب الإسلامي", coef: 3}, {name: "العروض والقافية", coef: 2}, {name: "نقد أدبي قديم", coef: 2}, {name: "إعلام آلي", coef: 1} ]
-                }
-            }
+            ]
         };
 
-        window.onload = function() {
-            const savedName = localStorage.getItem('uni_username');
-            const savedSubject = localStorage.getItem('uni_subject');
-            const savedYear = localStorage.getItem('uni_year');
+        let currentActiveSemester = 3;
 
-            const intro = document.getElementById('introScreen');
-            const container = document.getElementById('mainContainer');
+        // توليد الواجهة فور تشغيل السكريبت
+        document.addEventListener("DOMContentLoaded", () => {
+            renderSemesterTables(currentActiveSemester);
+        });
 
-            if (savedName && savedSubject && savedYear) {
-                username = savedName;
-                selectedSubject = savedSubject;
-                selectedYearName = savedYear;
-
-                setTimeout(() => {
-                    intro.classList.add('fade-out');
-                    container.style.display = 'block';
-                    container.style.animation = 'fadeInBody 1s ease-in-out forwards';
-                    document.getElementById('mainDashboard').classList.add('active');
-                    document.getElementById('userWelcomeMessage').innerText = "لوحة حساب النقاط الحية الخاصة بك يا " + username;
-                    activateYearButton(selectedYearName);
-                }, 2000);
-            } else {
-                setTimeout(() => {
-                    intro.classList.add('fade-out');
-                    container.style.display = 'block';
-                    container.style.animation = 'fadeInBody 1s ease-in-out forwards';
-                    document.getElementById('step1').classList.add('active');
-                }, 2500);
-            }
+        function switchSemester(semNum) {
+            currentActiveSemester = semNum;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-s${semNum}`).classList.add('active');
+            renderSemesterTables(semNum);
         }
 
-        function goToStep(nextStepId, key, value) {
-            if(key === 'subject') selectedSubject = value;
-            if(key === 'startYear') selectedYearName = value;
+        // دالة بناء جداول الوحدات والمواد
+        function renderSemesterTables(semNum) {
+            const container = document.getElementById("dynamic-tables-container");
+            container.innerHTML = "";
 
-            document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
-            document.getElementById('step' + nextStepId).classList.add('active');
-        }
+            const units = physicsDatabase[semNum];
 
-        function finishSteps() {
-            let nameInput = document.getElementById('userNameInput').value.trim();
-            if(nameInput === "") {
-                alert("من فضلك اكتب اسمك ! 😉");
-                return;
-            }
-            username = nameInput;
+            units.forEach((unit, uIdx) => {
+                const unitDiv = document.createElement("div");
+                unitDiv.className = "unit-section";
 
-            localStorage.setItem('uni_username', username);
-            localStorage.setItem('uni_subject', selectedSubject);
-            localStorage.setItem('uni_year', selectedYearName);
-
-            document.getElementById('step3').classList.remove('active');
-            document.getElementById('mainDashboard').classList.add('active');
-            document.getElementById('userWelcomeMessage').innerText = "لوحة حساب النقاط الحية الخاصة بك يا " + username;
-            activateYearButton(selectedYearName);
-        }
-
-        function activateYearButton(yearName) {
-            let indexToActive = 1;
-            if(yearName.includes("الأولى")) indexToActive = 1;
-            if(yearName.includes("الثانية")) indexToActive = 2;
-            if(yearName.includes("الثالثة")) indexToActive = 3;
-            selectYear(indexToActive, yearName);
-        }
-
-        function selectYear(yearNumber, yearText) {
-            document.querySelectorAll('.year-btn').forEach(btn => btn.classList.remove('active'));
-            let targetBtn = document.getElementById('ybtn' + yearNumber);
-            if(targetBtn) targetBtn.classList.add('active');
-            
-            selectedYearName = yearText;
-            updateDashboardView();
-        }
-
-        function selectSemester(semNumber) {
-            document.querySelectorAll('.sem-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('sbtn' + semNumber).classList.add('active');
-            currentSemester = semNumber;
-            updateDashboardView();
-        }
-
-        function updateDashboardView() {
-            document.getElementById('currentSelectionDisplay').innerText = `جامعة مستغانم | التخصص: ${selectedSubject} | ${selectedYearName} | السداسي ${currentSemester}`;
-            generateStaticTableRows();
-        }
-
-        // بناء الجدول بالمواد الثابتة وحساب فوري تلقائي
-        function generateStaticTableRows() {
-            let tbody = document.getElementById('subjectsTableBody');
-            tbody.innerHTML = "";
-
-            // جلب قائمة المواد من قاعدة البيانات بناء على الاختيارات الحالية
-            let subjectsList = [];
-            if(staticSubjectsDatabase[selectedSubject] && staticSubjectsDatabase[selectedSubject][selectedYearName]) {
-                subjectsList = staticSubjectsDatabase[selectedSubject][selectedYearName][currentSemester] || [];
-            }
-
-            if(subjectsList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="color: #aaa; padding: 20px;">المواد غير متوفرة لهذا السداسي حالياً، سيتم إضافتها لاحقاً.</td></tr>`;
-                calculateLiveAverage();
-                return;
-            }
-
-            subjectsList.forEach((sub, index) => {
-                let tr = document.createElement('tr');
-                tr.id = `row-${index}`;
-                
-                tr.innerHTML = `
-                    <td class="subject-title">${sub.name}</td>
-                    <td class="coef-badge" data-coef="${sub.coef}">${sub.coef}</td>
-                    <td><input type="number" class="grade-input exam-in" min="0" max="20" step="0.01" placeholder="00.00" oninput="handleLiveInputChange(this, ${index})"></td>
-                    <td><input type="number" class="grade-input td-in" min="0" max="20" step="0.01" placeholder="00.00" oninput="handleLiveInputChange(this, ${index})"></td>
+                let tableHTML = `
+                    <div class="unit-title">${unit.unitName}</div>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>المادة</th>
+                                    <th>المعامل</th>
+                                    <th>الامتحان (60%)</th>
+                                    <th>الـ TD / التطبيقي (40%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                 `;
-                tbody.appendChild(tr);
+
+                unit.subjects.forEach((sub, sIdx) => {
+                    const uniqueId = `s-${uIdx}-${sIdx}`;
+                    tableHTML += `
+                        <tr class="subject-row" id="row-${uniqueId}">
+                            <td>${sub.name}</td>
+                            <td class="coef-display" data-c="${sub.coef}">${sub.coef}</td>
+                            <td><input type="number" class="input-box exam-field" min="0" max="20" step="0.01" placeholder="00.00" oninput="liveUpdateEngine(this, '${uniqueId}')"></td>
+                            <td><input type="number" class="input-box td-field" min="0" max="20" step="0.01" placeholder="00.00" oninput="liveUpdateEngine(this, '${uniqueId}')"></td>
+                        </tr>
+                    `;
+                });
+
+                tableHTML += `</tbody></table></div>`;
+                unitDiv.innerHTML = tableHTML;
+                container.appendChild(unitDiv);
             });
 
-            calculateLiveAverage();
+            resetScoreBoard();
         }
 
-        // دالة المراقبة اللحظية عند الكتابة في الخانات
-        function handleLiveInputChange(input, rowIndex) {
+        // 👑 محرك الحساب اللحظي المطور والـ Animations الحية للتلوين
+        function liveUpdateEngine(input, rowId) {
             let val = parseFloat(input.value);
-            
-            // تحقق من حدود النقاط وتلوين الخانات الفردية
+
+            // 1. تلوين حقل الإدخال فورياً عند الكتابة
             if (isNaN(val) || input.value === "") {
-                input.className = "grade-input";
+                input.className = "input-box";
             } else {
-                if (val >= 10) { input.className = "grade-input input-passed"; } 
-                else { input.className = "grade-input input-failed"; }
+                if (val >= 10) input.className = "input-box input-passed";
+                else input.className = "input-box input-failed";
             }
 
-            // تلوين السطر بأكمله حسب معدل المادة الفردية الحالي
-            let row = document.getElementById(`row-${rowIndex}`);
-            let examVal = parseFloat(row.querySelector('.exam-in').value);
-            let tdVal = parseFloat(row.querySelector('.td-in').value);
+            // 2. حساب معدل المادة الفردي وتلوين السطر بالكامل بنظام النيون
+            const row = document.getElementById(`row-${rowId}`);
+            const examVal = parseFloat(row.querySelector('.exam-field').value);
+            const tdVal = parseFloat(row.querySelector('.td-field').value);
 
-            if(!isNaN(examVal) || !isNaN(tdVal)) {
-                let e = isNaN(examVal) ? 0 : examVal;
-                let t = isNaN(tdVal) ? 0 : tdVal;
-                
-                // حساب معدل المادة الفردي (60% امتحان و 40% للأعمال الموجهة)
+            if (!isNaN(examVal) || !isNaN(tdVal)) {
+                let ev = isNaN(examVal) ? 0 : examVal;
+                let tv = isNaN(tdVal) ? 0 : tdVal;
+
                 let subAvg = 0;
-                if(!isNaN(examVal) && !isNaN(tdVal)) subAvg = (e * 0.6) + (t * 0.4);
-                else if(!isNaN(examVal)) subAvg = examVal;
+                if (!isNaN(examVal) && !isNaN(tdVal)) subAvg = (ev * 0.6) + (tv * 0.4);
+                else if (!isNaN(examVal)) subAvg = examVal;
                 else subAvg = tdVal;
 
-                if(subAvg >= 10) {
-                    row.className = "row-passed";
+                if (subAvg >= 10) {
+                    row.className = "subject-row passed-row";
                 } else {
-                    row.className = "row-failed";
+                    row.className = "subject-row failed-row";
                 }
             } else {
-                row.className = "";
+                row.className = "subject-row";
             }
 
-            // استدعاء الحساب التلقائي اللحظي للمعدل الفصلي العام
-            calculateLiveAverage();
+            // 3. تشغيل الـ Global Calc لحساب المعدل الفصلي العام أوتوماتيكياً
+            calculateGlobalAverage();
         }
 
-        // 👑 دالة الحساب الفوري اللحظي للمعدل العام بدون الضغط على أي زر
-        function calculateLiveAverage() {
-            let rows = document.querySelectorAll('#subjectsTableBody tr');
-            let totalWeightedGrades = 0;
-            let totalCoefficients = 0;
-            let hasAnyValidInput = false;
+        // دالة الحساب الكلي للمعدل للسداسي
+        function calculateGlobalAverage() {
+            const allRows = document.querySelectorAll('.subject-row');
+            let totalWeighted = 0;
+            let totalCoef = 0;
+            let hasData = false;
 
-            rows.forEach(row => {
-                let coefElem = row.querySelector('.coef-badge');
-                if(!coefElem) return;
+            allRows.forEach(row => {
+                const coef = parseFloat(row.querySelector('.coef-display').getAttribute('data-c'));
+                const examVal = parseFloat(row.querySelector('.exam-field').value);
+                const tdVal = parseFloat(row.querySelector('.td-field').value);
 
-                let coef = parseFloat(coefElem.getAttribute('data-coef'));
-                let examVal = parseFloat(row.querySelector('.exam-in').value);
-                let tdVal = parseFloat(row.querySelector('.td-in').value);
-
-                let subjectAverage = 0;
-                let hasValidData = false;
+                let subAvg = 0;
+                let isValid = false;
 
                 if (!isNaN(examVal) && !isNaN(tdVal)) {
-                    subjectAverage = (examVal * 0.6) + (tdVal * 0.4);
-                    hasValidData = true;
-                } else if (!isNaN(examVal) && isNaN(tdVal)) {
-                    subjectAverage = examVal;
-                    hasValidData = true;
-                } else if (isNaN(examVal) && !isNaN(tdVal)) {
-                    subjectAverage = tdVal;
-                    hasValidData = true;
+                    subAvg = (examVal * 0.6) + (tdVal * 0.4);
+                    isValid = true;
+                } else if (!isNaN(examVal)) {
+                    subAvg = examVal;
+                    isValid = true;
+                } else if (!isNaN(tdVal)) {
+                    subAvg = tdVal;
+                    isValid = true;
                 }
 
-                if (hasValidData) {
-                    totalWeightedGrades += (subjectAverage * coef);
-                    totalCoefficients += coef;
-                    hasAnyValidInput = true;
+                if (isValid) {
+                    totalWeighted += (subAvg * coef);
+                    totalCoef += coef;
+                    hasData = true;
                 }
             });
 
-            let liveAvgElem = document.getElementById('liveAverageValue');
-            let liveStatusElem = document.getElementById('liveStatusText');
+            const display = document.getElementById('globalAverageDisplay');
+            const badge = document.getElementById('statusBadgeDisplay');
 
-            if (!hasAnyValidInput || totalCoefficients === 0) {
-                liveAvgElem.innerText = "00.00";
-                liveAvgElem.style.color = "#FFFFFF";
-                liveStatusElem.innerHTML = "المعدل العام للسداسي الحالي (اكتب النقاط ليظهر الحساب فوراً):";
+            if (!hasData || totalCoef === 0) {
+                resetScoreBoard();
                 return;
             }
 
-            let finalAvg = totalWeightedGrades / totalCoefficients;
-            liveAvgElem.innerText = finalAvg.toFixed(2);
+            let finalResult = totalWeighted / totalCoef;
+            display.innerText = finalResult.toFixed(2);
 
-            if (finalAvg >= 10) {
-                liveAvgElem.style.color = "var(--success)";
-                liveStatusElem.innerHTML = "🎉 مبروك! السداسي مستوفى بنجاح:";
+            // تلوين البانل الكبير حسب النتيجة مع تأثير الـ Glow المطور
+            if (finalResult >= 10) {
+                display.style.color = "var(--neon-green)";
+                display.style.textShadow = "0 0 25px rgba(57, 255, 20, 0.5)";
+                badge.className = "status-badge badge-passed";
+                badge.innerText = "🚀 السداسي مبلع بنجاح! راك فايت السرعة القصوى";
             } else {
-                liveAvgElem.style.color = "var(--danger)";
-                liveStatusElem.innerHTML = "⚠️ المعدل الحالي دون الـ 10 (بالتوفيق في الاستدراك):";
+                display.style.color = "var(--neon-red)";
+                display.style.textShadow = "0 0 25px rgba(255, 49, 49, 0.5)";
+                badge.className = "status-badge badge-failed";
+                badge.innerText = "⚠️ المعدل تحت 10، ركز برك وراح تقفلها في الرابوراجي";
             }
         }
 
-        function clearSavedData() {
-            if(confirm("هل راك متأكد بلي حاب تبدل الاسم والتخصص؟")) {
-                localStorage.clear();
-                location.reload();
-            }
+        function resetScoreBoard() {
+            const display = document.getElementById('globalAverageDisplay');
+            const badge = document.getElementById('statusBadgeDisplay');
+            display.innerText = "00.00";
+            display.style.color = "#FFF";
+            display.style.textShadow = "none";
+            badge.className = "status-badge";
+            badge.innerText = "في انتظار إدخال النقاط...";
         }
     </script>
 </body>
