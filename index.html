@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ حاسبة المعدلات الرقمية | المطور الخارق</title>
+    <title>⚡حاسبة معدل المتوسط</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -65,7 +65,7 @@
 
         <!-- الخطوة 1: طلب الاسم -->
         <div class="step-panel active" id="step1">
-            <label for="userName">مرحباً بك في المنصة الرقمية! واش هو اسمك يا بطل؟</label>
+            <label for="userName">مرحباً بك في المنصة الرقمية! واش هو اسمك يا ؟</label>
             <input type="text" id="userName" class="input-field" placeholder="اكتب اسمك هنا..." autocomplete="off">
             <div class="btn-group">
                 <button class="action-btn" onclick="goToStep2()">التالي ⚡</button>
@@ -74,7 +74,7 @@
 
         <!-- الخطوة 2: اختيار السنة الدراسية -->
         <div class="step-panel" id="step2">
-            <label id="welcomeLabel">يا هيثم، اختر السنة الدراسية التي تدرس فيها حالياً:</label>
+            <label id="welcomeLabel">يا هيثم، إختار وين تقرى:</label>
             <div class="grid-options">
                 <div class="option-card" onclick="selectYear(1, this)">السنة الأولى متوسط</div>
                 <div class="option-card" onclick="selectYear(2, this)">السنة الثانية متوسط</div>
@@ -134,10 +134,10 @@
         <!-- الخطوة 5: عرض النتيجة الخرافية -->
         <div class="step-panel" id="step5">
             <div class="result-box">
-                <h2 id="congratsUser">ألف مبروك!</h2>
+                <h2 id="congratsUser">بصحتك!</h2>
                 <p>معدلك الإجمالي النهائي هو:</p>
                 <div class="result-val" id="finalGrade">00.00</div>
-                <div class="status-text" id="statusMessage">ناجح بميزة ممتاز!</div>
+                <div class="status-text" id="statusMessage">مليحا!</div>
             </div>
             <div class="btn-group">
                 <button class="action-btn" onclick="restartApp()">إعادة الحساب 🔄</button>
@@ -181,7 +181,7 @@
             const nameInput = document.getElementById("userName").value.trim();
             if(nameInput === "") { alert("من فضلك اكتب اسمك أولاً!"); return; }
             userData.name = nameInput;
-            document.getElementById("welcomeLabel").innerText = `يا ${userData.name}، اختر السنة الدراسية التي تدرس فيها حالياً:`;
+            document.getElementById("welcomeLabel").innerText = `يا ${userData.name}،أتب السنة لي تقرى فيها:`;
             switchPanel(1, 2);
         }
 
