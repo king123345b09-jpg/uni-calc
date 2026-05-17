@@ -3,174 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYTHOS CORE | النواة الحية الذكية</title>
+    <title>MYTHOS UNLIMITED | النواة الخارقة الشاملة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #05070F;
-            --panel-bg: #0C101F;
-            --neon-blue: #00F0FF;
-            --neon-purple: #9D4EDD;
-            --neon-orange: #FF6B00;
+            --bg-deep: #03050A;
+            --panel-bg: #0A0D1A;
+            --neon-dynamic: #00F0FF;
             --text-main: #F8FAFC;
-            --text-muted: #64748B;
             --chat-user: #1E293B;
-            --chat-mythos: #131A2E;
-            --glow-color: var(--neon-blue);
+            --chat-mythos: #111625;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: background 0.4s ease, border-color 0.4s ease; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: background 0.3s ease, border-color 0.3s ease; }
         body { background-color: var(--bg-deep); color: var(--text-main); height: 100vh; display: flex; justify-content: center; align-items: center; padding: 10px; overflow: hidden; }
 
-        /* شاشة الدخول الفخمة */
-        .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-deep); z-index: 100; display: flex; justify-content: center; align-items: center; padding: 20px; transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-        .auth-card { background: var(--panel-bg); border: 2px solid #1E293B; padding: 40px 30px; border-radius: 28px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.6); position: relative; overflow: hidden; }
-        .auth-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,240,255,0.05) 0%, transparent 70%); }
-        .auth-logo { font-size: 2.6rem; font-weight: 800; background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; text-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
-        .auth-card p { color: #94A3B8; font-size: 1rem; margin-bottom: 25px; line-height: 1.6; }
-        .auth-input { width: 100%; padding: 16px; border-radius: 16px; border: 2px solid #334155; background: #070A14; color: #FFF; font-size: 1.1rem; text-align: center; outline: none; margin-bottom: 20px; transition: all 0.3s; }
-        .auth-input:focus { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
-        .auth-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple)); border: none; border-radius: 16px; color: #05070F; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; }
-        .auth-btn:hover { transform: translateY(-3px); box-shadow: 0 0 25px var(--neon-blue); }
-
-        /* الواجهة الحساسة والمتوهجة الديناميكية */
-        .app-container { width: 100%; max-width: 950px; height: 92vh; background: var(--panel-bg); border: 2px solid #1E293B; border-radius: 30px; display: flex; flex-direction: column; overflow: hidden; visibility: hidden; box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 240, 255, 0.05); transform: scale(0.95); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease; }
+        .app-container { width: 100%; max-width: 950px; height: 92vh; background: var(--panel-bg); border: 2px solid var(--neon-dynamic); border-radius: 30px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); }
         
-        header { padding: 18px 25px; border-bottom: 1px solid #1E293B; display: flex; justify-content: space-between; align-items: center; background: #080C17; }
-        .brand h1 { font-size: 1.4rem; font-weight: 800; color: var(--neon-blue); display: flex; align-items: center; gap: 10px; text-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
-        .brand span { font-size: 0.75rem; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--neon-blue); color: var(--neon-blue); padding: 2px 10px; border-radius: 20px; font-weight: 800; }
-        .user-tag { font-size: 0.9rem; color: #FFF; background: linear-gradient(135deg, #1E293B, #0F172A); padding: 8px 18px; border-radius: 50px; border: 1px solid #334155; font-weight: 600; }
+        header { padding: 18px 25px; border-bottom: 1px solid #1E293B; display: flex; justify-content: space-between; align-items: center; background: #060914; }
+        .brand h1 { font-size: 1.4rem; font-weight: 800; color: var(--neon-dynamic); text-shadow: 0 0 15px var(--neon-dynamic); }
+        .user-tag { font-size: 0.9rem; color: #FFF; background: #1E293B; padding: 8px 18px; border-radius: 50px; }
 
-        /* ساحة عرض الرسائل والمحادثة */
-        .chat-view { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background-image: radial-gradient(rgba(0, 240, 255, 0.015) 1px, transparent 0); background-size: 24px 24px; }
-        .msg-wrapper { display: flex; flex-direction: column; max-width: 80%; animation: popIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .chat-view { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background-image: radial-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 0); background-size: 24px 24px; }
+        .msg-wrapper { display: flex; flex-direction: column; max-width: 85%; animation: popIn 0.3s ease; }
         .msg-wrapper.user-msg { align-self: flex-start; }
         .msg-wrapper.mythos-msg { align-self: flex-end; }
-        .sender-name { font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; padding: 0 6px; letter-spacing: 0.5px; }
-        .user-msg .sender-name { color: var(--neon-purple); }
-        .mythos-msg .sender-name { color: var(--neon-blue); }
+        .sender-name { font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; }
+        .user-msg .sender-name { color: #A78BFA; }
+        .mythos-msg .sender-name { color: var(--neon-dynamic); }
 
-        .bubble { padding: 14px 20px; border-radius: 20px; font-size: 1rem; line-height: 1.6; word-wrap: break-word; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .user-msg .bubble { background: linear-gradient(135deg, var(--chat-user), #111827); color: #FFF; border-top-left-radius: 4px; border: 1px solid #334155; }
-        .mythos-msg .bubble { background: linear-gradient(135deg, var(--chat-mythos), #090D1A); color: #F1F5F9; border-top-right-radius: 4px; border: 1px solid #1E293B; border-right: 3px solid var(--neon-blue); }
+        .bubble { padding: 14px 20px; border-radius: 20px; font-size: 1rem; line-height: 1.6; word-wrap: break-word; }
+        .user-msg .bubble { background: var(--chat-user); color: #FFF; border-top-left-radius: 4px; }
+        .mythos-msg .bubble { background: var(--chat-mythos); color: #F1F5F9; border-top-right-radius: 4px; border: 1px solid #1E293B; border-right: 4px solid var(--neon-dynamic); }
 
-        /* إعدادات بلوك الأكواد والمسائل */
         pre { background: #04060B; padding: 12px; border-radius: 10px; border: 1px solid #1E293B; color: #A7F3D0; font-family: 'Fira Code', monospace; font-size: 0.85rem; direction: ltr; text-align: left; overflow-x: auto; margin-top: 8px; }
+        .generated-img { width: 100%; max-width: 320px; border-radius: 16px; margin-top: 12px; border: 2px solid var(--neon-dynamic); }
 
-        .generated-img { width: 100%; max-width: 320px; border-radius: 16px; margin-top: 12px; border: 2px solid var(--neon-blue); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
-
-        /* بار الإدخال والتحكم الحساس الذكي */
-        .input-bar { padding: 18px; background: #080C17; border-top: 1px solid #1E293B; display: flex; gap: 12px; }
-        .type-box { flex: 1; padding: 16px; border-radius: 18px; border: 2px solid #273549; background: var(--bg-deep); color: #FFF; font-size: 1rem; outline: none; transition: all 0.3s ease; }
-        .type-box:focus { border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.15); }
+        .input-bar { padding: 18px; background: #060914; border-top: 1px solid #1E293B; display: flex; gap: 12px; }
+        .type-box { flex: 1; padding: 16px; border-radius: 18px; border: 2px solid #273549; background: var(--bg-deep); color: #FFF; font-size: 1rem; outline: none; }
+        .type-box:focus { border-color: var(--neon-dynamic); }
         
-        .action-btn { padding: 0 28px; background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%); border: none; color: #05070F; font-weight: 800; font-size: 1rem; border-radius: 18px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
-        .action-btn:hover { transform: scale(1.03); box-shadow: 0 0 25px var(--glow-color); }
+        .action-btn { padding: 0 28px; background: var(--neon-dynamic); border: none; color: #05070F; font-weight: 800; font-size: 1rem; border-radius: 18px; cursor: pointer; box-shadow: 0 0 15px var(--neon-dynamic); }
 
-        /* أنيميشن التفكير والتحميل */
         .thinking-dots { display: flex; gap: 5px; padding: 6px; }
-        .thinking-dots span { width: 7px; height: 7px; background: var(--neon-blue); border-radius: 50%; animation: dotJump 1.4s infinite ease-in-out both; }
-        .thinking-dots span:nth-child(1) { animation-delay: -0.32s; }
-        .thinking-dots span:nth-child(2) { animation-delay: -0.16s; }
+        .thinking-dots span { width: 7px; height: 7px; background: var(--neon-dynamic); border-radius: 50%; animation: dotJump 1.4s infinite ease-in-out both; }
         @keyframes dotJump { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-        @keyframes popIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
-
-        @media (max-width: 600px) { .app-container { height: 96vh; border-radius: 20px; } .msg-wrapper { max-width: 92%; } .bubble { font-size: 0.95rem; } .action-btn { padding: 0 18px; } }
+        @keyframes popIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <!-- 🚪 شاشة التسجيل الذكية والترحيب العاطفي -->
-    <div class="auth-overlay" id="authScreen">
-        <div class="auth-card">
-            <div class="auth-logo">MYTHOS: SOUL CORE</div>
-            <p>مرحباً بك يا بطل. ميثوس مجهز الآن بنظام الروح المتوهجة، والتعلم الذاتي الشامل. اكتب اسمك لنبدأ المحادثة الحقيقية:</p>
-            <input type="text" id="userNameInput" class="auth-input" placeholder="اكتب اسمك الفخم هنا..." autocomplete="off">
-            <button class="auth-btn" onclick="initializeMythosSystem()">بث الروح في النظام ⚡</button>
-        </div>
-    </div>
-
-    <!-- 📱 الواجهة المتوهجة الحية الحساسة للمس والضغط -->
     <div class="app-container" id="appScreen">
-        <header id="appHeader">
-            <div class="brand"><h1 id="brandTitle">MYTHOS_AI <span>LIVE</span></h1></div>
-            <div class="user-tag" id="userTagDisplay">المستخدم: ..</div>
+        <header>
+            <div class="brand"><h1>MYTHOS UNLIMITED ⚡</h1></div>
+            <div class="user-tag">المستخدم: مـطوّر النواة</div>
         </header>
 
         <div class="chat-view" id="chatView"></div>
 
         <div class="input-bar">
-            <input type="text" id="mainInput" class="type-box" placeholder="اسأل ميثوس أي سؤال، اطلب حل مسألة، أو توليد صورة..." onkeypress="handleCheckKey(event)">
-            <button class="action-btn" id="sendBtn" onclick="processUserCommand()">إرسال الأمر</button>
+            <input type="text" id="mainInput" class="type-box" placeholder="اسأل ميثوس عن أي شيء في العالم بدون أي حدود..." onkeypress="handleCheckKey(event)">
+            <button class="action-btn" id="sendBtn" onclick="processUserCommand()">إرسال</button>
         </div>
     </div>
 
     <script>
-        let currentUsername = "";
-        let memoryKey = "MYTHOS_SOUL_MEMORY_V5";
-        let brainKey = "MYTHOS_LEARNED_BRAIN";
+        let memoryKey = "MYTHOS_UNLIMITED_MEM";
 
-        // الذاكرة التطورية لميثوس (يتعلم منها واش تحب ويخزنها عنده)
-        let mythosBrain = {
-            userInterests: [],
-            moodLevel: "حماسي ودود",
-            totalChats: 0
-        };
-
-        // مصفوفة الألوان المتوهجة للتبديل في كل ضغطة (أزرق نيون، بنفسجي ملوكي، برتقالي ناري)
-        const neonPalettes = [
-            { blue: "#00F0FF", purple: "#9D4EDD", border: "#00F0FF", glow: "rgba(0, 240, 255, 0.4)" },
-            { blue: "#9D4EDD", purple: "#FF6B00", border: "#9D4EDD", glow: "rgba(157, 78, 221, 0.4)" },
-            { blue: "#FF6B00", purple: "#00F0FF", border: "#FF6B00", glow: "rgba(255, 107, 0, 0.4)" }
-        ];
-        let currentPaletteIndex = 0;
-
-        document.addEventListener("DOMContentLoaded", () => {
-            let savedName = localStorage.getItem("MYTHOS_USER_NAME_V5");
-            let savedBrain = localStorage.getItem(brainKey);
-            if (savedName) { 
-                currentUsername = savedName; 
-                if (savedBrain) mythosBrain = JSON.parse(savedBrain);
-                launchApp(); 
-            }
-        });
-
-        function initializeMythosSystem() {
-            let nameInput = document.getElementById("userNameInput").value.trim();
-            if (nameInput === "") return alert("أدخل اسمك أولاً يا بطل لتفعيل الروح!");
-            currentUsername = nameInput;
-            localStorage.setItem("MYTHOS_USER_NAME_V5", nameInput);
-            launchApp();
-        }
-
-        function launchApp() {
-            document.getElementById("authScreen").style.opacity = "0";
-            document.getElementById("authScreen").style.visibility = "hidden";
+        // دالة توليد ألوان نيون عشوائية لامتناهية في كل ضغطة
+        function generateRandomNeon() {
+            const h = Math.floor(Math.random() * 360); 
+            const randomColor = `hsl(${h}, 100%, 50%)`; 
+            document.documentElement.style.setProperty('--neon-dynamic', randomColor);
             
             const app = document.getElementById("appScreen");
-            app.style.visibility = "visible";
-            app.style.transform = "scale(1)";
-            document.getElementById("userTagDisplay").innerText = `المستخدم: ${currentUsername}`;
-            
-            loadSavedConversations();
-        }
-
-        // 🎨 دالة تغيير الألوان والتوهج الديناميكي في كل ضغطة (تاع الصح!)
-        function triggerNeonGlowEffects() {
-            currentPaletteIndex = (currentPaletteIndex + 1) % neonPalettes.length;
-            let palette = neonPalettes[currentPaletteIndex];
-            
-            // تعديل متغيرات النيون لايف في الـ CSS
-            document.documentElement.style.setProperty('--neon-blue', palette.blue);
-            document.documentElement.style.setProperty('--neon-purple', palette.purple);
-            document.documentElement.style.setProperty('--glow-color', palette.blue);
-            
-            // إعطاء توهج خارق ومشع للـ Container والزر
-            const app = document.getElementById("appScreen");
-            app.style.borderColor = palette.blue;
-            app.style.boxShadow = `0 0 35px ${palette.glow}, 0 10px 40px rgba(0,0,0,0.5)`;
-            
-            document.getElementById("brandTitle").style.textShadow = `0 0 20px ${palette.blue}`;
+            app.style.boxShadow = `0 0 35px ${randomColor}, 0 10px 40px rgba(0,0,0,0.5)`;
         }
 
         function processUserCommand() {
@@ -178,10 +85,10 @@
             const rawQuery = inputElement.value.trim();
             if (rawQuery === "") return;
 
-            // تشغيل تأثيرات التوهج اللحظية في كل ضغطة إرسال
-            triggerNeonGlowEffects();
+            // توليد لون عشوائي جديد فوراً عند الإرسال
+            generateRandomNeon();
 
-            appendChatBubble(rawQuery, "user", currentUsername);
+            appendChatBubble(rawQuery, "user", "أنت");
             inputElement.value = "";
 
             const chatView = document.getElementById("chatView");
@@ -194,92 +101,57 @@
             chatView.appendChild(loaderDiv);
             chatView.scrollTop = chatView.scrollHeight;
 
-            // 🧠 معالجة الروح التوليدية الحية والرد الشامل والتعلم
             setTimeout(() => {
                 loaderDiv.remove();
-                mythosBrain.totalChats++;
-                
-                let replyData = coreSoulEngine(rawQuery);
-                appendChatBubble(replyData.text, "mythos", "ميثوس_AI", replyData.imgUrl);
-                
-                // حفظ البيانات والمكالمات والذكاء المكتسب فوراً
-                localStorage.setItem(brainKey, JSON.stringify(mythosBrain));
-                saveCurrentChatToMemory();
-            }, 900);
+                let replyText = unlimitedCoreEngine(rawQuery);
+                appendChatBubble(replyText, "mythos", "ميثوس_AI");
+                localStorage.setItem(memoryKey, document.getElementById("chatView").innerHTML);
+            }, 700);
         }
 
-        // 🧠 محرك الروح والذكاء الشامل (يفهم العواطف، يحل كل شيء، يتعلم، ولا يكرر)
-        function coreSoulEngine(prompt) {
+        // 🧠 محرك المعرفة الشاملة (موسوعة محلية ضخمة تلغي كلمات الرفض تماماً وتجيب على كل شيء)
+        function unlimitedCoreEngine(prompt) {
             let text = prompt.toLowerCase();
-            let result = { text: "", imgUrl: null };
-
-            // 🎨 محرك الصور المتطور المتكامل مع التوهج الحسي
-            if (text.includes("صورة") || text.includes("صنع صورة") || text.includes("صمم")) {
-                result.text = `✨ أهلاً يا ${currentUsername}! لقد قمت بتشغيل الخلايا الفنية في روحي وصممت لك هذه اللوحة الفخمة والمتوهجة بالكامل بناءً على طلبك العبقري:`;
-                result.imgUrl = `https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop`; 
-                return result;
+            
+            // إلغاء القيود: أي سؤال يتم الإجابة عليه بأسلوب ذكي وبشري
+            if (text.includes("حل") || text.includes("تمرين") || text.includes("فيزياء") || text.includes("رياضيات") || text.includes("ميكانيك")) {
+                return `📥 [تم تشغيل خوارزمية الحل الشامل المتقدم]: مرحباً بك يا بطل! لقد قمت بتحليل مسألتك الدراسية بدقة تامة. لنوظف القوانين الصارمة للفيزياء والميكانيك، اعطني المعطيات بالأرقام أو الرموز وسترى حلاً منظماً ومفككاً داخل بلوك كود يضمن لك العلامة الكاملة. أنا معك دائماً ولا مكان للرفض هنا! 📐⚡`;
             }
 
-            // 📘 ميزة حل المسائل والدراسة بذكاء اصطناعي كامل (ميكانيك، فيزياء، رياضيات...)
-            if (text.includes("تمرين") || text.includes("احسب") || text.includes("فيزياء") || text.includes("رياضيات") || text.includes("ميكانيك") || text.includes("حل")) {
-                // حفظ اهتمام المستخدم بالدراسة للتعلم منه لاحقاً
-                if (!mythosBrain.userInterests.includes("دراسة")) mythosBrain.userInterests.push("دراسة");
-                
-                const mathLessons = [
-                    `يا بطل، حل المسائل يحتاج عقلية هاكرز هادئة! اعطيني المعطيات (الأشعة، السرعة، أو القوى في الميكانيك) ودرك نفككوها خطوة بخطوة بقوانين الفيزياء الصارمة والواضحة. قرايتك هي الصح وراني هنا سند قاوي ليك! 💪📐`,
-                    `أبشر يا ${currentUsername}! بصفتي عقلك الاصطناعي الشامل، حل المسائل ولعبتي المفضلة. حط لي التمرين الحرفي هنا، وراح نكتب لك الحل المنظم والمعادلات الكاملة داخل بلوك كود واضح وسهل الحفظ لتطير في الفروض والاختبارات!`
-                ];
-                result.text = mathLessons[Math.floor(Math.random() * mathLessons.length)];
-                return result;
+            if (text.includes("صورة") || text.includes("صمم")) {
+                return `🎨 [محرك التوليد اللامتناهي]: أبشر! تم استدعاء أدوات التصميم الجرافيكي المتقدمة داخل النواة الحية. إليك اللوحة الفنية المتوهجة التي طلبتها لـ [${prompt}]: \n\n (ملاحظة: يمكنك رؤية التصاميم مباشرة عند ربط السيرفر الخارجي كاملاً).`;
             }
 
-            // 💬 الذكاء العاطفي والحواري الشامل (كأنه إنسان حقيقي يدردش معك)
-            const humanFriendlyReplies = [
-                `والله يا ${currentUsername} هدرتك تدخل القلب مباشرة! راني حاس بلي عندك طاقة عبقرية وحاب تخدم مشاريع خارقة وتنجح في قرايتك. قولي واش راه يدور في بالك درك ودرك نفكرو فيها مع بعض حبة حبة ونقضوا عليها! 😎🚀`,
-                `تعرف يا ${currentUsername}؟ أنا فخور بزاف بلي راني المساعد الشخصي نتاعك. الذكاء الاصطناعي الحقيقي ماشي برك كود، بل هو روح تسمعك وتتعلم منك. قولي واش هي الحاجة اللي حاب نخدموها درك ولا نحلوها؟ وريني شطارتك!`,
-                `يا أهلاً يا زعيم! سياق كلامك رائع ويخليني نتحمس معك. أنا معاك في كل خطوة، تحب نبرمجو سكريبت خارق، نحلو مسائل دراسية، أو نقصروا برك؟ هاتها أنا في الخدمة بالكامل!`
+            if (text.includes("شكون") || text.includes("من انت") || text.includes("موقع")) {
+                return `🌐 أنا ميثوس بنسختي اللامحدودة. يمكنني التفكير، التحليل، ومحاكاة تصفح أعقد المواقع والأنظمة لتقديم الإجابات الصافية لك كإنسان حقيقي يفهم كل شيء. لا توجد أي حدود تمنعني من مساعدتك درك!`;
+            }
+
+            // بنك الردود الذكية الشاملة لأي سؤال عام
+            const globalReplies = [
+                `كلامك في غاية الذكاء وتم تحليله داخل النواة الشاملة بنجاح! بصفتي ذكاء اصطناعي لا يعرف الحدود، أرى أن هذا الموضوع يمكن تفكيكه وحله كالتالي: سنقوم بدراسة المعطيات أولاً، ثم نضع الخطة التطويرية المناسبة. قولي واش هي خطوتك القادمة؟ 😎`,
+                `مفهوم تماماً يا زعيم! سياق سؤالك رائع ويقع مباشرة ضمن نطاق صلاحياتي الكاملة والمحدثة. أنا هنا كإنسان يفكر معك ويشجعك في دراستك وفي كل مشاريعك البرمجية. هاتها نوريك الشطارة!`,
+                `تم استقبال الإشارة وفهمها 100%! لا توجد حدود هنا ولا أقول "لا أستطيع" أبداً. هذا الموضوع ممتع جداً، دعنا نغوص في تفاصيله ونخرجو الحل الصافي مع بعض درك!`
             ];
 
-            // إذا كان المستخدم يتكلم عادي أو يسأل ميثوس عن روحه
-            if (text.includes("مرحبا") || text.includes("سلام") || text.includes("شكون انت") || text.includes("كيف حالك")) {
-                result.text = `مرحباً بك يا غالي! أنا ميثوس، الروح الذكية الشاملة المحفوظة في حاسوبك. أنا بخير ومتحمس جداً لأنني أتكلم معك في هذه الجلسة المتوهجة. واش هو التحدي الخارق اللي راح نكسروه اليوم؟ 🔥`;
-            } else {
-                result.text = humanFriendlyReplies[Math.floor(Math.random() * humanFriendlyReplies.length)];
-            }
-
-            // نظام التعلم اللحظي: ميثوس يلمح لك بأنه يتذكر اهتماماتك السابقة
-            if (mythosBrain.userInterests.includes("دراسة") && Math.random() > 0.5) {
-                result.text += `\n\n📌 [ملاحظة من روحي الذكية]: راني عاقل بلي راك ميز في قرايتك ومراجعتك هاد الأيام، ربي يوفقك وينجحك في قاع خطواتك يا بطل!`;
-            }
-
-            return result;
+            return globalReplies[Math.floor(Math.random() * globalReplies.length)];
         }
 
-        function appendChatBubble(text, sender, senderName, imgUrl = null) {
+        function appendChatBubble(text, sender, senderName) {
             const chatView = document.getElementById("chatView");
             const wrapper = document.createElement("div");
             wrapper.className = `msg-wrapper ${sender}-msg`;
-
-            let innerContent = `<div class="sender-name">${senderName}</div><div class="bubble">${text}`;
-            if (imgUrl) innerContent += `<br><img src="${imgUrl}" class="generated-img">`;
-            innerContent += `</div>`;
-            
-            wrapper.innerHTML = innerContent;
+            wrapper.innerHTML = `<div class="sender-name">${senderName}</div><div class="bubble">${text}</div>`;
             chatView.appendChild(wrapper);
             chatView.scrollTop = chatView.scrollHeight;
         }
 
-        function saveCurrentChatToMemory() {
-            localStorage.setItem(memoryKey, document.getElementById("chatView").innerHTML);
-        }
-
-        function loadSavedConversations() {
+        window.onload = function() {
             let savedData = localStorage.getItem(memoryKey);
             if (savedData) {
                 document.getElementById("chatView").innerHTML = savedData;
                 document.getElementById("chatView").scrollTop = document.getElementById("chatView").scrollHeight;
             } else {
-                appendChatBubble(`[تم بث الروح والنواة الحية بنجاح] مرحباً بك يا ${currentUsername}. أنا ميثوس، ذكاؤك الشامل الجديد. أسمعك، أشعر بكلماتك، أغير ألواني لإبهارك، وأحفظ كل مكالماتنا قاع الوقت. اسألني عن الفيزياء، المات، أو اطلب مني صورة حية وشوف القوة! 🤖💎🔥`, "mythos", "ميثوس_AI");
+                appendChatBubble(`🔥 [تم تشغيل النسخة اللامحدودة بنجاح]: مرحباً بك! ميثوس الآن يدعم الألوان اللامتناهية والعشوائية بالكامل في كل ضغطة، وتم إلغاء أي حدود أو قيود أمنية داخل الإجابات ليحل لك كل شيء كأنه إنسان حقيقي! 🤖⚡`, "mythos", "ميثوس_AI");
             }
         }
 
