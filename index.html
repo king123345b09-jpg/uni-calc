@@ -3,159 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYTHOS UNLIMITED | النواة الخارقة الشاملة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <title>⚡ حاسبة المعدلات الرقمية | المطور الخارق</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #03050A;
-            --panel-bg: #0A0D1A;
-            --neon-dynamic: #00F0FF;
-            --text-main: #F8FAFC;
-            --chat-user: #1E293B;
-            --chat-mythos: #111625;
+            --bg-dark: #040610;
+            --card-bg: #0B0F1F;
+            --neon-color: #00F0FF;
+            --text-light: #F8FAFC;
+            --border-glow: rgba(0, 240, 255, 0.2);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: background 0.3s ease, border-color 0.3s ease; }
-        body { background-color: var(--bg-deep); color: var(--text-main); height: 100vh; display: flex; justify-content: center; align-items: center; padding: 10px; overflow: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        body { background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; overflow-x: hidden; }
 
-        .app-container { width: 100%; max-width: 950px; height: 92vh; background: var(--panel-bg); border: 2px solid var(--neon-dynamic); border-radius: 30px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); }
+        .container { width: 100%; max-width: 800px; background: var(--card-bg); border: 2px solid var(--neon-color); border-radius: 25px; padding: 30px; box-shadow: 0 0 40px var(--border-glow); position: relative; }
         
-        header { padding: 18px 25px; border-bottom: 1px solid #1E293B; display: flex; justify-content: space-between; align-items: center; background: #060914; }
-        .brand h1 { font-size: 1.4rem; font-weight: 800; color: var(--neon-dynamic); text-shadow: 0 0 15px var(--neon-dynamic); }
-        .user-tag { font-size: 0.9rem; color: #FFF; background: #1E293B; padding: 8px 18px; border-radius: 50px; }
-
-        .chat-view { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background-image: radial-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 0); background-size: 24px 24px; }
-        .msg-wrapper { display: flex; flex-direction: column; max-width: 85%; animation: popIn 0.3s ease; }
-        .msg-wrapper.user-msg { align-self: flex-start; }
-        .msg-wrapper.mythos-msg { align-self: flex-end; }
-        .sender-name { font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; }
-        .user-msg .sender-name { color: #A78BFA; }
-        .mythos-msg .sender-name { color: var(--neon-dynamic); }
-
-        .bubble { padding: 14px 20px; border-radius: 20px; font-size: 1rem; line-height: 1.6; word-wrap: break-word; }
-        .user-msg .bubble { background: var(--chat-user); color: #FFF; border-top-left-radius: 4px; }
-        .mythos-msg .bubble { background: var(--chat-mythos); color: #F1F5F9; border-top-right-radius: 4px; border: 1px solid #1E293B; border-right: 4px solid var(--neon-dynamic); }
-
-        pre { background: #04060B; padding: 12px; border-radius: 10px; border: 1px solid #1E293B; color: #A7F3D0; font-family: 'Fira Code', monospace; font-size: 0.85rem; direction: ltr; text-align: left; overflow-x: auto; margin-top: 8px; }
-        .generated-img { width: 100%; max-width: 320px; border-radius: 16px; margin-top: 12px; border: 2px solid var(--neon-dynamic); }
-
-        .input-bar { padding: 18px; background: #060914; border-top: 1px solid #1E293B; display: flex; gap: 12px; }
-        .type-box { flex: 1; padding: 16px; border-radius: 18px; border: 2px solid #273549; background: var(--bg-deep); color: #FFF; font-size: 1rem; outline: none; }
-        .type-box:focus { border-color: var(--neon-dynamic); }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px dashed rgba(255,255,255,0.1); padding-bottom: 20px; }
+        .header h1 { font-size: 2rem; font-weight: 900; color: var(--neon-color); text-shadow: 0 0 20px var(--neon-color); }
         
-        .action-btn { padding: 0 28px; background: var(--neon-dynamic); border: none; color: #05070F; font-weight: 800; font-size: 1rem; border-radius: 18px; cursor: pointer; box-shadow: 0 0 15px var(--neon-dynamic); }
+        .step-panel { display: none; }
+        .step-panel.active { display: block; animation: slideIn 0.5s ease forwards; }
 
-        .thinking-dots { display: flex; gap: 5px; padding: 6px; }
-        .thinking-dots span { width: 7px; height: 7px; background: var(--neon-dynamic); border-radius: 50%; animation: dotJump 1.4s infinite ease-in-out both; }
-        @keyframes dotJump { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
-        @keyframes popIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        label { display: block; font-size: 1.1rem; margin-bottom: 12px; font-weight: 600; color: #CBD5E1; }
+        .input-field { width: 100%; padding: 15px; background: #060914; border: 2px solid #1E293B; border-radius: 14px; color: #FFF; font-size: 1.1rem; outline: none; text-align: center; margin-bottom: 20px; }
+        .input-field:focus { border-color: var(--neon-color); box-shadow: 0 0 15px var(--border-glow); }
+
+        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
+        .action-btn { padding: 14px 35px; background: var(--neon-color); border: none; color: #040610; font-weight: 800; font-size: 1.1rem; border-radius: 15px; cursor: pointer; box-shadow: 0 0 15px var(--neon-color); }
+        .action-btn:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .btn-secondary { background: #1E293B; color: #FFF; box-shadow: none; border: 1px solid #334155; }
+
+        .grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .option-card { background: #060914; border: 2px solid #1E293B; padding: 20px; border-radius: 16px; text-align: center; cursor: pointer; font-weight: 700; font-size: 1.1rem; }
+        .option-card:hover, .option-card.selected { border-color: var(--neon-color); background: rgba(0, 240, 255, 0.05); box-shadow: 0 0 15px var(--border-glow); color: var(--neon-color); }
+
+        /* جدول المواد */
+        .subjects-table { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 25px; }
+        .subjects-table th { background: #060914; padding: 12px; text-align: center; color: var(--neon-color); font-weight: 700; border-bottom: 2px solid #1E293B; }
+        .subjects-table td { padding: 10px; border-bottom: 1px solid #1E293B; text-align: center; }
+        .sub-input { width: 70px; padding: 8px; background: #040610; border: 1px solid #334155; border-radius: 8px; color: #FFF; text-align: center; font-weight: 700; }
+        .sub-input:focus { border-color: var(--neon-color); }
+        .badge-coeff { background: #1E293B; padding: 4px 10px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; }
+
+        .optional-switch { background: #161B33; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+
+        .result-box { text-align: center; padding: 30px; background: rgba(0, 240, 255, 0.03); border: 3px solid var(--neon-color); border-radius: 20px; margin-top: 20px; box-shadow: 0 0 30px var(--border-glow); }
+        .result-val { font-size: 3.5rem; font-weight: 900; color: var(--neon-color); text-shadow: 0 0 25px var(--neon-color); margin: 15px 0; }
+        .status-text { font-size: 1.5rem; font-weight: 700; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 600px) { .subjects-table th { font-size: 0.8rem; padding: 6px; } .sub-input { width: 55px; font-size: 0.9rem; } .container { padding: 15px; } }
     </style>
 </head>
 <body>
 
-    <div class="app-container" id="appScreen">
-        <header>
-            <div class="brand"><h1>MYTHOS UNLIMITED ⚡</h1></div>
-            <div class="user-tag">المستخدم: مـطوّر النواة</div>
-        </header>
-
-        <div class="chat-view" id="chatView"></div>
-
-        <div class="input-bar">
-            <input type="text" id="mainInput" class="type-box" placeholder="اسأل ميثوس عن أي شيء في العالم بدون أي حدود..." onkeypress="handleCheckKey(event)">
-            <button class="action-btn" id="sendBtn" onclick="processUserCommand()">إرسال</button>
+    <div class="container" id="mainContainer">
+        <div class="header">
+            <h1 id="appTitle">📊 نِظام حِساب المُعدّلات المطور</h1>
         </div>
+
+        <!-- الخطوة 1: طلب الاسم -->
+        <div class="step-panel active" id="step1">
+            <label for="userName">مرحباً بك في المنصة الرقمية! واش هو اسمك يا بطل؟</label>
+            <input type="text" id="userName" class="input-field" placeholder="اكتب اسمك هنا..." autocomplete="off">
+            <div class="btn-group">
+                <button class="action-btn" onclick="goToStep2()">التالي ⚡</button>
+            </div>
+        </div>
+
+        <!-- الخطوة 2: اختيار السنة الدراسية -->
+        <div class="step-panel" id="step2">
+            <label id="welcomeLabel">يا هيثم، اختر السنة الدراسية التي تدرس فيها حالياً:</label>
+            <div class="grid-options">
+                <div class="option-card" onclick="selectYear(1, this)">السنة الأولى متوسط</div>
+                <div class="option-card" onclick="selectYear(2, this)">السنة الثانية متوسط</div>
+                <div class="option-card" onclick="selectYear(3, this)">السنة الثالثة متوسط</div>
+                <div class="option-card" onclick="selectYear(4, this)">السنة الرابعة متوسط (BEM)</div>
+            </div>
+            <div class="btn-group">
+                <button class="action-btn btn-secondary" onclick="goBack(1)">رجوع</button>
+                <button class="action-btn" onclick="goToStep3()">التالي ⚡</button>
+            </div>
+        </div>
+
+        <!-- الخطوة 3: اختيار الفصل أو الشهادة -->
+        <div class="step-panel" id="step3">
+            <label>اختر نوع الحساب الذي تريده:</label>
+            <div class="grid-options" id="periodOptions">
+                <!-- سيتم ملؤها ديناميكياً بواسطة الجافاسكربت -->
+            </div>
+            <div class="btn-group">
+                <button class="action-btn btn-secondary" onclick="goBack(2)">رجوع</button>
+                <button class="action-btn" onclick="goToStep4()">ابدأ إدخال النقاط 🔥</button>
+            </div>
+        </div>
+
+        <!-- الخطوة 4: كشف وإدخال النقاط -->
+        <div class="step-panel" id="step4">
+            <h3 style="text-align: center; margin-bottom: 15px; color: var(--neon-color);" id="tableTitle">كشف النقاط الفصلي</h3>
+            
+            <div class="optional-switch">
+                <span>هل تدرس مادة اللغة الأمازيغية؟</span>
+                <input type="checkbox" id="hasAmazigh" onchange="renderSubjectsTable()" style="width: 20px; height: 20px; cursor: pointer;">
+            </div>
+            <div class="optional-switch" id="drawingContainer">
+                <span>هل تدرس التربية التشكيلية/الموسيقية؟</span>
+                <input type="checkbox" id="hasDrawing" checked onchange="renderSubjectsTable()" style="width: 20px; height: 20px; cursor: pointer;">
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="subjects-table">
+                    <thead>
+                        <tr id="tableHeaderRow">
+                            <!-- يتغير حسب نوع الحساب فصلي أو بيام -->
+                        </tr>
+                    </thead>
+                    <tbody id="subjectsBody">
+                        <!-- ديناميكي -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="btn-group">
+                <button class="action-btn btn-secondary" onclick="goBack(3)">رجوع</button>
+                <button class="action-btn" onclick="calculateFinalScore()">احسب المعدل الآن 🚀</button>
+            </div>
+        </div>
+
+        <!-- الخطوة 5: عرض النتيجة الخرافية -->
+        <div class="step-panel" id="step5">
+            <div class="result-box">
+                <h2 id="congratsUser">ألف مبروك!</h2>
+                <p>معدلك الإجمالي النهائي هو:</p>
+                <div class="result-val" id="finalGrade">00.00</div>
+                <div class="status-text" id="statusMessage">ناجح بميزة ممتاز!</div>
+            </div>
+            <div class="btn-group">
+                <button class="action-btn" onclick="restartApp()">إعادة الحساب 🔄</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        let memoryKey = "MYTHOS_UNLIMITED_MEM";
+        let userData = { name: "", year: 0, period: "" };
+        
+        // معاملات الطور المتوسط المعتمدة رسمياً في الجزائر
+        const coefficientsData = {
+            1: { arabic: 2, math: 2, french: 1, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
+            2: { arabic: 3, math: 3, french: 2, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
+            3: { arabic: 3, math: 3, french: 2, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
+            4: { 
+                // الرابعة متوسط فصلي
+                fasp: { arabic: 5, math: 4, french: 3, english: 2, science: 2, physics: 2, history_geo: 3, islamic: 2, civic: 1, sport: 1, drawing: 1, amazigh: 2 },
+                // معاملات شهادة البيام الرسمية BEM
+                bem: { arabic: 5, math: 4, french: 3, english: 2, science: 2, physics: 2, history_geo: 3, islamic: 2, civic: 1, sport: 1, drawing: 1, amazigh: 2 }
+            }
+        };
 
-        // دالة توليد ألوان نيون عشوائية لامتناهية في كل ضغطة
-        function generateRandomNeon() {
-            const h = Math.floor(Math.random() * 360); 
-            const randomColor = `hsl(${h}, 100%, 50%)`; 
-            document.documentElement.style.setProperty('--neon-dynamic', randomColor);
+        const subjectNames = {
+            arabic: "اللغة العربية", math: "الرياضيات", french: "اللغة الفرنسية", english: "اللغة الإنجليزية",
+            science: "علوم الطبيعة والحياة", physics: "العلوم الفيزيائية", history_geo: "التاريخ والجغرافيا",
+            islamic: "التربية الإسلامية", civic: "التربية المدنية", sport: "التربية البدنية",
+            drawing: "الرسم / الموسيقى", amazigh: "اللغة الأمازيغية"
+        };
+
+        // دالة توليد ألوان نيون لانهائية لتغيير شكل الموقع قاع في كل ضغطة
+        function triggerInfiniteNeon() {
+            const randomHue = Math.floor(Math.random() * 360);
+            const newNeon = `hsl(${randomHue}, 100%, 50%)`;
+            document.documentElement.style.setProperty('--neon-color', newNeon);
+            document.documentElement.style.setProperty('--border-glow', `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.3)`);
+        }
+
+        function goToStep2() {
+            const nameInput = document.getElementById("userName").value.trim();
+            if(nameInput === "") { alert("من فضلك اكتب اسمك أولاً!"); return; }
+            userData.name = nameInput;
+            document.getElementById("welcomeLabel").innerText = `يا ${userData.name}، اختر السنة الدراسية التي تدرس فيها حالياً:`;
+            switchPanel(1, 2);
+        }
+
+        function selectYear(yearNum, element) {
+            userData.year = yearNum;
+            document.querySelectorAll("#step2 .option-card").forEach(el => el.classList.remove("selected"));
+            element.classList.add("selected");
+            triggerInfiniteNeon();
+        }
+
+        function goToStep3() {
+            if(userData.year === 0) { alert("من فضلك اختر السنة الدراسية!"); return; }
             
-            const app = document.getElementById("appScreen");
-            app.style.boxShadow = `0 0 35px ${randomColor}, 0 10px 40px rgba(0,0,0,0.5)`;
-        }
+            const periodOptions = document.getElementById("periodOptions");
+            periodOptions.innerHTML = "";
 
-        function processUserCommand() {
-            const inputElement = document.getElementById("mainInput");
-            const rawQuery = inputElement.value.trim();
-            if (rawQuery === "") return;
-
-            // توليد لون عشوائي جديد فوراً عند الإرسال
-            generateRandomNeon();
-
-            appendChatBubble(rawQuery, "user", "أنت");
-            inputElement.value = "";
-
-            const chatView = document.getElementById("chatView");
-            const loaderDiv = document.createElement("div");
-            loaderDiv.className = "msg-wrapper mythos-msg loader-temp";
-            loaderDiv.innerHTML = `
-                <div class="sender-name">ميثوس_AI</div>
-                <div class="bubble"><div class="thinking-dots"><span></span><span></span><span></span></div></div>
-            `;
-            chatView.appendChild(loaderDiv);
-            chatView.scrollTop = chatView.scrollHeight;
-
-            setTimeout(() => {
-                loaderDiv.remove();
-                let replyText = unlimitedCoreEngine(rawQuery);
-                appendChatBubble(replyText, "mythos", "ميثوس_AI");
-                localStorage.setItem(memoryKey, document.getElementById("chatView").innerHTML);
-            }, 700);
-        }
-
-        // 🧠 محرك المعرفة الشاملة (موسوعة محلية ضخمة تلغي كلمات الرفض تماماً وتجيب على كل شيء)
-        function unlimitedCoreEngine(prompt) {
-            let text = prompt.toLowerCase();
-            
-            // إلغاء القيود: أي سؤال يتم الإجابة عليه بأسلوب ذكي وبشري
-            if (text.includes("حل") || text.includes("تمرين") || text.includes("فيزياء") || text.includes("رياضيات") || text.includes("ميكانيك")) {
-                return `📥 [تم تشغيل خوارزمية الحل الشامل المتقدم]: مرحباً بك يا بطل! لقد قمت بتحليل مسألتك الدراسية بدقة تامة. لنوظف القوانين الصارمة للفيزياء والميكانيك، اعطني المعطيات بالأرقام أو الرموز وسترى حلاً منظماً ومفككاً داخل بلوك كود يضمن لك العلامة الكاملة. أنا معك دائماً ولا مكان للرفض هنا! 📐⚡`;
-            }
-
-            if (text.includes("صورة") || text.includes("صمم")) {
-                return `🎨 [محرك التوليد اللامتناهي]: أبشر! تم استدعاء أدوات التصميم الجرافيكي المتقدمة داخل النواة الحية. إليك اللوحة الفنية المتوهجة التي طلبتها لـ [${prompt}]: \n\n (ملاحظة: يمكنك رؤية التصاميم مباشرة عند ربط السيرفر الخارجي كاملاً).`;
-            }
-
-            if (text.includes("شكون") || text.includes("من انت") || text.includes("موقع")) {
-                return `🌐 أنا ميثوس بنسختي اللامحدودة. يمكنني التفكير، التحليل، ومحاكاة تصفح أعقد المواقع والأنظمة لتقديم الإجابات الصافية لك كإنسان حقيقي يفهم كل شيء. لا توجد أي حدود تمنعني من مساعدتك درك!`;
-            }
-
-            // بنك الردود الذكية الشاملة لأي سؤال عام
-            const globalReplies = [
-                `كلامك في غاية الذكاء وتم تحليله داخل النواة الشاملة بنجاح! بصفتي ذكاء اصطناعي لا يعرف الحدود، أرى أن هذا الموضوع يمكن تفكيكه وحله كالتالي: سنقوم بدراسة المعطيات أولاً، ثم نضع الخطة التطويرية المناسبة. قولي واش هي خطوتك القادمة؟ 😎`,
-                `مفهوم تماماً يا زعيم! سياق سؤالك رائع ويقع مباشرة ضمن نطاق صلاحياتي الكاملة والمحدثة. أنا هنا كإنسان يفكر معك ويشجعك في دراستك وفي كل مشاريعك البرمجية. هاتها نوريك الشطارة!`,
-                `تم استقبال الإشارة وفهمها 100%! لا توجد حدود هنا ولا أقول "لا أستطيع" أبداً. هذا الموضوع ممتع جداً، دعنا نغوص في تفاصيله ونخرجو الحل الصافي مع بعض درك!`
-            ];
-
-            return globalReplies[Math.floor(Math.random() * globalReplies.length)];
-        }
-
-        function appendChatBubble(text, sender, senderName) {
-            const chatView = document.getElementById("chatView");
-            const wrapper = document.createElement("div");
-            wrapper.className = `msg-wrapper ${sender}-msg`;
-            wrapper.innerHTML = `<div class="sender-name">${senderName}</div><div class="bubble">${text}</div>`;
-            chatView.appendChild(wrapper);
-            chatView.scrollTop = chatView.scrollHeight;
-        }
-
-        window.onload = function() {
-            let savedData = localStorage.getItem(memoryKey);
-            if (savedData) {
-                document.getElementById("chatView").innerHTML = savedData;
-                document.getElementById("chatView").scrollTop = document.getElementById("chatView").scrollHeight;
+            // إذا كان رابعة متوسط نزيدوله خيار شهادة البيام BEM
+            if(userData.year === 4) {
+                periodOptions.innerHTML = `
+                    <div class="option-card" onclick="selectPeriod('1', this)">الفصل الأول</div>
+                    <div class="option-card" onclick="selectPeriod('2', this)">الفصل الثاني</div>
+                    <div class="option-card" onclick="selectPeriod('3', this)">الفصل الثالث</div>
+                    <div class="option-card" onclick="selectPeriod('bem', this)">📥 حساب معدل شهادة الـ BEM</div>
+                `;
+                document.getElementById("drawingContainer").style.display = "flex";
             } else {
-                appendChatBubble(`🔥 [تم تشغيل النسخة اللامحدودة بنجاح]: مرحباً بك! ميثوس الآن يدعم الألوان اللامتناهية والعشوائية بالكامل في كل ضغطة، وتم إلغاء أي حدود أو قيود أمنية داخل الإجابات ليحل لك كل شيء كأنه إنسان حقيقي! 🤖⚡`, "mythos", "ميثوس_AI");
+                periodOptions.innerHTML = `
+                    <div class="option-card" onclick="selectPeriod('1', this)">الفصل الأول</div>
+                    <div class="option-card" onclick="selectPeriod('2', this)">الفصل الثاني</div>
+                    <div class="option-card" onclick="selectPeriod('3', this)">الفصل الثالث</div>
+                `;
+                document.getElementById("drawingContainer").style.display = "flex";
+            }
+            switchPanel(2, 3);
+        }
+
+        function selectPeriod(p, element) {
+            userData.period = p;
+            document.querySelectorAll("#step3 .option-card").forEach(el => el.classList.remove("selected"));
+            element.classList.add("selected");
+            triggerInfiniteNeon();
+        }
+
+        function goToStep4() {
+            if(!userData.period) { alert("من فضلك اختر الفصل أو نوع الحساب!"); return; }
+            
+            if(userData.period === 'bem') {
+                document.getElementById("tableTitle").innerText = `حساب نقاط شهادة التعليم المتوسط (BEM) - يا ${userData.name}`;
+                document.getElementById("drawingContainer").style.display = "none"; // في البيام تحتسب الرسم كمادة عادية بنظام خاص أو مادة عادية حسب التعديل ونحن نعتمد نظام المعاملات والإنقاذ المباشر
+            } else {
+                document.getElementById("tableTitle").innerText = `نقاط الفصل ${userData.period} - الطور ${userData.year} متوسط`;
+            }
+
+            renderSubjectsTable();
+            switchPanel(3, 4);
+        }
+
+        function renderSubjectsTable() {
+            const headerRow = document.getElementById("tableHeaderRow");
+            const body = document.getElementById("subjectsBody");
+            
+            body.innerHTML = "";
+            triggerInfiniteNeon();
+
+            // تخصيص عناوين الجدول حسب نوع الحساب (فصلي أو شهادة)
+            if(userData.period === 'bem') {
+                headerRow.innerHTML = `
+                    <th>المادة</th>
+                    <th>المعامل</th>
+                    <th>نقطة الشهادة (من 20)</th>
+                `;
+            } else {
+                headerRow.innerHTML = `
+                    <th>المادة</th>
+                    <th>المعامل</th>
+                    <th>مراقبة مستمرة</th>
+                    <th>الفرض</th>
+                    <th>الاختبار</th>
+                `;
+            }
+
+            // جلب قائمة المواد المناسبة للسنة
+            let coeffs = (userData.year === 4) ? coefficientsData[4].fasp : coefficientsData[userData.year];
+            if(userData.period === 'bem') coeffs = coefficientsData[4].bem;
+
+            for (let subKey in coeffs) {
+                if(subKey === 'amazigh' && !document.getElementById("hasAmazigh").checked) continue;
+                if(subKey === 'drawing' && !document.getElementById("hasDrawing").checked && userData.period !== 'bem') continue;
+
+                const tr = document.createElement("tr");
+                
+                if(userData.period === 'bem') {
+                    tr.innerHTML = `
+                        <td style="font-weight:bold;">${subjectNames[subKey]}</td>
+                        <td><span class="badge-coeff">${coeffs[subKey]}</span></td>
+                        <td><input type="number" step="0.01" min="0" max="20" class="sub-input score-field" data-subject="${subKey}" data-type="exam"></td>
+                    `;
+                } else {
+                    tr.innerHTML = `
+                        <td style="font-weight:bold;">${subjectNames[subKey]}</td>
+                        <td><span class="badge-coeff">${coeffs[subKey]}</span></td>
+                        <td><input type="number" step="0.01" min="0" max="20" class="sub-input" data-subject="${subKey}" data-type="ca"></td>
+                        <td><input type="number" step="0.01" min="0" max="20" class="sub-input" data-subject="${subKey}" data-type="quiz"></td>
+                        <td><input type="number" step="0.01" min="0" max="20" class="sub-input" data-subject="${subKey}" data-type="exam"></td>
+                    `;
+                }
+                body.appendChild(tr);
             }
         }
 
-        function handleCheckKey(event) { if (event.key === "Enter") processUserCommand(); }
+        function calculateFinalScore() {
+            let totalPoints = 0;
+            let totalCoeffs = 0;
+            let inputs = document.querySelectorAll("#subjectsBody tr");
+            let error = false;
+
+            let coeffs = (userData.year === 4) ? coefficientsData[4].fasp : coefficientsData[userData.year];
+            if(userData.period === 'bem') coeffs = coefficientsData[4].bem;
+
+            inputs.forEach(tr => {
+                if(error) return;
+                
+                // جلب حقول الإدخال للسطر الحالي
+                let examInput = tr.querySelector('[data-type="exam"]');
+                let subKey = examInput.getAttribute("data-subject");
+                let coeff = coeffs[subKey];
+
+                let examVal = parseFloat(examInput.value);
+
+                if(isNaN(examVal) || examVal < 0 || examVal > 20) { error = true; return; }
+
+                if(userData.period === 'bem') {
+                    // حساب شهادة البيام: نقطة المادة مباشرة مضروبة في المعامل
+                    // ملاحظة مادة الرسم في البيام: تحتسب فوق 10 كنقاط إضافية لا تقسم على معاملها في بعض الأنظمة، ولكن لتفادي التعقيد نعتمد الحساب المباشر العادل لجميع المواد الأساسية
+                    totalPoints += examVal * coeff;
+                    totalCoeffs += coeff;
+                } else {
+                    // الحساب الفصلي المعتمد بالجزائر
+                    let caInput = tr.querySelector('[data-type="ca"]');
+                    let quizInput = tr.querySelector('[data-type="quiz"]');
+
+                    let caVal = parseFloat(caInput.value);
+                    let quizVal = parseFloat(quizInput.value);
+
+                    if(isNaN(caVal) || caVal < 0 || caVal > 20 || isNaN(quizVal) || quizVal < 0 || quizVal > 20) { error = true; return; }
+
+                    // 1. معدل التقويم والفرض
+                    let subAvgActivity = (caVal + quizVal) / 2;
+                    // 2. معدل المادة الفصلي = (معدل الأنشطة + الاختبار*2) / 3
+                    let subjectFinalAvg = (subAvgActivity + (examVal * 2)) / 3;
+
+                    // معالجة مادة الرسم الفصلي المعتمدة (تحتسب النقاط فوق 10 كبونيس دون معامل في بعض المؤسسات، وهنا ندمجها بنظام المعامل العادي المبسط لضمان عدم حدوث خطأ)
+                    totalPoints += subjectFinalAvg * coeff;
+                    totalCoeffs += coeff;
+                }
+            });
+
+            if(error) { alert("تنبيه: يرجى ملء جميع النقاط بشكل صحيح (بين 0 و 20)!"); return; }
+
+            let finalAvg = totalPoints / totalCoeffs;
+            document.getElementById("finalGrade").innerText = finalAvg.toFixed(2);
+
+            // تحديد رسالة الحالة والميزة لقائلها
+            let statusText = "";
+            let congrads = `ألف مبروك يا ${userData.name}! ✨`;
+
+            if(finalAvg >= 18) { statusText = "ناجح بميزة ممتاز! (عبقري الطور المتوسط) 👑"; }
+            else if(finalAvg >= 16) { statusText = "ناجح بميزة جيد جداً! 🌟"; }
+            else if(finalAvg >= 14) { statusText = "ناجح بميزة جيد! 👍"; }
+            else if(finalAvg >= 12) { statusText = "ناجح بميزة قريب من الجيد! 😉"; }
+            else if(finalAvg >= 10) { statusText = "ناجح ومبروك الانتقال! 🎓"; }
+            else { 
+                congrads = `معليش يا ${userData.name}، لا تيأس! 💪`;
+                statusText = "لم توفق هذه المرة، ركز واخدم كثر في المرة القادمة!"; 
+            }
+
+            document.getElementById("congratsUser").innerText = congrads;
+            document.getElementById("statusMessage").innerText = statusText;
+
+            switchPanel(4, 5);
+            triggerInfiniteNeon();
+        }
+
+        function switchPanel(from, to) {
+            document.getElementById(`step${from}`).classList.remove("active");
+            document.getElementById(`step${to}`).classList.add("active");
+            triggerInfiniteNeon();
+        }
+
+        function goBack(toStep) {
+            switchPanel(toStep + 1, toStep);
+        }
+
+        function restartApp() {
+            document.getElementById("userName").value = "";
+            userData = { name: "", year: 0, period: "" };
+            document.querySelectorAll(".option-card").forEach(el => el.classList.remove("selected"));
+            document.getElementById("hasAmazigh").checked = false;
+            switchPanel(5, 1);
+        }
     </script>
 </body>
 </html>
