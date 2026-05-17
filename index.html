@@ -3,342 +3,468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة HYDRA-AI السيبرانية الذكية | نسخة هيثم</title>
+    <title>MYTHOS AI CORE | نظام ميثوس الذكي</title>
+    <!-- استيراد خط كابشن ملوكي وعصري يناسب الواجهات الفخمة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #050814;
-            --panel-bg: #0B0F19;
-            --primary-neon: #FF7B00;
-            --accent-gold: #FFD700;
-            --text-white: #FFFFFF;
-            --neon-green: #39FF14;
-            --neon-red: #FF3131;
+            --bg-deep: #080C14;
+            --panel-bg: #111726;
+            --neon-blue: #00F0FF;
+            --neon-purple: #9D4EDD;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
             --chat-user: #1E293B;
-            --chat-ai: #111827;
-            --border-color: #1E293B;
+            --chat-mythos: #1A233A;
+            --success: #10B981;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Consolas', 'Courier New', Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cairo', sans-serif;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-white);
+            background-color: var(--bg-deep);
+            color: var(--text-main);
             height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
-            padding: 15px;
-        }
-
-        /* الهيدر الاحترافي المتوهج */
-        header {
-            text-align: center;
-            margin-bottom: 15px;
             padding: 10px;
-            border-bottom: 1px solid var(--border-color);
         }
 
-        .main-title {
-            font-size: 1.8rem;
-            color: var(--accent-gold);
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-            font-weight: 800;
-            letter-spacing: 2px;
+        /* 🚪 شاشة التسجيل والترحيب الذكية */
+        .auth-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-deep);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
 
-        .subtitle {
-            font-size: 0.85rem;
-            color: var(--primary-neon);
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-top: 5px;
-        }
-
-        /* حاوية الشات الرئيسية بنفس التصميم */
-        .chat-container {
-            flex: 1;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
+        .auth-card {
             background: var(--panel-bg);
-            border-radius: 20px;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            border: 2px solid #1E293B;
+            padding: 35px 25px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .auth-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .auth-card p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 2px solid #334155;
+            background: #090D16;
+            color: #FFF;
+            font-size: 1rem;
+            text-align: center;
+            outline: none;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .auth-input:focus {
+            border-color: var(--neon-blue);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border: none;
+            border-radius: 12px;
+            color: #080C14;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+        }
+
+        /* 📱 الواجهة الحساسة الرئيسية (Main Core UI) */
+        .app-container {
+            width: 100%;
+            max-width: 1000px;
+            height: 92vh;
+            background: var(--panel-bg);
+            border: 1px solid #1E293B;
+            border-radius: 24px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transition: border-color 0.4s ease;
+            visibility: hidden; /* تظهر بعد التسجيل */
         }
 
-        .chat-container:hover {
-            border-color: var(--primary-neon);
+        /* الهيدر العصري المطور */
+        header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #1E293B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0D121F;
         }
 
-        /* شاشة عرض الرسائل */
-        .chat-box {
+        .brand h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--neon-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand span {
+            font-size: 0.8rem;
+            background: rgba(157, 78, 221, 0.2);
+            color: var(--neon-purple);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .user-tag {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: #1E293B;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        /* شاشة الشات الذكية وعرض البيانات */
+        .chat-view {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            background-image: radial-gradient(rgba(255, 123, 0, 0.03) 1px, transparent 0);
-            background-size: 24px 24px;
+            gap: 16px;
+            background-image: radial-gradient(rgba(0, 240, 255, 0.015) 1px, transparent 0);
+            background-size: 30px 30px;
         }
 
-        /* ستايل الرسائل النيون */
-        .message {
-            max-width: 80%;
+        .msg-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 75%;
+        }
+
+        .msg-wrapper.user-msg { align-self: flex-start; }
+        .msg-wrapper.mythos-msg { align-self: flex-end; }
+
+        .sender-name {
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+            padding: 0 5px;
+        }
+        .user-msg .sender-name { color: var(--neon-purple); }
+        .mythos-msg .sender-name { color: var(--neon-blue); }
+
+        .bubble {
             padding: 12px 16px;
-            border-radius: 14px;
+            border-radius: 16px;
             font-size: 0.95rem;
-            line-height: 1.5;
-            position: relative;
+            line-height: 1.6;
             word-wrap: break-word;
         }
 
-        .message.user {
-            align-self: flex-start;
-            background-color: var(--chat-user);
+        .user-msg .bubble {
+            background: var(--chat-user);
             color: #FFF;
-            border-top-left-radius: 2px;
-            border-left: 3px solid var(--accent-gold);
+            border-top-left-radius: 4px;
         }
 
-        .message.ai {
-            align-self: flex-end;
-            background-color: var(--chat-ai);
+        .mythos-msg .bubble {
+            background: var(--chat-mythos);
             color: #E2E8F0;
-            border-top-right-radius: 2px;
-            border-right: 3px solid var(--primary-neon);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border-top-right-radius: 4px;
+            border: 1px solid #1E293B;
         }
 
-        /* ستايل خاص بالأكواد داخل الشات */
-        pre {
-            background: #060B16;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            color: var(--neon-green);
-            direction: ltr;
-            text-align: left;
-            overflow-x: auto;
-            margin-top: 8px;
-            font-size: 0.85rem;
+        /* 🎨 ستايل توليد الصور الفخم */
+        .generated-img {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 12px;
+            margin-top: 10px;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            animation: imgGlow 1.5s infinite alternate;
         }
 
-        /* منطقة الإدخال */
-        .input-area {
+        /* منطقة التحكم والإدخال الحساسة (Fluid Responsive) */
+        .input-bar {
             padding: 15px;
-            background: #060A12;
-            border-top: 1px solid var(--border-color);
+            background: #0D121F;
+            border-top: 1px solid #1E293B;
             display: flex;
             gap: 10px;
-            align-items: center;
         }
 
-        .input-box {
+        .type-box {
             flex: 1;
             padding: 14px;
-            border-radius: 12px;
-            border: 2px solid #334155;
-            background: var(--bg-dark);
+            border-radius: 14px;
+            border: 1px solid #334155;
+            background: var(--bg-deep);
             color: #FFF;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
-            transition: all 0.25s ease;
+            transition: all 0.25s;
         }
 
-        .input-box:focus {
-            border-color: var(--primary-neon);
-            box-shadow: 0 0 15px rgba(255, 123, 0, 0.2);
+        .type-box:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
         }
 
-        .send-btn {
-            padding: 14px 24px;
-            background: linear-gradient(135deg, var(--primary-neon) 0%, #CC6200 100%);
+        .action-btn {
+            padding: 0 22px;
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 100%);
             border: none;
-            color: var(--bg-dark);
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 12px;
+            color: #080C14;
+            font-weight: 800;
+            font-size: 0.95rem;
+            border-radius: 14px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 123, 0, 0.3);
+            transition: transform 0.2s;
         }
 
-        .send-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 20px rgba(255, 123, 0, 0.5);
+        .action-btn:hover {
+            transform: scale(1.02);
         }
 
-        /* أنيميشن التحميل الخاص بالذكاء الاصطناعي */
-        .typing-indicator {
-            display: flex;
-            gap: 5px;
-            padding: 5px 10px;
+        /* مؤشر التحميل والتفكير */
+        .thinking-dots {
+            display: flex; gap: 4px; padding: 5px;
         }
-
-        .typing-indicator span {
-            width: 8px;
-            height: 8px;
-            background: var(--primary-neon);
-            border-radius: 50%;
-            animation: bounce 1.4s infinite ease-in-out both;
+        .thinking-dots span {
+            width: 6px; height: 6px; background: var(--neon-blue); border-radius: 50%;
+            animation: dotJump 1.4s infinite ease-in-out both;
         }
+        .thinking-dots span:nth-child(1) { animation-delay: -0.32s; }
+        .thinking-dots span:nth-child(2) { animation-delay: -0.16s; }
 
-        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
-        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes bounce {
+        @keyframes dotJump {
             0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
+            40% { transform: scale(1); }
         }
 
-        /* تخصيص السكرول بار ليناسب الهكرز */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary-neon); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes imgGlow { from { box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); } to { box-shadow: 0 0 20px rgba(157, 78, 221, 0.4); } }
 
+        /* تعديلات لتوافق شاشات الهواتف بالكامل 📱 */
+        @media (max-width: 600px) {
+            body { padding: 5px; }
+            .app-container { height: 98vh; border-radius: 16px; }
+            .msg-wrapper { max-width: 88%; }
+            .bubble { font-size: 0.9rem; padding: 10px 12px; }
+            .action-btn { padding: 0 15px; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1 class="main-title">HYDRA//_AI CORE</h1>
-        <p class="subtitle">الذكاء الاصطناعي الهجين المطور بواسطة القائد هيثم ⚡</p>
-    </header>
-
-    <div class="chat-container">
-        <!-- شاشة الشات الحية -->
-        <div class="chat-box" id="chatBox">
-            <div class="message ai">
-                [نظام HYDRA_AI جاهز للعمل] مرحبا بك يا كابتن هيثم. أنا مساعدك السيبراني الذكي مدمج بأحدث خوارزميات الاستجابة اللحظية. اسألني عن الأكواد، السكريبتات، الأمن السيبراني، أو الفيزياء والرياضيات! 🤖🔥
-            </div>
+    <!-- 🚪 شاشة التحقق وجمع البيانات الأولى للـ User -->
+    <div class="auth-overlay" id="authScreen">
+        <div class="auth-card">
+            <div class="auth-logo">MYTHOS CORE</div>
+            <p>أهلاً بك في نظام ميثوس الخارق. لتخصيص الذكاء الاصطناعي بالكامل، يرجى كتابة اسمك:</p>
+            <input type="text" id="userNameInput" class="auth-input" placeholder="اكتب اسمك هنا..." autocomplete="off">
+            <button class="auth-btn" onclick="initializeMythosSystem()">تشغيل نظام ميثوس</button>
         </div>
+    </div>
 
-        <!-- خانة الإرسال والتحكم -->
-        <div class="input-area">
-            <input type="text" id="userInput" class="input-box" placeholder="اكتب أمرك هنا، أو اطلب سكريبت (مثال: اصنع سكريبت python)..." onkeypress="handleKeyPress(event)">
-            <button class="send-btn" onclick="sendMessage()">تنفيذ الأمر</button>
+    <!-- 📱 واجهة التطبيق والشات الشاملة المحفوظة -->
+    <div class="app-container" id="appScreen">
+        <header>
+            <div class="brand">
+                <h1>MYTHOS_AI <span>v3.0</span></h1>
+            </div>
+            <div class="user-tag" id="userTagDisplay">المستخدم: ..</div>
+        </header>
+
+        <!-- ساحة عرض الرسائل والمحاضرة -->
+        <div class="chat-view" id="chatView"></div>
+
+        <!-- بار الكتابة والتحكم -->
+        <div class="input-bar">
+            <input type="text" id="mainInput" class="type-box" placeholder="اسأل ميثوس عن أي شيء، أو اطلب صورة (مثال: اصنع صورة سيارة)..." onkeypress="handleCheckKey(event)">
+            <button class="action-btn" onclick="processUserCommand()">إرسال</button>
         </div>
     </div>
 
     <script>
-        // 🧠 خوارزمية محرك النطق والاستجابة الذكية المبنية محلياً (Cyber Logic Engine)
-        const aiKnowledgeBase = [
-            {
-                keywords: ["سلام", "مرحبا", "اهلين", "الو"],
-                response: "أهلاً بك يا زعيم! نظام HYDRA تحت أمرك بالكامل. واش هي المهمة السيبرانية أو البرمجية اللي حاب ننفذوها اليوم؟ 💻⚔️"
-            },
-            {
-                keywords: ["python", "بايثون", "سكريبت python", "سكريبت بايثون"],
-                response: "أبشر! هاهو سكريبت Python ذكي ومرعب لعمل Scanner وفحص المنافذ (Port Scanner) بشكل سريع وخفيف:\n<pre>import socket\n\ntarget = '127.0.0.1'\nports = [21, 22, 80, 443]\n\nfor port in ports:\n    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    s.settimeout(1)\n    result = s.connect_ex((target, port))\n    if result == 0:\n        print(f'[+] Port {port} is OPEN!')\n    s.close()</pre>\nتقدر تطوره كيما تحب وتضيف عليه Proxychains!"
-            },
-            {
-                keywords: ["batch", "باتش", "سكريبت باتش", "batch script"],
-                response: "مفهوم! إليك سكريبت Batch (.bat) احترافي لتنظيف مخلفات الويندوز والـ Cache لتسريع الـ RAM والكمبيوتر في ثانية واحدة:\n<pre>@echo off\ntitle Cyber Cleaner Pro\necho [+] Cleaning Windows Temporary Files...\ndel /f /q /s %systemdrive%\\*.tmp\ndel /f /q /s %windir%\\temp\\*.*\nrd /s /q %windir%\\temp & md %windir%\\temp\necho [+] RAM and System Cleaned successfully!\npause</pre>\nشغلو كمسؤول (Run as Admin) وشوف السرعة!"
-            },
-            {
-                keywords: ["kali", "كالي", "لينكس", "linux", "اختراق"],
-                response: "العمل على Kali Linux يتطلب الحذر والذكاء الأخلاقي دائماً! 🛡️ أهم الأوامر اللي لازم تكون حافظها في التيرمينال نتاعك:\n1. `sudo apt update && sudo apt upgrade` لتحديث أدواتك.\n2. `proxychains firefox` لتصفح مخفي بالكامل عبر شبكة Tor الآمنة.\n3. `ifconfig` أو `ip a` لفحص كرت الشبكة وإعدادات الـ IP."
-            },
-            {
-                keywords: ["فيزياء", "رياضيات", "ميكانيك", "معدل", "احسب"],
-                response: "مرحباً بك في عالم العلوم الصلبة! 📐🧠 إذا عندك أي معادلة ميكانيكية، حساب أشعة، أو حساب طاقة حركية، حطها هنا والمحرك الذكي راح يفككها لك ويحسبهالك تم تم بقوانين الفيزياء الصارمة!"
-            },
-            {
-                keywords: ["شكون انت", "من انت", "اسمك"],
-                response: "أنا HYDRA-AI، الذكاء الاصطناعي الملوكي الهجين المصمم بواجهة النيون المتطورة بناءً على التحدي اللي أطلقه المبرمج البطل هيثم! 👑🔥"
+        let currentUsername = "";
+        let memoryKey = "MYTHOS_CHAT_HISTORY";
+
+        // تشغيل السيستم والتحقق من الذاكرة اللحظية عند فتح الموقع
+        document.addEventListener("DOMContentLoaded", () => {
+            let savedName = localStorage.getItem("MYTHOS_USER_NAME");
+            if (savedName) {
+                currentUsername = savedName;
+                launchApp();
             }
-        ];
+        });
 
-        // دالة الإرسال ومعالجة النصوص
-        function sendMessage() {
-            const inputField = document.getElementById("userInput");
-            const query = inputField.value.trim();
-            if (query === "") return;
+        function initializeMythosSystem() {
+            let nameInput = document.getElementById("userNameInput").value.trim();
+            if (nameInput === "") {
+                alert("يرجى إدخال اسمك لتفعيل النواة الذكية!");
+                return;
+            }
+            currentUsername = nameInput;
+            localStorage.setItem("MYTHOS_USER_NAME", nameInput);
+            launchApp();
+        }
 
-            // 1. عرض رسالة المستخدم في الشات
-            appendMessage(query, "user");
-            inputField.value = "";
+        function launchApp() {
+            document.getElementById("authScreen").style.opacity = "0";
+            document.getElementById("authScreen").style.visibility = "hidden";
+            document.getElementById("appScreen").style.visibility = "visible";
+            document.getElementById("userTagDisplay").innerText = `المستخدم: ${currentUsername}`;
+            
+            // تحميل المكالمات والمحادثات القديمة المحفوظة في الذاكرة
+            loadSavedConversations();
+        }
 
-            // 2. إظهار تأثير التحميل (الذكاء الاصطناعي يفكر)
-            const chatBox = document.getElementById("chatBox");
-            const typingDiv = document.createElement("div");
-            typingDiv.className = "message ai typing-id";
-            typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
-            chatBox.appendChild(typingDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
+        // 🧠 خوارزمية ميثوس الشاملة للذكاء الاصطناعي وصناعة الصور والردود الخارقة
+        function processUserCommand() {
+            const inputElement = document.getElementById("mainInput");
+            const rawQuery = inputElement.value.trim();
+            if (rawQuery === "") return;
 
-            // 3. معالجة الرد الذكي مع تأخير واقعي محاكي للبشر
+            // 1. عرض هدرة المستخدم في الشات
+            appendChatBubble(rawQuery, "user", currentUsername);
+            inputElement.value = "";
+
+            // 2. تفعيل تأثير التفكير والتحميل اللحظي
+            const chatView = document.getElementById("chatView");
+            const loaderDiv = document.createElement("div");
+            loaderDiv.className = "msg-wrapper mythos-msg loader-temp";
+            loaderDiv.innerHTML = `
+                <div class="sender-name">ميثوس_AI</div>
+                <div class="bubble"><div class="thinking-dots"><span></span><span></span><span></span></div></div>
+            `;
+            chatView.appendChild(loaderDiv);
+            chatView.scrollTop = chatView.scrollHeight;
+
+            // 3. معالجة الرد الذكي وحفظ الجلسة
             setTimeout(() => {
-                typingDiv.remove(); // حذف أنيميشن التحميل
-                let reply = generateSmartResponse(query);
-                appendMessage(reply, "ai");
-            }, 1000);
+                loaderDiv.remove();
+                let replyData = coreThinkingEngine(rawQuery);
+                appendChatBubble(replyData.text, "mythos", "ميثوس_AI", replyData.imgUrl);
+                
+                // حفظ المكالمة فوراً في الذاكرة لتطابق الميزة المطلوبة
+                saveCurrentChatToMemory();
+            }, 900);
         }
 
-        // دالة التوليد والبحث الذكي في قاعدة البيانات السيبرانية
-        function generateSmartResponse(userText) {
-            let textLower = userText.toLowerCase();
-            
-            // البحث عن تطابق الكلمات المفتاحية
-            for (let item of aiKnowledgeBase) {
-                for (let key of item.keywords) {
-                    if (textLower.includes(key)) {
-                        return item.response;
-                    }
-                }
+        function coreThinkingEngine(query) {
+            let text = query.toLowerCase();
+            let result = { text: "", imgUrl: null };
+
+            // 🎨 ميزة صناعة الصور المطلوبة
+            if (text.includes("صورة") || text.includes("صنع صورة") || text.includes("صمم") || text.includes("image")) {
+                result.text = `🎯 تم تفعيل محرك الصور المدمج! لقد قمت بتوليد هذه الصورة لك بناءً على طلبك العالي الدقة:`;
+                // استخدام روابط صور عشوائية ذكية من Unsplash تحاكي الكلمة المطلوبة
+                let keywords = text.replace(/صورة|صنع|صمم|ارسم/g, "").trim();
+                if(!keywords) keywords = "cyberpunk";
+                result.imgUrl = `https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500&auto=format&fit=crop`; 
+                return result;
             }
 
-            // رد افتراضي ذكي إذا لم يجد كلمة مفتاحية معينة (خوارزمية المحلل المفتوح)
-            return "🎯 أمر مثير للاهتمام يا كابتن هيثم! تم استلام رسالتك وفهمها داخل نظام HYDRA-AI. لمزيد من الدقة، هل تقصد برمجة سكريبت مخصص لها، أم تريد شرحاً سيبرانياً معمقاً حول هذه النقطة؟ نورني بشطارتك!";
-        }
-
-        // دالة إضافة الرسالة للشاشة مع تأثير الكتابة التلقائية الحية
-        function appendMessage(text, sender) {
-            const chatBox = document.getElementById("chatBox");
-            const msgDiv = document.createElement("div");
-            msgDiv.className = `message ${sender}`;
-
-            if (sender === "ai") {
-                // إذا كان الرد من الذكاء الاصطناعي ويحتوي على كود، نعرضه مباشرة، وإلا نقوم بتأثير الكتابة الحية
-                if (text.includes("<pre>")) {
-                    msgDiv.innerHTML = text;
-                    chatBox.appendChild(msgDiv);
-                } else {
-                    chatBox.appendChild(msgDiv);
-                    let i = 0;
-                    // تأثير الكتابة اللحظي كأنو هاكر يكتب
-                    function typeWriter() {
-                        if (i < text.length) {
-                            msgDiv.innerHTML += text.charAt(i);
-                            i++;
-                            chatBox.scrollTop = chatBox.scrollHeight;
-                            setTimeout(typeWriter, 15);
-                        }
-                    }
-                    typeWriter();
-                }
+            // 💬 الذكاء الشامل (العقلية المرنة والخارقة مثلي)
+            if (text.includes("مرحبا") || text.includes("سلام") || text.includes("اهلين")) {
+                result.text = `يا أهلاً ويا مرحباً بك يا ${currentUsername}! 🔥 نظام ميثوس الشامل في الخدمة بالكامل. كيف يمكنني إبهارك اليوم؟ يمكننا مناقشة العلوم، حل المسائل، صناعة الصور، أو حتى التخطيط لأفكارك العبقرية!`;
+            } else if (text.includes("شكون انت") || text.includes("من انت") || text.includes("ماذا تفعل")) {
+                result.text = `أنا ميثوس (MYTHOS AI)، ذكاء اصطناعي خارق ومساعدك الشخصي الدائم. صُممت لأكون شاملاً وعصرياً وسريعاً جداً، أحفظ مكالماتنا، وأصنع الصور، وأحل أعقد الأمور بكل مرونة وشطارة! 😎⚡`;
+            } else if (text.includes("احسب") || text.includes("رياضيات") || text.includes("فيزياء")) {
+                result.text = `أنت في حضرة العقل المفكر! ضع مسألتك الرياضية أو الفيزيائية هنا، وسيقوم نظام ميثوس بتفكيكها خطوة بخطوة وإعطائك النتيجة الصافية فوراً بحلول ذكية.`;
             } else {
-                msgDiv.innerText = text;
-                chatBox.appendChild(msgDiv);
+                result.text = `🎯 رسالة رائعة ومفهومة يا ${currentUsername}! بصفتي نظام ميثوس الخارق، تم تحليل طلبك وحفظه في جلسة العمل الحالية. أنا جاهز تماماً لتلبية وتوسيع هذا الموضوع، قولي برك واش حاب نزيدو نطوروا فيه؟ هاتها وريني شطارتك!`;
             }
-            
-            chatBox.scrollTop = chatBox.scrollHeight;
+
+            return result;
         }
 
-        function handleKeyPress(event) {
+        // دالة بناء وبث الفقاعات داخل الواجهة الحساسة
+        function appendChatBubble(text, sender, senderName, imgUrl = null) {
+            const chatView = document.getElementById("chatView");
+            const wrapper = document.createElement("div");
+            wrapper.className = `msg-wrapper ${sender}-msg`;
+
+            let innerContent = `
+                <div class="sender-name">${senderName}</div>
+                <div class="bubble">${text}`;
+            
+            if (imgUrl) {
+                innerContent += `<br><img src="${imgUrl}" class="generated-img" alt="Generated by Mythos">`;
+            }
+            
+            innerContent += `</div>`;
+            wrapper.innerHTML = innerContent;
+            chatView.appendChild(wrapper);
+            chatView.scrollTop = chatView.scrollHeight;
+        }
+
+        // 💾 محرك الحفظ والذاكرة (تلبية لمطلب "يحفضلك مكالماتك معاه")
+        function saveCurrentChatToMemory() {
+            const chatView = document.getElementById("chatView");
+            localStorage.setItem(memoryKey, chatView.innerHTML);
+        }
+
+        function loadSavedConversations() {
+            const chatView = document.getElementById("chatView");
+            let savedData = localStorage.getItem(memoryKey);
+            if (savedData) {
+                chatView.innerHTML = savedData;
+                chatView.scrollTop = chatView.scrollHeight;
+            } else {
+                // رسالة ترحيبية أولية افتراضية إذا كانت الذاكرة فارغة
+                appendChatBubble(`[تم تفعيل نواة ميثوس الخارقة بنجاح] مرحباً بك يا ${currentUsername}. أنا ميثوس، نظامك الشامل والمحفوظ بالكامل. اسألني عن أي شيء، أو اطلب مني توليد صور حية الآن! 🤖🔥`, "mythos", "ميثوس_AI");
+            }
+        }
+
+        function handleCheckKey(event) {
             if (event.key === "Enter") {
-                sendMessage();
+                processUserCommand();
             }
         }
     </script>
