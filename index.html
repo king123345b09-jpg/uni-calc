@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡حاسبة معدل المتوسط</title>
+    <title>⚡ نظام حساب وحفظ المعدلات المطور</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,47 +12,62 @@
             --neon-color: #00F0FF;
             --text-light: #F8FAFC;
             --border-glow: rgba(0, 240, 255, 0.2);
+            --neon-green: #39FF14;
+            --neon-red: #FF3131;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: background 0.3s ease, border-color 0.3s ease; }
         body { background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; overflow-x: hidden; }
 
-        .container { width: 100%; max-width: 800px; background: var(--card-bg); border: 2px solid var(--neon-color); border-radius: 25px; padding: 30px; box-shadow: 0 0 40px var(--border-glow); position: relative; }
+        .container { width: 100%; max-width: 850px; background: var(--card-bg); border: 2px solid var(--neon-color); border-radius: 25px; padding: 30px; box-shadow: 0 0 40px var(--border-glow); position: relative; }
         
         .header { text-align: center; margin-bottom: 30px; border-bottom: 2px dashed rgba(255,255,255,0.1); padding-bottom: 20px; }
         .header h1 { font-size: 2rem; font-weight: 900; color: var(--neon-color); text-shadow: 0 0 20px var(--neon-color); }
         
         .step-panel { display: none; }
-        .step-panel.active { display: block; animation: slideIn 0.5s ease forwards; }
+        .step-panel.active { display: block; animation: slideIn 0.4s ease forwards; }
 
         label { display: block; font-size: 1.1rem; margin-bottom: 12px; font-weight: 600; color: #CBD5E1; }
         .input-field { width: 100%; padding: 15px; background: #060914; border: 2px solid #1E293B; border-radius: 14px; color: #FFF; font-size: 1.1rem; outline: none; text-align: center; margin-bottom: 20px; }
         .input-field:focus { border-color: var(--neon-color); box-shadow: 0 0 15px var(--border-glow); }
 
-        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 15px; flex-wrap: wrap; }
-        .action-btn { padding: 14px 35px; background: var(--neon-color); border: none; color: #040610; font-weight: 800; font-size: 1.1rem; border-radius: 15px; cursor: pointer; box-shadow: 0 0 15px var(--neon-color); }
-        .action-btn:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 25px; flex-wrap: wrap; }
+        .action-btn { padding: 14px 35px; background: var(--neon-color); border: none; color: #040610; font-weight: 800; font-size: 1.1rem; border-radius: 15px; cursor: pointer; box-shadow: 0 0 15px var(--neon-color); transform: scale(1); }
+        .action-btn:hover { transform: scale(1.03); filter: brightness(1.2); }
         .btn-secondary { background: #1E293B; color: #FFF; box-shadow: none; border: 1px solid #334155; }
+        .btn-danger { background: var(--neon-red); color: white; box-shadow: 0 0 15px var(--neon-red); }
 
         .grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
         .option-card { background: #060914; border: 2px solid #1E293B; padding: 20px; border-radius: 16px; text-align: center; cursor: pointer; font-weight: 700; font-size: 1.1rem; }
         .option-card:hover, .option-card.selected { border-color: var(--neon-color); background: rgba(0, 240, 255, 0.05); box-shadow: 0 0 15px var(--border-glow); color: var(--neon-color); }
 
-        /* جدول المواد */
+        /* جداول متطورة */
         .subjects-table { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 25px; }
-        .subjects-table th { background: #060914; padding: 12px; text-align: center; color: var(--neon-color); font-weight: 700; border-bottom: 2px solid #1E293B; }
-        .subjects-table td { padding: 10px; border-bottom: 1px solid #1E293B; text-align: center; }
-        .sub-input { width: 70px; padding: 8px; background: #040610; border: 1px solid #334155; border-radius: 8px; color: #FFF; text-align: center; font-weight: 700; }
-        .sub-input:focus { border-color: var(--neon-color); }
-        .badge-coeff { background: #1E293B; padding: 4px 10px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; }
+        .subjects-table th { background: #060914; padding: 14px; text-align: center; color: var(--neon-color); font-weight: 700; border-bottom: 2px solid #1E293B; }
+        .subjects-table td { padding: 12px; border-bottom: 1px solid #1E293B; text-align: center; }
+        
+        /* حقول إدخال النقاط الذكية */
+        .sub-input { width: 75px; padding: 8px; background: #040610; border: 2px solid #334155; border-radius: 8px; color: #FFF; text-align: center; font-weight: 700; font-size: 1.05rem; }
+        .sub-input.score-pass { border-color: var(--neon-green) !important; color: var(--neon-green) !important; text-shadow: 0 0 5px rgba(57, 255, 20, 0.3); }
+        .sub-input.score-fail { border-color: var(--neon-red) !important; color: var(--neon-red) !important; text-shadow: 0 0 5px rgba(255, 49, 49, 0.3); }
 
+        .badge-coeff { background: #1E293B; padding: 4px 10px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; }
         .optional-switch { background: #161B33; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
 
-        .result-box { text-align: center; padding: 30px; background: rgba(0, 240, 255, 0.03); border: 3px solid var(--neon-color); border-radius: 20px; margin-top: 20px; box-shadow: 0 0 30px var(--border-glow); }
-        .result-val { font-size: 3.5rem; font-weight: 900; color: var(--neon-color); text-shadow: 0 0 25px var(--neon-color); margin: 15px 0; }
+        /* واجهة النتيجة الإجمالية الملونة */
+        .result-box { text-align: center; padding: 30px; background: rgba(6, 9, 20, 0.7); border: 3px solid var(--neon-color); border-radius: 20px; margin-top: 20px; box-shadow: 0 0 30px var(--border-glow); }
+        .result-val { font-size: 3.8rem; font-weight: 900; margin: 15px 0; }
+        .result-val.pass { color: var(--neon-green); text-shadow: 0 0 30px var(--neon-green); }
+        .result-val.fail { color: var(--neon-red); text-shadow: 0 0 30px var(--neon-red); }
         .status-text { font-size: 1.5rem; font-weight: 700; }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* مساحة مراجعة النقاط */
+        .review-section { margin-top: 30px; border-top: 2px dashed #334155; padding-top: 20px; text-align: right; }
+        .review-title { color: var(--neon-color); font-weight: 800; font-size: 1.3rem; margin-bottom: 15px; text-align: center; }
+        .text-pass { color: var(--neon-green) !important; font-weight: bold; }
+        .text-fail { color: var(--neon-red) !important; font-weight: bold; }
+
+        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @media (max-width: 600px) { .subjects-table th { font-size: 0.8rem; padding: 6px; } .sub-input { width: 55px; font-size: 0.9rem; } .container { padding: 15px; } }
     </style>
 </head>
@@ -60,12 +75,12 @@
 
     <div class="container" id="mainContainer">
         <div class="header">
-            <h1 id="appTitle">📊 نِظام حِساب المُعدّلات المطور</h1>
+            <h1 id="appTitle">📊 نظام المُعدّلات الرقمي الذكي ⚡</h1>
         </div>
 
         <!-- الخطوة 1: طلب الاسم -->
         <div class="step-panel active" id="step1">
-            <label for="userName">مرحباً بك في المنصة الرقمية! واش هو اسمك يا ؟</label>
+            <label for="userName">مرحباً بك في المنصة! واش هو اسمك يا بطل؟</label>
             <input type="text" id="userName" class="input-field" placeholder="اكتب اسمك هنا..." autocomplete="off">
             <div class="btn-group">
                 <button class="action-btn" onclick="goToStep2()">التالي ⚡</button>
@@ -74,12 +89,12 @@
 
         <!-- الخطوة 2: اختيار السنة الدراسية -->
         <div class="step-panel" id="step2">
-            <label id="welcomeLabel">يا هيثم، إختار وين تقرى:</label>
-            <div class="grid-options">
-                <div class="option-card" onclick="selectYear(1, this)">السنة الأولى متوسط</div>
-                <div class="option-card" onclick="selectYear(2, this)">السنة الثانية متوسط</div>
-                <div class="option-card" onclick="selectYear(3, this)">السنة الثالثة متوسط</div>
-                <div class="option-card" onclick="selectYear(4, this)">السنة الرابعة متوسط (BEM)</div>
+            <label id="welcomeLabel">اختر السنة الدراسية:</label>
+            <div class="grid-options" id="yearOptionsContainer">
+                <div class="option-card" data-y="1" onclick="selectYear(1, this)">السنة الأولى متوسط</div>
+                <div class="option-card" data-y="2" onclick="selectYear(2, this)">السنة الثانية متوسط</div>
+                <div class="option-card" data-y="3" onclick="selectYear(3, this)">السنة الثالثة متوسط</div>
+                <div class="option-card" data-y="4" onclick="selectYear(4, this)">السنة الرابعة متوسط (BEM)</div>
             </div>
             <div class="btn-group">
                 <button class="action-btn btn-secondary" onclick="goBack(1)">رجوع</button>
@@ -89,10 +104,8 @@
 
         <!-- الخطوة 3: اختيار الفصل أو الشهادة -->
         <div class="step-panel" id="step3">
-            <label>اختر نوع الحساب الذي تريده:</label>
-            <div class="grid-options" id="periodOptions">
-                <!-- سيتم ملؤها ديناميكياً بواسطة الجافاسكربت -->
-            </div>
+            <label>اختر نوع الحساب والفصل الفعلي:</label>
+            <div class="grid-options" id="periodOptions"></div>
             <div class="btn-group">
                 <button class="action-btn btn-secondary" onclick="goBack(2)">رجوع</button>
                 <button class="action-btn" onclick="goToStep4()">ابدأ إدخال النقاط 🔥</button>
@@ -101,46 +114,57 @@
 
         <!-- الخطوة 4: كشف وإدخال النقاط -->
         <div class="step-panel" id="step4">
-            <h3 style="text-align: center; margin-bottom: 15px; color: var(--neon-color);" id="tableTitle">كشف النقاط الفصلي</h3>
+            <h3 style="text-align: center; margin-bottom: 15px; color: var(--neon-color);" id="tableTitle">كشف النقاط</h3>
             
             <div class="optional-switch">
                 <span>هل تدرس مادة اللغة الأمازيغية؟</span>
-                <input type="checkbox" id="hasAmazigh" onchange="renderSubjectsTable()" style="width: 20px; height: 20px; cursor: pointer;">
+                <input type="checkbox" id="hasAmazigh" onchange="toggleAmazighData()" style="width: 20px; height: 20px; cursor: pointer;">
             </div>
             <div class="optional-switch" id="drawingContainer">
                 <span>هل تدرس التربية التشكيلية/الموسيقية؟</span>
-                <input type="checkbox" id="hasDrawing" checked onchange="renderSubjectsTable()" style="width: 20px; height: 20px; cursor: pointer;">
+                <input type="checkbox" id="hasDrawing" checked onchange="toggleDrawingData()" style="width: 20px; height: 20px; cursor: pointer;">
             </div>
 
             <div style="overflow-x: auto;">
                 <table class="subjects-table">
                     <thead>
-                        <tr id="tableHeaderRow">
-                            <!-- يتغير حسب نوع الحساب فصلي أو بيام -->
-                        </tr>
+                        <tr id="tableHeaderRow"></tr>
                     </thead>
-                    <tbody id="subjectsBody">
-                        <!-- ديناميكي -->
-                    </tbody>
+                    <tbody id="subjectsBody"></tbody>
                 </table>
             </div>
 
             <div class="btn-group">
                 <button class="action-btn btn-secondary" onclick="goBack(3)">رجوع</button>
-                <button class="action-btn" onclick="calculateFinalScore()">احسب المعدل الآن 🚀</button>
+                <button class="action-btn" onclick="calculateFinalScore()">احسب المعدل واعرض التقرير 🚀</button>
             </div>
         </div>
 
-        <!-- الخطوة 5: عرض النتيجة الخرافية -->
+        <!-- الخطوة 5: عرض النتيجة الخرافية والتقرير الشامل والذاكرة المكتوبة -->
         <div class="step-panel" id="step5">
             <div class="result-box">
-                <h2 id="congratsUser">بصحتك!</h2>
-                <p>معدلك الإجمالي النهائي هو:</p>
+                <h2 id="congratsUser">ألف مبروك!</h2>
+                <p>معدلك الإجمالي النهائي الحقيقي:</p>
                 <div class="result-val" id="finalGrade">00.00</div>
-                <div class="status-text" id="statusMessage">مليحا!</div>
+                <div class="status-text" id="statusMessage">ناجح!</div>
             </div>
+
+            <!-- تقرير عرض كافة النقاط التي تم إدخالها مع تلوينها تلقائياً -->
+            <div class="review-section">
+                <div class="review-title">📋 تفاصيل وثيقة النقاط التي قمت بكتابتها:</div>
+                <div style="overflow-x: auto;">
+                    <table class="subjects-table" style="margin-top:10px;">
+                        <thead>
+                            <tr id="reviewHeaderRow"></tr>
+                        </thead>
+                        <tbody id="reviewTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="btn-group">
-                <button class="action-btn" onclick="restartApp()">إعادة الحساب 🔄</button>
+                <button class="action-btn btn-secondary" onclick="goBack(4)">تعديل النقاط الحالية ✏️</button>
+                <button class="action-btn btn-danger" onclick="clearSavedMemory()">مسح الذاكرة بالكامل 🧹</button>
             </div>
         </div>
 
@@ -148,16 +172,14 @@
 
     <script>
         let userData = { name: "", year: 0, period: "" };
+        let scoresStorageKey = "ALGERIAN_BEM_SCORES_STORAGE";
         
-        // معاملات الطور المتوسط المعتمدة رسمياً في الجزائر
         const coefficientsData = {
             1: { arabic: 2, math: 2, french: 1, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
             2: { arabic: 3, math: 3, french: 2, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
             3: { arabic: 3, math: 3, french: 2, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
             4: { 
-                // الرابعة متوسط فصلي
                 fasp: { arabic: 5, math: 4, french: 3, english: 2, science: 2, physics: 2, history_geo: 3, islamic: 2, civic: 1, sport: 1, drawing: 1, amazigh: 2 },
-                // معاملات شهادة البيام الرسمية BEM
                 bem: { arabic: 5, math: 4, french: 3, english: 2, science: 2, physics: 2, history_geo: 3, islamic: 2, civic: 1, sport: 1, drawing: 1, amazigh: 2 }
             }
         };
@@ -169,19 +191,32 @@
             drawing: "الرسم / الموسيقى", amazigh: "اللغة الأمازيغية"
         };
 
-        // دالة توليد ألوان نيون لانهائية لتغيير شكل الموقع قاع في كل ضغطة
         function triggerInfiniteNeon() {
             const randomHue = Math.floor(Math.random() * 360);
-            const newNeon = `hsl(${randomHue}, 100%, 50%)`;
-            document.documentElement.style.setProperty('--neon-color', newNeon);
-            document.documentElement.style.setProperty('--border-glow', `rgba(${Math.random()*255}, ${Math.random()*255}, ${Math.random()*255}, 0.3)`);
+            document.documentElement.style.setProperty('--neon-color', `hsl(${randomHue}, 100%, 50%)`);
+        }
+
+        // دالة فحص وتلوين حقول الإدخال حية عند الكتابة (خضر أو حمر)
+        function colorizeInput(inputEl) {
+            let val = parseFloat(inputEl.value);
+            if(isNaN(val)) {
+                inputEl.classList.remove("score-pass", "score-fail");
+            } else if (val >= 10) {
+                inputEl.classList.add("score-pass");
+                inputEl.classList.remove("score-fail");
+            } else {
+                inputEl.classList.add("score-fail");
+                inputEl.classList.remove("score-pass");
+            }
+            saveCurrentInputsToMemory(); // حفظ فوري للنقاط في الذاكرة
         }
 
         function goToStep2() {
             const nameInput = document.getElementById("userName").value.trim();
             if(nameInput === "") { alert("من فضلك اكتب اسمك أولاً!"); return; }
             userData.name = nameInput;
-            document.getElementById("welcomeLabel").innerText = `يا ${userData.name}،أتب السنة لي تقرى فيها:`;
+            document.getElementById("welcomeLabel").innerText = `يا ${userData.name}، اختر السنة الدراسية الحالية:`;
+            saveCurrentInputsToMemory();
             switchPanel(1, 2);
         }
 
@@ -189,32 +224,37 @@
             userData.year = yearNum;
             document.querySelectorAll("#step2 .option-card").forEach(el => el.classList.remove("selected"));
             element.classList.add("selected");
+            saveCurrentInputsToMemory();
             triggerInfiniteNeon();
         }
 
         function goToStep3() {
             if(userData.year === 0) { alert("من فضلك اختر السنة الدراسية!"); return; }
-            
             const periodOptions = document.getElementById("periodOptions");
             periodOptions.innerHTML = "";
 
-            // إذا كان رابعة متوسط نزيدوله خيار شهادة البيام BEM
             if(userData.year === 4) {
                 periodOptions.innerHTML = `
-                    <div class="option-card" onclick="selectPeriod('1', this)">الفصل الأول</div>
-                    <div class="option-card" onclick="selectPeriod('2', this)">الفصل الثاني</div>
-                    <div class="option-card" onclick="selectPeriod('3', this)">الفصل الثالث</div>
-                    <div class="option-card" onclick="selectPeriod('bem', this)">📥 حساب معدل شهادة الـ BEM</div>
+                    <div class="option-card" data-p="1" onclick="selectPeriod('1', this)">الفصل الأول</div>
+                    <div class="option-card" data-p="2" onclick="selectPeriod('2', this)">الفصل الثاني</div>
+                    <div class="option-card" data-p="3" onclick="selectPeriod('3', this)">الفصل الثالث</div>
+                    <div class="option-card" data-p="bem" onclick="selectPeriod('bem', this)">📥 حساب معدل شهادة الـ BEM</div>
                 `;
-                document.getElementById("drawingContainer").style.display = "flex";
             } else {
                 periodOptions.innerHTML = `
-                    <div class="option-card" onclick="selectPeriod('1', this)">الفصل الأول</div>
-                    <div class="option-card" onclick="selectPeriod('2', this)">الفصل الثاني</div>
-                    <div class="option-card" onclick="selectPeriod('3', this)">الفصل الثالث</div>
+                    <div class="option-card" data-p="1" onclick="selectPeriod('1', this)">الفصل الأول</div>
+                    <div class="option-card" data-p="2" onclick="selectPeriod('2', this)">الفصل الثاني</div>
+                    <div class="option-card" data-p="3" onclick="selectPeriod('3', this)">الفصل الثالث</div>
                 `;
-                document.getElementById("drawingContainer").style.display = "flex";
             }
+
+            // استعادة الاختيار المحفوظ إن وُجد
+            let saved = getMemory();
+            if(saved && saved.period) {
+                let card = periodOptions.querySelector(`[data-p="${saved.period}"]`);
+                if(card) selectPeriod(saved.period, card);
+            }
+
             switchPanel(2, 3);
         }
 
@@ -222,50 +262,42 @@
             userData.period = p;
             document.querySelectorAll("#step3 .option-card").forEach(el => el.classList.remove("selected"));
             element.classList.add("selected");
+            saveCurrentInputsToMemory();
             triggerInfiniteNeon();
         }
 
         function goToStep4() {
-            if(!userData.period) { alert("من فضلك اختر الفصل أو نوع الحساب!"); return; }
-            
+            if(!userData.period) { alert("من فضلك اختر الفصل الدراسي!"); return; }
             if(userData.period === 'bem') {
-                document.getElementById("tableTitle").innerText = `حساب نقاط شهادة التعليم المتوسط (BEM) - يا ${userData.name}`;
-                document.getElementById("drawingContainer").style.display = "none"; // في البيام تحتسب الرسم كمادة عادية بنظام خاص أو مادة عادية حسب التعديل ونحن نعتمد نظام المعاملات والإنقاذ المباشر
+                document.getElementById("tableTitle").innerText = `نقاط شهادة التعليم المتوسط (BEM) - يا ${userData.name}`;
+                document.getElementById("drawingContainer").style.display = "none";
             } else {
                 document.getElementById("tableTitle").innerText = `نقاط الفصل ${userData.period} - الطور ${userData.year} متوسط`;
+                document.getElementById("drawingContainer").style.display = "flex";
             }
 
             renderSubjectsTable();
             switchPanel(3, 4);
         }
 
+        function toggleAmazighData() { saveCurrentInputsToMemory(); renderSubjectsTable(); }
+        function toggleDrawingData() { saveCurrentInputsToMemory(); renderSubjectsTable(); }
+
         function renderSubjectsTable() {
             const headerRow = document.getElementById("tableHeaderRow");
             const body = document.getElementById("subjectsBody");
-            
             body.innerHTML = "";
-            triggerInfiniteNeon();
 
-            // تخصيص عناوين الجدول حسب نوع الحساب (فصلي أو شهادة)
             if(userData.period === 'bem') {
-                headerRow.innerHTML = `
-                    <th>المادة</th>
-                    <th>المعامل</th>
-                    <th>نقطة الشهادة (من 20)</th>
-                `;
+                headerRow.innerHTML = `<th>المادة</th><th>المعامل</th><th>نقطة الشهادة (من 20)</th>`;
             } else {
-                headerRow.innerHTML = `
-                    <th>المادة</th>
-                    <th>المعامل</th>
-                    <th>مراقبة مستمرة</th>
-                    <th>الفرض</th>
-                    <th>الاختبار</th>
-                `;
+                headerRow.innerHTML = `<th>المادة</th><th>المعامل</th><th>تقويم مستمر</th><th>الفرض</th><th>الاختبار</th>`;
             }
 
-            // جلب قائمة المواد المناسبة للسنة
             let coeffs = (userData.year === 4) ? coefficientsData[4].fasp : coefficientsData[userData.year];
             if(userData.period === 'bem') coeffs = coefficientsData[4].bem;
+
+            let saved = getMemory();
 
             for (let subKey in coeffs) {
                 if(subKey === 'amazigh' && !document.getElementById("hasAmazigh").checked) continue;
@@ -273,96 +305,143 @@
 
                 const tr = document.createElement("tr");
                 
+                // جلب القيم القديمة المحفوظة في ذاكرة الكومبيوتر للتعرف عليها تلقائياً
+                let oldExam = (saved && saved.scores && saved.scores[subKey] && saved.scores[subKey].exam) ? saved.scores[subKey].exam : "";
+                let oldCa = (saved && saved.scores && saved.scores[subKey] && saved.scores[subKey].ca) ? saved.scores[subKey].ca : "";
+                let oldQuiz = (saved && saved.scores && saved.scores[subKey] && saved.scores[subKey].quiz) ? saved.scores[subKey].quiz : "";
+
                 if(userData.period === 'bem') {
                     tr.innerHTML = `
                         <td style="font-weight:bold;">${subjectNames[subKey]}</td>
                         <td><span class="badge-coeff">${coeffs[subKey]}</span></td>
-                        <td><input type="number" step="0.01" min="0" max="20" class="sub-input score-field" data-subject="${subKey}" data-type="exam"></td>
+                        <td><input type="number" step="0.01" value="${oldExam}" class="sub-input score-field" data-subject="${subKey}" data-type="exam" oninput="colorizeInput(this)"></td>
                     `;
                 } else {
                     tr.innerHTML = `
                         <td style="font-weight:bold;">${subjectNames[subKey]}</td>
                         <td><span class="badge-coeff">${coeffs[subKey]}</span></td>
-                        <td><input type="number" step="0.01" min="0" max="20" class="sub-input" data-subject="${subKey}" data-type="ca"></td>
-                        <td><input type="number" step="0.01" min="0" max="20" class="sub-input" data-subject="${subKey}" data-type="quiz"></td>
-                        <td><input type="number" step="0.01" min="0" max="20" class="sub-input" data-subject="${subKey}" data-type="exam"></td>
+                        <td><input type="number" step="0.01" value="${oldCa}" class="sub-input" data-subject="${subKey}" data-type="ca" oninput="colorizeInput(this)"></td>
+                        <td><input type="number" step="0.01" value="${oldQuiz}" class="sub-input" data-subject="${subKey}" data-type="quiz" oninput="colorizeInput(this)"></td>
+                        <td><input type="number" step="0.01" value="${oldExam}" class="sub-input" data-subject="${subKey}" data-type="exam" oninput="colorizeInput(this)"></td>
                     `;
                 }
                 body.appendChild(tr);
+                
+                // تلوين الحقول بعد استرجاعها مباشرة
+                tr.querySelectorAll("input").forEach(inp => colorizeInput(inp));
             }
         }
 
+        // حفظ قاع المعطيات الحالية في LocalStorage
+        function saveCurrentInputsToMemory() {
+            let currentScores = {};
+            document.querySelectorAll("#subjectsBody tr").forEach(tr => {
+                let examInp = tr.querySelector('[data-type="exam"]');
+                if(!examInp) return;
+                let subKey = examInp.getAttribute("data-subject");
+                
+                currentScores[subKey] = {
+                    exam: examInp.value,
+                    ca: tr.querySelector('[data-type="ca"]') ? tr.querySelector('[data-type="ca"]').value : "",
+                    quiz: tr.querySelector('[data-type="quiz"]') ? tr.querySelector('[data-type="quiz"]').value : ""
+                };
+            });
+
+            let fullPackage = {
+                name: document.getElementById("userName").value,
+                year: userData.year,
+                period: userData.period,
+                hasAmazigh: document.getElementById("hasAmazigh").checked,
+                hasDrawing: document.getElementById("hasDrawing").checked,
+                scores: currentScores
+            };
+            localStorage.setItem(scoresStorageKey, JSON.stringify(fullPackage));
+        }
+
+        function getMemory() {
+            let data = localStorage.getItem(scoresStorageKey);
+            return data ? JSON.parse(data) : null;
+        }
+
         function calculateFinalScore() {
+            saveCurrentInputsToMemory(); // تأكيد الحفظ
             let totalPoints = 0;
             let totalCoeffs = 0;
-            let inputs = document.querySelectorAll("#subjectsBody tr");
             let error = false;
 
             let coeffs = (userData.year === 4) ? coefficientsData[4].fasp : coefficientsData[userData.year];
             if(userData.period === 'bem') coeffs = coefficientsData[4].bem;
 
-            inputs.forEach(tr => {
+            const reviewBody = document.getElementById("reviewTableBody");
+            const reviewHeaderRow = document.getElementById("reviewHeaderRow");
+            reviewBody.innerHTML = "";
+
+            if(userData.period === 'bem') {
+                reviewHeaderRow.innerHTML = `<th>المادة</th><th>المعامل</th><th>الدرجة المكتوبة</th>`;
+            } else {
+                reviewHeaderRow.innerHTML = `<th>المادة</th><th>المعامل</th><th>تقويم</th><th>فرض</th><th>اختبار</th><th>معدل المادة</th>`;
+            }
+
+            document.querySelectorAll("#subjectsBody tr").forEach(tr => {
                 if(error) return;
-                
-                // جلب حقول الإدخال للسطر الحالي
                 let examInput = tr.querySelector('[data-type="exam"]');
                 let subKey = examInput.getAttribute("data-subject");
                 let coeff = coeffs[subKey];
-
                 let examVal = parseFloat(examInput.value);
 
                 if(isNaN(examVal) || examVal < 0 || examVal > 20) { error = true; return; }
 
+                let revTr = document.createElement("tr");
+
                 if(userData.period === 'bem') {
-                    // حساب شهادة البيام: نقطة المادة مباشرة مضروبة في المعامل
-                    // ملاحظة مادة الرسم في البيام: تحتسب فوق 10 كنقاط إضافية لا تقسم على معاملها في بعض الأنظمة، ولكن لتفادي التعقيد نعتمد الحساب المباشر العادل لجميع المواد الأساسية
+                    let cls = examVal >= 10 ? 'text-pass' : 'text-fail';
+                    revTr.innerHTML = `<td>${subjectNames[subKey]}</td><td><span class="badge-coeff">${coeff}</span></td><td class="${cls}">${examVal.toFixed(2)}</td>`;
                     totalPoints += examVal * coeff;
                     totalCoeffs += coeff;
                 } else {
-                    // الحساب الفصلي المعتمد بالجزائر
-                    let caInput = tr.querySelector('[data-type="ca"]');
-                    let quizInput = tr.querySelector('[data-type="quiz"]');
-
-                    let caVal = parseFloat(caInput.value);
-                    let quizVal = parseFloat(quizInput.value);
+                    let caVal = parseFloat(tr.querySelector('[data-type="ca"]').value);
+                    let quizVal = parseFloat(tr.querySelector('[data-type="quiz"]').value);
 
                     if(isNaN(caVal) || caVal < 0 || caVal > 20 || isNaN(quizVal) || quizVal < 0 || quizVal > 20) { error = true; return; }
 
-                    // 1. معدل التقويم والفرض
                     let subAvgActivity = (caVal + quizVal) / 2;
-                    // 2. معدل المادة الفصلي = (معدل الأنشطة + الاختبار*2) / 3
                     let subjectFinalAvg = (subAvgActivity + (examVal * 2)) / 3;
 
-                    // معالجة مادة الرسم الفصلي المعتمدة (تحتسب النقاط فوق 10 كبونيس دون معامل في بعض المؤسسات، وهنا ندمجها بنظام المعامل العادي المبسط لضمان عدم حدوث خطأ)
                     totalPoints += subjectFinalAvg * coeff;
                     totalCoeffs += coeff;
+
+                    let cCls = caVal >= 10 ? 'text-pass' : 'text-fail';
+                    let qCls = quizVal >= 10 ? 'text-pass' : 'text-fail';
+                    let eCls = examVal >= 10 ? 'text-pass' : 'text-fail';
+                    let fCls = subjectFinalAvg >= 10 ? 'text-pass' : 'text-fail';
+
+                    revTr.innerHTML = `
+                        <td>${subjectNames[subKey]}</td><td><span class="badge-coeff">${coeff}</span></td>
+                        <td class="${cCls}">${caVal.toFixed(2)}</td><td class="${qCls}">${quizVal.toFixed(2)}</td>
+                        <td class="${eCls}">${examVal.toFixed(2)}</td><td class="${fCls}">${subjectFinalAvg.toFixed(2)}</td>
+                    `;
                 }
+                reviewBody.appendChild(revTr);
             });
 
-            if(error) { alert("تنبيه: يرجى ملء جميع النقاط بشكل صحيح (بين 0 و 20)!"); return; }
+            if(error) { alert("خطأ: يرجى ملء وتصحيح كافة حقول وعلامات المواد بين 0 و 20!"); return; }
 
             let finalAvg = totalPoints / totalCoeffs;
-            document.getElementById("finalGrade").innerText = finalAvg.toFixed(2);
+            let gradeEl = document.getElementById("finalGrade");
+            gradeEl.innerText = finalAvg.toFixed(2);
 
-            // تحديد رسالة الحالة والميزة لقائلها
-            let statusText = "";
-            let congrads = `ألف مبروك يا ${userData.name}! ✨`;
-
-            if(finalAvg >= 18) { statusText = "ناجح بميزة ممتاز! (عبقري الطور المتوسط) 👑"; }
-            else if(finalAvg >= 16) { statusText = "ناجح بميزة جيد جداً! 🌟"; }
-            else if(finalAvg >= 14) { statusText = "ناجح بميزة جيد! 👍"; }
-            else if(finalAvg >= 12) { statusText = "ناجح بميزة قريب من الجيد! 😉"; }
-            else if(finalAvg >= 10) { statusText = "ناجح ومبروك الانتقال! 🎓"; }
-            else { 
-                congrads = `معليش يا ${userData.name}، لا تيأس! 💪`;
-                statusText = "لم توفق هذه المرة، ركز واخدم كثر في المرة القادمة!"; 
+            // تلوين النتيجة النهائية الكبرى
+            if(finalAvg >= 10) {
+                gradeEl.className = "result-val pass";
+                document.getElementById("statusMessage").innerText = finalAvg >= 16 ? "ناجح بتفوق وامتياز باهر! 🏆" : "ناجح ومبروك الانتقال! 🎓";
+                document.getElementById("congratsUser").innerText = `ألف مبروك يا ${userData.name}! ✨`;
+            } else {
+                gradeEl.className = "result-val fail";
+                document.getElementById("statusMessage").innerText = "النتيجة دون المعدل المطلوب، يمكنك التعويض!";
+                document.getElementById("congratsUser").innerText = `حظ أوفر في المرة القادمة يا ${userData.name} 💪`;
             }
 
-            document.getElementById("congratsUser").innerText = congrads;
-            document.getElementById("statusMessage").innerText = statusText;
-
             switchPanel(4, 5);
-            triggerInfiniteNeon();
         }
 
         function switchPanel(from, to) {
@@ -371,16 +450,38 @@
             triggerInfiniteNeon();
         }
 
-        function goBack(toStep) {
-            switchPanel(toStep + 1, toStep);
+        function goBack(toStep) { switchPanel(toStep + 1, toStep); }
+
+        function clearSavedMemory() {
+            if(confirm("هل أنت متأكد من مسح كافة النقاط المكتوبة والبيانات المحفوظة؟")) {
+                localStorage.removeItem(scoresStorageKey);
+                document.getElementById("userName").value = "";
+                document.getElementById("hasAmazigh").checked = false;
+                document.getElementById("hasDrawing").checked = true;
+                userData = { name: "", year: 0, period: "" };
+                document.querySelectorAll(".option-card").forEach(el => el.classList.remove("selected"));
+                switchPanel(5, 1);
+            }
         }
 
-        function restartApp() {
-            document.getElementById("userName").value = "";
-            userData = { name: "", year: 0, period: "" };
-            document.querySelectorAll(".option-card").forEach(el => el.classList.remove("selected"));
-            document.getElementById("hasAmazigh").checked = false;
-            switchPanel(5, 1);
+        // كود استعادة الذاكرة الفوري عند فتح الموقع
+        window.onload = function() {
+            let saved = getMemory();
+            if(saved && saved.name) {
+                document.getElementById("userName").value = saved.name;
+                userData.name = saved.name;
+                
+                if(saved.year) {
+                    userData.year = saved.year;
+                    let yearCard = document.querySelector(`[data-y="${saved.year}"]`);
+                    if(yearCard) yearCard.classList.add("selected");
+                }
+                if(saved.hasAmazigh) document.getElementById("hasAmazigh").checked = saved.hasAmazigh;
+                if(saved.hasDrawing !== undefined) document.getElementById("hasDrawing").checked = saved.hasDrawing;
+                
+                // نقله مباشرة لخطوة اختيار الفصل لتوفير الوقت
+                goToStep3();
+            }
         }
     </script>
 </body>
