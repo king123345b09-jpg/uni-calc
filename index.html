@@ -15,7 +15,7 @@
             --primary-gold: #f59e0b;
             --gold-glow: rgba(245, 158, 11, 0.4);
             --accent-blue: #2563eb;
-            --cyan-glow: #06b6d4;
+            --light-blue: #38bdf8; /* أزرق فاتح لشريط التقدم */
             --text-light: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -41,7 +41,7 @@
             position: relative;
         }
 
-        /* 🌟 خلفية حية ومتحركة بأشكال هندسية عائمة ومتنوعة 🌟 */
+        /* خلفية حية ومتحركة */
         .bg-shapes {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -57,7 +57,6 @@
             filter: drop-shadow(0 0 10px var(--gold-glow));
         }
 
-        /* تنويع الأشكال والحركات */
         .shape-circle { border-radius: 50%; border: 2px solid var(--primary-gold); }
         .shape-square { border: 2px solid var(--accent-blue); transform: rotate(45deg); }
         .shape-triangle {
@@ -80,7 +79,6 @@
             100% { transform: translate(-40px, -50px) rotate(360deg) scale(0.9); }
         }
 
-        /* 🌟 بطاقات تفاعلية تتلون حوافها عند تحريك الفأرة 🌟 */
         .glow-box {
             background: var(--bg-card);
             border: 1.5px solid rgba(245, 158, 11, 0.2);
@@ -169,51 +167,50 @@
         .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 850px) { .grid-layout { grid-template-columns: 1fr; } }
 
-        /* التايمر الدائري */
+        /* التايمر الدائري المعدل */
         .timer-card { text-align: center; display: flex; flex-direction: column; align-items: center; }
         
         .circle-timer-wrapper {
-            position: relative; width: 200px; height: 200px;
+            position: relative; width: 220px; height: 220px;
             margin: 15px 0; display: flex; align-items: center; justify-content: center;
         }
 
         .circle-timer-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .circle-bg { fill: none; stroke: #090d16; stroke-width: 10; }
+        .circle-bg { fill: none; stroke: #090d16; stroke-width: 12; }
 
         .circle-progress {
             fill: none; stroke: var(--primary-gold);
-            stroke-width: 10; stroke-linecap: round;
-            stroke-dasharray: 534; stroke-dashoffset: 0;
+            stroke-width: 12; stroke-linecap: round;
             transition: stroke-dashoffset 1s linear;
-            filter: drop-shadow(0px 0px 6px var(--primary-gold));
+            filter: drop-shadow(0px 0px 8px var(--primary-gold));
         }
 
         .timer-display-inner {
-            position: absolute; font-size: 2.6rem; font-weight: 900;
+            position: absolute; font-size: 2.8rem; font-weight: 900;
             color: #fff; text-shadow: 0 0 10px var(--primary-gold);
         }
 
-        /* 🌟 تنسيق الأهداف والتقدم مع جعل الكلمة والنسبة في الوسط 🌟 */
-        .progress-bar-bg {
-            background: #090d16; height: 16px; border-radius: 10px;
-            overflow: hidden; border: 1px solid rgba(37, 99, 235, 0.4);
-            position: relative; margin: 15px 0 8px 0;
+        /* 🌟 شريط التقدم الأزرق الفاتح مع النص بالوسط تماماً 🌟 */
+        .progress-bar-container {
+            background: #090d16; height: 32px; border-radius: 10px;
+            overflow: hidden; border: 1px solid var(--light-blue);
+            position: relative; margin: 15px 0 15px 0;
+            display: flex; align-items: center; justify-content: center;
         }
 
         .progress-bar-fill {
+            position: absolute; top: 0; right: 0;
             height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--accent-blue), var(--primary-gold));
-            box-shadow: 0 0 8px var(--primary-gold);
+            background: var(--light-blue);
+            box-shadow: 0 0 10px var(--light-blue);
+            transition: width 0.4s ease;
         }
 
-        .progress-stats-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            text-align: center;
+        .progress-bar-text {
+            position: relative; z-index: 2;
+            color: #ffffff; font-weight: bold; font-size: 0.95rem;
+            text-shadow: 0 0 4px #000;
+            display: flex; gap: 8px; justify-content: center; align-items: center;
         }
 
         .goals-list { list-style: none; max-height: 200px; overflow-y: auto; text-align: right; }
@@ -262,7 +259,6 @@
 </head>
 <body>
 
-    <!-- أشكال هندسية متحركة متنوعة في الخلفية -->
     <div class="bg-shapes">
         <div class="shape shape-circle s1"></div>
         <div class="shape shape-square s2"></div>
@@ -328,8 +324,8 @@
                 
                 <div class="circle-timer-wrapper">
                     <svg class="circle-timer-svg">
-                        <circle class="circle-bg" cx="100" cy="100" r="85"></circle>
-                        <circle class="circle-progress" id="circleProgress" cx="100" cy="100" r="85"></circle>
+                        <circle class="circle-bg" cx="110" cy="110" r="90"></circle>
+                        <circle class="circle-progress" id="circleProgress" cx="110" cy="110" r="90"></circle>
                     </svg>
                     <div class="timer-display-inner" id="timerDisplay">25:00</div>
                 </div>
@@ -353,14 +349,13 @@
                     <button class="btn" style="padding: 6px 12px; font-size: 0.85rem;" onclick="openGoalModal()"><i class="fa-solid fa-plus"></i> إضافة هدف</button>
                 </div>
 
-                <div class="progress-bar-bg">
+                <!-- 🌟 شريط أزرق فاتح وبداخله النص والنسبة في السنتر 🌟 -->
+                <div class="progress-bar-container">
                     <div class="progress-bar-fill" id="progressBar"></div>
-                </div>
-
-                <!-- 🌟 النسبة وكلمة مكتمل مصطفتان في الوسط تماماً 🌟 -->
-                <div class="progress-stats-row">
-                    <span id="progressText" style="color: var(--text-muted);">0 / 0 مكتمل</span>
-                    <span id="progressPercent" style="color: var(--primary-gold); font-weight: bold;">(0%)</span>
+                    <div class="progress-bar-text">
+                        <span id="progressText">0/0 مكتمل</span>
+                        <span id="progressPercent">(0%)</span>
+                    </div>
                 </div>
 
                 <ul class="goals-list" id="goalsList"></ul>
@@ -405,9 +400,17 @@
         let totalSeconds = 0;
         let sessionInitialSeconds = 0;
         let isPaused = false;
-        const maxCircleOffset = 534;
+
+        // حساب المحيط بدقة لدائرة نصف قطرها 90 (2 * PI * 90)
+        const circleRadius = 90;
+        const circleCircumference = 2 * Math.PI * circleRadius;
 
         window.onload = function() {
+            // تهيئة الدائرة بالقيم الحسابية المظبوطة
+            const circleProgress = document.getElementById('circleProgress');
+            circleProgress.style.strokeDasharray = circleCircumference;
+            circleProgress.style.strokeDashoffset = 0;
+
             loadAccountsFromStorage();
             const lastActiveIndex = localStorage.getItem('last_active_account');
             
@@ -531,7 +534,7 @@
             document.getElementById('mainDashboard').style.display = 'none';
         }
 
-        // المؤقت التناقصي
+        /* إصلاح المؤقت والتصغير التدريجي للدائرة */
         function handleStartTimer() {
             const minsInput = parseInt(document.getElementById('customMinutes').value);
             
@@ -547,6 +550,7 @@
             document.getElementById('stopBtn').style.display = 'inline-flex';
 
             isPaused = false;
+            if(timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(updateTimer, 1000);
         }
 
@@ -565,9 +569,9 @@
             document.getElementById('timerDisplay').innerText = 
                 `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 
-            /* جعل الدائرة تنقص وتصغر كلما مر الوقت */
+            /* معادلة تناقص الدائرة بدقة */
             const progressRatio = totalSeconds / sessionInitialSeconds;
-            const offset = maxCircleOffset * (1 - progressRatio);
+            const offset = circleCircumference * (1 - progressRatio);
             document.getElementById('circleProgress').style.strokeDashoffset = offset;
         }
 
@@ -685,7 +689,7 @@
             const percent = total === 0 ? 0 : Math.round((completedCount / total) * 100);
             document.getElementById('progressBar').style.width = `${percent}%`;
             document.getElementById('progressPercent').innerText = `(${percent}%)`;
-            document.getElementById('progressText').innerText = `${completedCount} / ${total} مكتمل`;
+            document.getElementById('progressText').innerText = `${completedCount}/${total} مكتمل`;
         }
     </script>
 </body>
