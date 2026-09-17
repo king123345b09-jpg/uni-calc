@@ -10,15 +10,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #020b18;
-            --bg-card: rgba(10, 25, 47, 0.85);
-            --primary-gold: #ffd700;
-            --gold-glow: rgba(255, 215, 0, 0.6);
-            --deep-blue: #0a192f;
-            --accent-blue: #0052cc;
-            --light-blue: #64ffda;
-            --text-light: #f1f5f9;
-            --text-muted: #8892b0;
+            --bg-dark: #030712;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --primary-gold: #f59e0b;
+            --gold-glow: rgba(245, 158, 11, 0.4);
+            --accent-blue: #2563eb;
+            --cyan-glow: #06b6d4;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
         }
 
         * {
@@ -26,7 +25,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.3s ease;
         }
 
         body {
@@ -42,54 +41,59 @@
             position: relative;
         }
 
-        /* 🌟 خلفية حية ومتحركة بفقاعات وأشكال تفاعلية بالذهبي والأزرق 🌟 */
-        .bg-bubbles {
+        /* 🌟 خلفية حية ومتحركة بأشكال هندسية عائمة ومتنوعة 🌟 */
+        .bg-shapes {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             overflow: hidden;
-            background: radial-gradient(circle at center, #0a192f 0%, #020b18 100%);
+            background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
         }
 
-        .bubble {
+        .shape {
             position: absolute;
-            list-style: none;
-            display: block;
-            border-radius: 50%;
-            bottom: -150px;
-            animation: floatUp 15s infinite linear;
-            backdrop-filter: blur(2px);
+            opacity: 0.25;
+            animation: floatMove 20s infinite ease-in-out alternate;
+            filter: drop-shadow(0 0 10px var(--gold-glow));
         }
 
-        .bubble:nth-child(1) { left: 10%; width: 80px; height: 80px; background: rgba(255, 215, 0, 0.15); border: 1px solid var(--primary-gold); animation-duration: 12s; }
-        .bubble:nth-child(2) { left: 20%; width: 30px; height: 30px; background: rgba(0, 82, 204, 0.25); border: 1px solid var(--accent-blue); animation-duration: 8s; animation-delay: 1s; }
-        .bubble:nth-child(3) { left: 35%; width: 100px; height: 100px; background: rgba(255, 215, 0, 0.08); border: 1px solid var(--primary-gold); animation-duration: 18s; }
-        .bubble:nth-child(4) { left: 50%; width: 50px; height: 50px; background: rgba(0, 82, 204, 0.2); animation-duration: 10s; }
-        .bubble:nth-child(5) { left: 65%; width: 120px; height: 120px; background: rgba(255, 215, 0, 0.1); border: 1px solid var(--primary-gold); animation-duration: 14s; }
-        .bubble:nth-child(6) { left: 80%; width: 40px; height: 40px; background: rgba(0, 82, 204, 0.3); animation-duration: 9s; }
-        .bubble:nth-child(7) { left: 90%; width: 70px; height: 70px; background: rgba(255, 215, 0, 0.12); border: 1px solid var(--primary-gold); animation-duration: 11s; }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-1200px) rotate(360deg); opacity: 0; }
+        /* تنويع الأشكال والحركات */
+        .shape-circle { border-radius: 50%; border: 2px solid var(--primary-gold); }
+        .shape-square { border: 2px solid var(--accent-blue); transform: rotate(45deg); }
+        .shape-triangle {
+            width: 0; height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 45px solid var(--primary-gold);
+            background: none !important;
         }
 
-        /* 🌟 بطاقات تفاعلية بحواف تضيء عند حركة الماوس 🌟 */
+        .s1 { top: 10%; left: 15%; width: 60px; height: 60px; animation-duration: 18s; }
+        .s2 { top: 70%; left: 80%; width: 80px; height: 80px; animation-duration: 22s; }
+        .s3 { top: 40%; left: 85%; animation-duration: 15s; }
+        .s4 { top: 85%; left: 20%; width: 50px; height: 50px; animation-duration: 25s; }
+        .s5 { top: 20%; left: 70%; width: 70px; height: 70px; animation-duration: 19s; }
+
+        @keyframes floatMove {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            50% { transform: translate(60px, 40px) rotate(180deg) scale(1.15); }
+            100% { transform: translate(-40px, -50px) rotate(360deg) scale(0.9); }
+        }
+
+        /* 🌟 بطاقات تفاعلية تتلون حوافها عند تحريك الفأرة 🌟 */
         .glow-box {
             background: var(--bg-card);
-            border: 2px solid rgba(255, 215, 0, 0.25);
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
+            border: 1.5px solid rgba(245, 158, 11, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
             position: relative;
         }
 
         .glow-box:hover {
             border-color: var(--primary-gold);
-            box-shadow: 0 0 25px var(--gold-glow), inset 0 0 15px rgba(255, 215, 0, 0.1);
-            transform: translateY(-4px);
+            box-shadow: 0 0 20px var(--gold-glow), inset 0 0 10px rgba(245, 158, 11, 0.1);
         }
 
         .step-card {
@@ -99,22 +103,21 @@
             animation: fadeIn 0.5s ease-out;
         }
 
-        /* صورة البروفايل */
         .avatar-container {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 15px;
         }
 
         .avatar-box {
             width: 100%; height: 100%;
             border-radius: 50%;
-            border: 3px solid var(--primary-gold);
+            border: 2px solid var(--primary-gold);
             background: var(--accent-blue);
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
-            box-shadow: 0 0 20px var(--gold-glow);
+            box-shadow: 0 0 15px var(--gold-glow);
         }
 
         .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
@@ -122,120 +125,127 @@
         .avatar-upload-btn {
             position: absolute; bottom: 0; right: 0;
             background: var(--primary-gold); color: #000;
-            width: 32px; height: 32px; border-radius: 50%;
+            width: 28px; height: 28px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 0.9rem;
+            cursor: pointer; font-size: 0.85rem;
         }
 
         h2, h3 { color: var(--primary-gold); margin-bottom: 15px; }
-        p { font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; }
 
         input[type="text"], input[type="number"], select {
-            width: 100%; padding: 14px;
-            border-radius: 12px;
-            background: var(--deep-blue);
+            width: 100%; padding: 12px;
+            border-radius: 10px;
+            background: #090d16;
             border: 1px solid var(--accent-blue);
-            color: #fff; font-size: 1.05rem; outline: none;
-            margin-bottom: 18px; text-align: center;
+            color: #fff; font-size: 1rem; outline: none;
+            margin-bottom: 15px; text-align: center;
         }
 
         input:focus, select:focus {
             border-color: var(--primary-gold);
-            box-shadow: 0 0 12px var(--gold-glow);
+            box-shadow: 0 0 10px var(--gold-glow);
         }
 
         .btn {
-            background: linear-gradient(45deg, var(--primary-gold), #ffae00);
-            color: #000; border: none; padding: 12px 30px;
-            font-size: 1.05rem; font-weight: bold; border-radius: 12px;
-            cursor: pointer; box-shadow: 0 4px 15px var(--gold-glow);
+            background: linear-gradient(45deg, var(--primary-gold), #d97706);
+            color: #000; border: none; padding: 10px 24px;
+            font-size: 1rem; font-weight: bold; border-radius: 10px;
+            cursor: pointer; box-shadow: 0 4px 12px var(--gold-glow);
             display: inline-flex; align-items: center; gap: 8px; justify-content: center;
         }
 
-        .btn:hover { transform: scale(1.05); }
-        .btn-secondary { background: transparent; border: 1.5px solid var(--accent-blue); color: #fff; }
-        .btn-danger { background: #e74c3c; color: #fff; }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-secondary { background: transparent; border: 1.5px solid var(--accent-blue); color: #fff; box-shadow: none; }
+        .btn-danger { background: #ef4444; color: #fff; box-shadow: none; }
 
-        /* الشاشة الرئيسية */
+        /* الواجهة الرئيسية */
         #mainDashboard { display: none; width: 95%; max-width: 1100px; }
 
         .dashboard-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 25px; padding: 18px 25px;
+            margin-bottom: 20px; padding: 15px 20px;
         }
 
-        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 850px) { .grid-layout { grid-template-columns: 1fr; } }
 
-        /* 🌟 التايمر الدائري المستقبلي بالذهبي والأزرق 🌟 */
+        /* التايمر الدائري */
         .timer-card { text-align: center; display: flex; flex-direction: column; align-items: center; }
         
         .circle-timer-wrapper {
-            position: relative; width: 220px; height: 220px;
+            position: relative; width: 200px; height: 200px;
             margin: 15px 0; display: flex; align-items: center; justify-content: center;
         }
 
         .circle-timer-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .circle-bg { fill: none; stroke: var(--deep-blue); stroke-width: 10; }
+        .circle-bg { fill: none; stroke: #090d16; stroke-width: 10; }
 
         .circle-progress {
             fill: none; stroke: var(--primary-gold);
             stroke-width: 10; stroke-linecap: round;
             stroke-dasharray: 565; stroke-dashoffset: 0;
             transition: stroke-dashoffset 1s linear;
-            filter: drop-shadow(0px 0px 8px var(--primary-gold));
+            filter: drop-shadow(0px 0px 6px var(--primary-gold));
         }
 
         .timer-display-inner {
-            position: absolute; font-size: 2.8rem; font-weight: 900;
-            color: #fff; text-shadow: 0 0 15px var(--primary-gold);
+            position: absolute; font-size: 2.6rem; font-weight: 900;
+            color: #fff; text-shadow: 0 0 10px var(--primary-gold);
         }
 
-        /* الأهداف وشريط التقدم */
+        /* 🌟 إصلاح تنسيق الأهداف وشريط التقدم ونصوص المكتمل والنسبة 🌟 */
         .progress-bar-bg {
-            background: var(--deep-blue); height: 22px; border-radius: 11px;
-            overflow: hidden; border: 1px solid var(--accent-blue);
-            position: relative; margin: 15px 0;
+            background: #090d16; height: 16px; border-radius: 10px;
+            overflow: hidden; border: 1px solid rgba(37, 99, 235, 0.4);
+            position: relative; margin: 15px 0 8px 0;
         }
 
         .progress-bar-fill {
             height: 100%; width: 0%;
             background: linear-gradient(90deg, var(--accent-blue), var(--primary-gold));
-            box-shadow: 0 0 10px var(--primary-gold);
+            box-shadow: 0 0 8px var(--primary-gold);
         }
 
-        .goals-list { list-style: none; max-height: 220px; overflow-y: auto; text-align: right; }
+        .progress-stats-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            padding: 0 2px;
+        }
+
+        .goals-list { list-style: none; max-height: 200px; overflow-y: auto; text-align: right; }
         .goal-item {
-            background: var(--deep-blue); padding: 12px; border-radius: 10px;
+            background: #090d16; padding: 10px 14px; border-radius: 8px;
             margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(0, 82, 204, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
         .goal-item:hover { border-color: var(--primary-gold); }
-        .goal-item.completed span { text-decoration: line-through; opacity: 0.6; }
+        .goal-item.completed span { text-decoration: line-through; opacity: 0.5; }
 
-        /* قسم الإحصائيات والرسم البياني */
-        .stats-section { grid-column: 1 / -1; margin-top: 10px; }
+        /* الإحصائيات */
+        .stats-section { grid-column: 1 / -1; }
 
         .chart-container {
             display: flex; justify-content: space-around; align-items: flex-end;
-            height: 200px; padding-top: 20px; background: var(--deep-blue);
-            border-radius: 16px; border: 1px solid rgba(255, 215, 0, 0.2); margin-top: 15px;
+            height: 180px; padding-top: 15px; background: #090d16;
+            border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.15); margin-top: 10px;
         }
 
         .bar-wrapper { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; width: 12%; }
         .bar {
-            width: 100%; max-width: 35px;
+            width: 100%; max-width: 30px;
             background: linear-gradient(to top, var(--accent-blue), var(--primary-gold));
-            border-radius: 6px 6px 0 0; min-height: 4px;
-            box-shadow: 0 0 8px var(--gold-glow);
+            border-radius: 4px 4px 0 0; min-height: 4px;
         }
 
-        .bar-label { font-size: 0.85rem; margin-top: 8px; color: var(--text-muted); }
+        .bar-label { font-size: 0.8rem; margin-top: 6px; color: var(--text-muted); }
         .bar-value { font-size: 0.75rem; color: var(--primary-gold); margin-bottom: 4px; }
 
         .account-card {
-            background: var(--deep-blue); border: 1px solid var(--accent-blue);
-            padding: 12px; border-radius: 12px; margin-bottom: 12px;
+            background: #090d16; border: 1px solid rgba(37, 99, 235, 0.4);
+            padding: 10px 15px; border-radius: 10px; margin-bottom: 10px;
             display: flex; align-items: center; justify-content: space-between; cursor: pointer;
         }
         .account-card:hover { border-color: var(--primary-gold); box-shadow: 0 0 10px var(--gold-glow); }
@@ -244,23 +254,26 @@
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center;
         }
-        .modal-content { background: var(--deep-blue); border: 2px solid var(--primary-gold); border-radius: 20px; padding: 25px; width: 90%; max-width: 450px; }
+        .modal-content { background: var(--bg-card); border: 1.5px solid var(--primary-gold); border-radius: 16px; padding: 20px; width: 90%; max-width: 400px; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <!-- الخلفية الحية برياح وأشكال دائرية متحرّكة -->
-    <ul class="bg-bubbles">
-        <li class="bubble"></li><li class="bubble"></li><li class="bubble"></li>
-        <li class="bubble"></li><li class="bubble"></li><li class="bubble"></li><li class="bubble"></li>
-    </ul>
+    <!-- أشكال هندسية متحركة متنوعة في الخلفية -->
+    <div class="bg-shapes">
+        <div class="shape shape-circle s1"></div>
+        <div class="shape shape-square s2"></div>
+        <div class="shape shape-triangle s3"></div>
+        <div class="shape shape-circle s4"></div>
+        <div class="shape shape-square s5"></div>
+    </div>
 
-    <!-- الشاشة الأولى: اختيار الحساب (تظهر فقط عند الحاجة أو أول استخدام) -->
+    <!-- الشاشة الأولى: اختيار الحساب -->
     <div id="accountsScreen" class="glow-box step-card" style="display: none;">
         <h2><i class="fa-solid fa-users"></i> مرحباً بك! اختر حسابك</h2>
-        <p>اختر حسابك المفضل لمتابعة دراستك أو أنشئ حساباً جديداً:</p>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px;">اختر حسابك المفضل لمتابعة دراستك أو أنشئ حساباً جديداً:</p>
         <div id="accountsList"></div>
         <button class="btn" onclick="showNewAccountForm()"><i class="fa-solid fa-user-plus"></i> إضافة حساب جديد</button>
     </div>
@@ -270,7 +283,7 @@
         <h2><i class="fa-solid fa-user-gear"></i> إنشاء حساب جديد</h2>
         <div class="avatar-container">
             <div class="avatar-box" id="avatarPreviewBox">
-                <i class="fa-solid fa-user" style="font-size: 45px; color: var(--primary-gold);"></i>
+                <i class="fa-solid fa-user" style="font-size: 40px; color: var(--primary-gold);"></i>
             </div>
             <label class="avatar-upload-btn" title="اختر صورة">
                 <i class="fa-solid fa-camera"></i>
@@ -290,19 +303,19 @@
         </div>
     </div>
 
-    <!-- واجهة الموقع الرئيسية -->
+    <!-- الواجهة الرئيسية -->
     <div id="mainDashboard">
         <div class="glow-box dashboard-header">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <div class="avatar-container" style="width: 55px; height: 55px; margin: 0;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="avatar-container" style="width: 50px; height: 50px; margin: 0;">
                     <div class="avatar-box" id="dashAvatarBox"></div>
                 </div>
                 <div style="text-align: right;">
-                    <h3 id="dashUserName" style="margin: 0;">اسم المستخدم</h3>
-                    <span id="dashUserLevel" style="color: var(--text-muted); font-size: 0.9rem;">المستوى</span>
+                    <h3 id="dashUserName" style="margin: 0; font-size: 1.1rem;">اسم المستخدم</h3>
+                    <span id="dashUserLevel" style="color: var(--text-muted); font-size: 0.85rem;">المستوى</span>
                 </div>
             </div>
-            <button class="btn btn-secondary" style="padding: 8px 15px; font-size: 0.85rem;" onclick="switchAccount()">
+            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;" onclick="switchAccount()">
                 <i class="fa-solid fa-right-from-bracket"></i> تبديل الحساب
             </button>
         </div>
@@ -314,46 +327,48 @@
                 
                 <div class="circle-timer-wrapper">
                     <svg class="circle-timer-svg">
-                        <circle class="circle-bg" cx="110" cy="110" r="90"></circle>
-                        <circle class="circle-progress" id="circleProgress" cx="110" cy="110" r="90"></circle>
+                        <circle class="circle-bg" cx="100" cy="100" r="85"></circle>
+                        <circle class="circle-progress" id="circleProgress" cx="100" cy="100" r="85"></circle>
                     </svg>
                     <div class="timer-display-inner" id="timerDisplay">25:00</div>
                 </div>
                 
                 <div id="timerSetup">
-                    <label style="color: var(--text-muted); font-size: 0.9rem; display: block; margin-bottom: 5px;">حدد المدة بالدقائق:</label>
-                    <input type="number" id="customMinutes" value="25" min="1" max="300" style="width: 120px; padding: 8px;">
+                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">حدد المدة بالدقائق:</label>
+                    <input type="number" id="customMinutes" value="25" min="1" max="300" style="width: 100px; padding: 6px;">
                 </div>
 
-                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px;">
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 5px;">
                     <button class="btn" id="startBtn" onclick="handleStartTimer()"><i class="fa-solid fa-play"></i> ابدأ</button>
                     <button class="btn btn-secondary" id="pauseBtn" onclick="pauseTimer()" style="display: none;"><i class="fa-solid fa-pause"></i> مؤقت</button>
                     <button class="btn btn-danger" id="stopBtn" onclick="confirmStopTimer()" style="display: none;"><i class="fa-solid fa-square"></i> توقيف كلي</button>
                 </div>
             </div>
 
-            <!-- الأهداف وشريط التقدم -->
+            <!-- الأهداف وشريط التقدم (معدل ومعدل محاذاة النص) -->
             <div class="glow-box">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h3><i class="fa-solid fa-bullseye"></i> أهدافي اليومية</h3>
+                    <h3 style="margin:0;"><i class="fa-solid fa-bullseye"></i> أهدافي اليومية</h3>
                     <button class="btn" style="padding: 6px 12px; font-size: 0.85rem;" onclick="openGoalModal()"><i class="fa-solid fa-plus"></i> إضافة هدف</button>
                 </div>
 
                 <div class="progress-bar-bg">
                     <div class="progress-bar-fill" id="progressBar"></div>
                 </div>
-                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">
-                    <span id="progressText">0 / 0 مكتمل</span>
+
+                <!-- 🌟 إصلاح التموضع 🌟 -->
+                <div class="progress-stats-row">
+                    <span id="progressText" style="color: var(--text-muted);">0 / 0 مكتمل</span>
                     <span id="progressPercent" style="color: var(--primary-gold); font-weight: bold;">0%</span>
                 </div>
 
                 <ul class="goals-list" id="goalsList"></ul>
             </div>
 
-            <!-- الإحصائيات الأسبوعية -->
+            <!-- الإحصائيات -->
             <div class="glow-box stats-section">
-                <h3><i class="fa-solid fa-chart-column"></i> إحصائيات دراستك هذا الأسبوع</h3>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px;">تسجيل وقت دراستك تلقائياً عند إكمال المؤقت:</p>
+                <h3 style="margin-bottom: 5px;"><i class="fa-solid fa-chart-column"></i> إحصائيات دراستك هذا الأسبوع</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">تسجيل وقت دراستك تلقائياً عند إكمال المؤقت:</p>
                 <div class="chart-container" id="chartContainer"></div>
             </div>
         </div>
@@ -377,32 +392,7 @@
             "عاش الأبطال! استمر، الإنجازات الصغرى تصنع النجاح الباهر! 🔥",
             "عمل رائع! العظمة ليست حظاً بل انضباطاً كالموجود لديك الآن! 💪",
             "أحسنت! إرادتك هي سلاحك الحقيقي، واصل التحدي! 🚀",
-            "بطل! المستقبل يصنعه من يعمل له في هذه اللحظات بالذات! 🏆",
-            "يا لها من عزيمة! لا شيء يستطيع إيقافك عندما تركز! ✨",
-            "رائع! الاستمرارية هي السر الحقيقي لكل العظماء! 💎",
-            "هدف آخر يسقط أمام إرادتك القوية، واصل التألق! ⚡",
-            "فخورون بك! كل نقطة عرق وتركيز اليوم هي فرحة الغد! 🎓",
-            "ممتاز! أنت تثبت لنفسك كل يوم أنك قادر على المستحيل! 👑",
-            "عمل ممتاز! لا تتوقف حتى تصبح فخوراً بكل خطوة! 🌈",
-            "رائع جداً! النجاح هو مجموع محاولات صغيرة تتكرر يومياً! 📈",
-            "أحسنت القول والفعل! طموحك أعلى بكثير من أي كسول! 💥",
-            "واصل الإبداع! شعلة شغفك هي ما يضيء طريقك! 💡",
-            "خطوة ممتازة! العقل الناجح هو الذي ينهي ما بدأه! 🧠",
-            "إنجاز مبهر! اجعل تركيزك اليوم هو قوتك لغد أفضل! 🎯",
-            "أنت على الطريق الصحيح دائماً، واصل يا بطل! 🛣️",
-            "ممتاز! من يتعب اليوم يتذوق طعم الحلاوة والنجاح غداً! 🥇",
-            "برافو! التركيز هو المفتاح الذهبي لكل الأبواب المغلقة! 🔑",
-            "رائع! اجعل إنجازك هذا حافزاً لهدفك التالي! ⏩",
-            "عاشت الأيادي! أنت تبني مستقبلك بيديك وبكل ثقة! 🏗️",
-            "أحسنت! التحدي هو ما يجعل الحياة ممتعة والنجاح ذا قيمة! 🍁",
-            "استمر! التميز ليس حدثاً بل عادة، وأنت اليوم عظيم! 🌟",
-            "إرادة من حديد! لا يدمر الأحلام إلا التردد وانت انتصرت عليه! 🛡️",
-            "فخور بإنجازك! لا حدود لما يمكنك تحقيقه بالعزيمة! 🌌",
-            "ممتاز! العلم والقوة والعمل هم سلاحك للوصول إلى أحلامك! 📚",
-            "كل هدف تنجزه يزيد من احترامك لنفسك وقدراتك! 🔥",
-            "أحسنت يا بطل! طموحك يستحق كل دقيقة من جهدك! ⏳",
-            "عمل متقن! خطوة أخرى وتصل إلى القمة التي تطمح لها! 🏔️",
-            "رائع جداً! واصل بهذا الشغف العالي ولن يوقفك أحد! 🚀"
+            "بطل! المستقبل يصنعه من يعمل له في هذه اللحظات بالذات! 🏆"
         ];
 
         const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
@@ -414,12 +404,10 @@
         let totalSeconds = 0;
         let sessionInitialSeconds = 0;
         let isPaused = false;
-        const maxCircleOffset = 565;
+        const maxCircleOffset = 534;
 
-        // 🌟 الدخول التلقائي للموقع بالدخول إلى الحساب الأخير 🌟
         window.onload = function() {
             loadAccountsFromStorage();
-            
             const lastActiveIndex = localStorage.getItem('last_active_account');
             
             if (accounts.length === 0) {
@@ -463,13 +451,13 @@
                 card.className = 'account-card';
                 card.onclick = () => selectAccount(index);
                 card.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div class="avatar-box" style="width: 45px; height: 45px; border-width: 1.5px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="avatar-box" style="width: 38px; height: 38px;">
                             ${acc.avatar ? `<img src="${acc.avatar}">` : `<i class="fa-solid fa-user" style="color: var(--primary-gold);"></i>`}
                         </div>
                         <div style="text-align: right;">
-                            <strong style="color: var(--primary-gold); font-size: 1.05rem;">${acc.name}</strong><br>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">${acc.level}</span>
+                            <strong style="color: var(--primary-gold); font-size: 0.95rem;">${acc.name}</strong><br>
+                            <span style="font-size: 0.75rem; color: var(--text-muted);">${acc.level}</span>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-left" style="color: var(--primary-gold);"></i>
@@ -481,7 +469,7 @@
         function showNewAccountForm() {
             hideAllScreens();
             tempAvatarBase64 = '';
-            document.getElementById('avatarPreviewBox').innerHTML = `<i class="fa-solid fa-user" style="font-size: 45px; color: var(--primary-gold);"></i>`;
+            document.getElementById('avatarPreviewBox').innerHTML = `<i class="fa-solid fa-user" style="font-size: 40px; color: var(--primary-gold);"></i>`;
             document.getElementById('newUserName').value = '';
             document.getElementById('newAccountScreen').style.display = 'block';
         }
@@ -524,7 +512,7 @@
             document.getElementById('dashUserLevel').innerText = `المستوى: ${acc.level}`;
             
             const dashBox = document.getElementById('dashAvatarBox');
-            dashBox.innerHTML = acc.avatar ? `<img src="${acc.avatar}">` : `<i class="fa-solid fa-user" style="font-size: 25px; color: var(--primary-gold);"></i>`;
+            dashBox.innerHTML = acc.avatar ? `<img src="${acc.avatar}">` : `<i class="fa-solid fa-user" style="font-size: 22px; color: var(--primary-gold);"></i>`;
 
             renderGoals();
             renderChart();
@@ -548,9 +536,6 @@
             
             if(!isPaused) {
                 if (isNaN(minsInput) || minsInput < 1) { alert('حدد وقتاً صحيحاً بالدقائق!'); return; }
-                if(minsInput > 90) {
-                    alert("أنت هنا لتدرس وقتاً كافياً لتعليمك وليس لتتعب نفسك! إن كنت تعرف ما تفعله اختر الوقت المناسب وابدأ.");
-                }
                 totalSeconds = minsInput * 60;
                 sessionInitialSeconds = totalSeconds;
             }
@@ -567,7 +552,7 @@
         function updateTimer() {
             if (totalSeconds <= 0) {
                 clearInterval(timerInterval);
-                alert("ممتاز جداً! أنهيت جلسة الدراسة بنجاح وحُفظ وقتك بالإحصائيات!");
+                alert("ممتاز جداً! أنهيت جلسة الدراسة بنجاح!");
                 recordStudyTime(sessionInitialSeconds);
                 resetTimer();
                 return;
@@ -593,8 +578,7 @@
         }
 
         function confirmStopTimer() {
-            const result = confirm("هل أنت غير قادر أم لا تريد الوصول لمستواك الأفضل؟ فكر في ذلك جيداً ثم واصل!");
-            if(result) {
+            if(confirm("هل تريد توقيف المؤقت؟")) {
                 clearInterval(timerInterval);
                 const elapsed = sessionInitialSeconds - totalSeconds;
                 if(elapsed > 10) recordStudyTime(elapsed);
@@ -629,13 +613,12 @@
             daysOfWeek.forEach((day, idx) => {
                 const totalSec = stats[idx];
                 const mins = Math.floor(totalSec / 60);
-                const secs = totalSec % 60;
                 const heightPercent = Math.min(100, Math.max(5, (totalSec / maxSecs) * 100));
 
                 const barWrapper = document.createElement('div');
                 barWrapper.className = 'bar-wrapper';
                 barWrapper.innerHTML = `
-                    <div class="bar-value">${mins}د ${secs}ث</div>
+                    <div class="bar-value">${mins}د</div>
                     <div class="bar" style="height: ${heightPercent}%;"></div>
                     <div class="bar-label">${day}</div>
                 `;
@@ -691,7 +674,7 @@
                     <span>${g.text}</span>
                     <div style="display:flex; gap: 10px;">
                         <i class="fa-solid fa-check" style="color: var(--primary-gold); cursor:pointer;" onclick="toggleGoal(${g.id})"></i>
-                        <i class="fa-solid fa-trash" style="color: #e74c3c; cursor:pointer;" onclick="deleteGoal(${g.id})"></i>
+                        <i class="fa-solid fa-trash" style="color: #ef4444; cursor:pointer;" onclick="deleteGoal(${g.id})"></i>
                     </div>
                 `;
                 list.appendChild(li);
