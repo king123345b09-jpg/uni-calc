@@ -10,11 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* خلفية مريحة للعين داكنة جداً مع كادر ذهبي براق */
             --bg-dark: #050a14;
             --bg-card: #0d1626;
             --primary-gold: #ffc800;
-            --gold-glow: rgba(255, 200, 0, 0.4);
+            --gold-glow: rgba(255, 200, 0, 0.6);
             --accent-blue: #1e6091;
             --accent-cyan: #00b4d8;
             --text-light: #f1f5f9;
@@ -26,7 +25,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.3s ease;
         }
 
         body {
@@ -41,20 +40,27 @@
             padding: 20px 10px;
         }
 
-        /* الكادر والإطارات المضيئة */
-        .step-card, .dashboard-card {
+        /* 🌟 تفاعل الحواف المضيئة عند مرور الفأرة على أي كادر 🌟 */
+        .glow-box {
             background: var(--bg-card);
-            border: 2px solid var(--primary-gold);
+            border: 2px solid rgba(255, 200, 0, 0.2);
             border-radius: 24px;
-            padding: 35px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 18px var(--gold-glow);
-            text-align: center;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             position: relative;
+            overflow: hidden;
+        }
+
+        .glow-box:hover {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 25px var(--gold-glow), inset 0 0 15px rgba(255, 200, 0, 0.1);
+            transform: translateY(-4px);
         }
 
         .step-card {
             width: 90%;
             max-width: 550px;
+            text-align: center;
             animation: fadeIn 0.6s ease-out;
         }
 
@@ -140,7 +146,7 @@
             justify-content: center;
         }
 
-        .btn:hover { transform: scale(1.04); }
+        .btn:hover { transform: scale(1.05); }
         .btn-secondary { background: transparent; border: 1.5px solid var(--accent-cyan); color: #fff; }
         .btn-danger { background: #e74c3c; color: #fff; }
 
@@ -152,10 +158,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
-            background: var(--bg-card);
             padding: 18px 25px;
-            border-radius: 20px;
-            border: 1.5px solid var(--primary-gold);
         }
 
         .grid-layout {
@@ -166,19 +169,49 @@
 
         @media (max-width: 850px) { .grid-layout { grid-template-columns: 1fr; } }
 
-        /* التايمر المبهج */
-        .timer-card { text-align: center; }
-        .timer-display {
-            font-size: 4.2rem;
+        /* 🌟 تصميم التايمر الدائري المستقبلي الفاخر 🌟 */
+        .timer-card { text-align: center; display: flex; flex-direction: column; align-items: center; }
+        
+        .circle-timer-wrapper {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle-timer-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: #080f1e;
+            stroke-width: 10;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke: var(--primary-gold);
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-dasharray: 565;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear;
+            filter: drop-shadow(0px 0px 8px var(--primary-gold));
+        }
+
+        .timer-display-inner {
+            position: absolute;
+            font-size: 2.8rem;
             font-weight: 900;
-            color: var(--primary-gold);
-            margin: 10px 0;
-            text-shadow: 0 0 25px var(--gold-glow), 0 0 5px #fff;
-            font-family: 'Courier New', Courier, monospace;
-            background: #050a14;
-            padding: 15px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 200, 0, 0.3);
+            color: #fff;
+            text-shadow: 0 0 15px var(--primary-gold);
+            font-family: 'Tajawal', sans-serif;
         }
 
         /* الأهداف وشريط التقدم */
@@ -209,6 +242,7 @@
             justify-content: space-between;
             align-items: center;
         }
+        .goal-item:hover { border-right: 3px solid var(--primary-gold); }
         .goal-item.completed span { text-decoration: line-through; opacity: 0.6; }
 
         /* قسم الإحصائيات والرسم البياني */
@@ -262,7 +296,7 @@
             justify-content: space-between;
             cursor: pointer;
         }
-        .account-card:hover { border-color: var(--primary-gold); background: #0d1626; }
+        .account-card:hover { border-color: var(--primary-gold); background: #0d1626; box-shadow: 0 0 10px var(--gold-glow); }
 
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -275,8 +309,8 @@
 </head>
 <body>
 
-    <!-- الشاشة الأولى: اختيار الحساب أو حساب جديد -->
-    <div id="accountsScreen" class="step-card">
+    <!-- الشاشة الأولى: اختيار الحساب -->
+    <div id="accountsScreen" class="glow-box step-card">
         <h2><i class="fa-solid fa-users"></i> مرحباً بك! اختر حسابك</h2>
         <p>اختر حسابك المفضل لمتابعة دراستك أو أنشئ حساباً جديداً:</p>
         <div id="accountsList"></div>
@@ -284,7 +318,7 @@
     </div>
 
     <!-- الشاشة الثانية: إنشـاء حساب جديد -->
-    <div id="newAccountScreen" class="step-card" style="display: none;">
+    <div id="newAccountScreen" class="glow-box step-card" style="display: none;">
         <h2><i class="fa-solid fa-user-gear"></i> إنشاء حساب جديد</h2>
         <div class="avatar-container">
             <div class="avatar-box" id="avatarPreviewBox">
@@ -309,7 +343,7 @@
     </div>
 
     <!-- الشاشة الثالثة: النصيحة التحفيزية -->
-    <div id="adviceScreen" class="step-card" style="display: none;">
+    <div id="adviceScreen" class="glow-box step-card" style="display: none;">
         <div class="avatar-container">
             <div class="avatar-box" id="adviceAvatarBox"></div>
         </div>
@@ -320,7 +354,7 @@
 
     <!-- واجهة الموقع الرئيسية -->
     <div id="mainDashboard">
-        <div class="dashboard-header">
+        <div class="glow-box dashboard-header">
             <div style="display: flex; align-items: center; gap: 15px;">
                 <div class="avatar-container" style="width: 60px; height: 60px; margin: 0;">
                     <div class="avatar-box" id="dashAvatarBox"></div>
@@ -336,10 +370,17 @@
         </div>
 
         <div class="grid-layout">
-            <!-- التايمر -->
-            <div class="dashboard-card timer-card">
+            <!-- التايمر الدائري -->
+            <div class="glow-box timer-card">
                 <h3><i class="fa-solid fa-stopwatch"></i> مؤقت التركيز الذهبي</h3>
-                <div class="timer-display" id="timerDisplay">25:00</div>
+                
+                <div class="circle-timer-wrapper">
+                    <svg class="circle-timer-svg">
+                        <circle class="circle-bg" cx="110" cy="110" r="90"></circle>
+                        <circle class="circle-progress" id="circleProgress" cx="110" cy="110" r="90"></circle>
+                    </svg>
+                    <div class="timer-display-inner" id="timerDisplay">25:00</div>
+                </div>
                 
                 <div id="timerSetup">
                     <label style="color: var(--text-muted); font-size: 0.9rem; display: block; margin-bottom: 5px;">حدد المدة بالدقائق:</label>
@@ -354,7 +395,7 @@
             </div>
 
             <!-- الأهداف وشريط التقدم -->
-            <div class="dashboard-card">
+            <div class="glow-box">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                     <h3><i class="fa-solid fa-bullseye"></i> أهدافي اليومية</h3>
                     <button class="btn" style="padding: 6px 12px; font-size: 0.85rem;" onclick="openGoalModal()"><i class="fa-solid fa-plus"></i> إضافة هدف</button>
@@ -372,12 +413,10 @@
             </div>
 
             <!-- الإحصائيات الأسبوعية -->
-            <div class="dashboard-card stats-section">
-                <h3><i class="fa-solid fa-chart-column"></i> إحصائيات دراستك هذا الأسبوع (الدقائق والثواني)</h3>
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px;">يتم تسجيل وقت دراستك تلقائياً عند إكمال المؤقت:</p>
-                <div class="chart-container" id="chartContainer">
-                    <!-- سيتم توليد الأعمدة الأسبوعية تلقائياً -->
-                </div>
+            <div class="glow-box stats-section">
+                <h3><i class="fa-solid fa-chart-column"></i> إحصائيات دراستك هذا الأسبوع</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 5px;">تسجيل وقت دراستك تلقائياً عند إكمال المؤقت:</p>
+                <div class="chart-container" id="chartContainer"></div>
             </div>
         </div>
     </div>
@@ -395,7 +434,6 @@
     </div>
 
     <script>
-        // 30 جملة تحفيزية عشوائية عند إكمال الأهداف
         const motivationalQuotes = [
             "ممتاز جداً! كل هدف تحققه هو خطوة نحو قمتك الشخصية! 🌟",
             "عاش الأبطال! استمر، الإنجازات الصغرى تصنع النجاح الباهر! 🔥",
@@ -438,7 +476,6 @@
 
         const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
-        // متغيّرات الحالة الحالية
         let accounts = [];
         let currentAccountIndex = null;
         let tempAvatarBase64 = '';
@@ -446,8 +483,8 @@
         let totalSeconds = 0;
         let sessionInitialSeconds = 0;
         let isPaused = false;
+        const maxCircleOffset = 565; // محيط الدائرة
 
-        // عند تحميل الصفحة
         window.onload = function() {
             loadAccountsFromStorage();
             showAccountsScreen();
@@ -462,7 +499,6 @@
             localStorage.setItem('study_app_accounts', JSON.stringify(accounts));
         }
 
-        // إدراج وحفظ الصور من الميكرو/الجهاز
         function handleImageUpload(e) {
             const file = e.target.files[0];
             if(file) {
@@ -475,7 +511,6 @@
             }
         }
 
-        // عرض قائمة الحسابات
         function showAccountsScreen() {
             hideAllScreens();
             document.getElementById('accountsScreen').style.display = 'block';
@@ -515,9 +550,7 @@
             document.getElementById('newAccountScreen').style.display = 'block';
         }
 
-        function cancelNewAccount() {
-            showAccountsScreen();
-        }
+        function cancelNewAccount() { showAccountsScreen(); }
 
         function createNewAccount() {
             const name = document.getElementById('newUserName').value.trim();
@@ -530,7 +563,7 @@
                 level: level,
                 avatar: tempAvatarBase64,
                 goals: [],
-                weeklyStats: [0, 0, 0, 0, 0, 0, 0] // الأحد إلى السبت بالثواني
+                weeklyStats: [0, 0, 0, 0, 0, 0, 0]
             };
 
             accounts.push(newAcc);
@@ -542,7 +575,6 @@
             currentAccountIndex = index;
             const acc = accounts[currentAccountIndex];
 
-            // تحضير نصيحة الحساب
             hideAllScreens();
             document.getElementById('adviceScreen').style.display = 'block';
             document.getElementById('adviceTitle').innerText = `أهلاً بك يا ${acc.name}!`;
@@ -580,7 +612,7 @@
             document.getElementById('mainDashboard').style.display = 'none';
         }
 
-        // إدارة التايمر
+        // إدارة التايمر الدائري
         function handleStartTimer() {
             const minsInput = parseInt(document.getElementById('customMinutes').value);
             
@@ -616,6 +648,11 @@
             const secs = totalSeconds % 60;
             document.getElementById('timerDisplay').innerText = 
                 `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+            // تحديث الرسم الدائري
+            const progressRatio = totalSeconds / sessionInitialSeconds;
+            const offset = maxCircleOffset * (1 - progressRatio);
+            document.getElementById('circleProgress').style.strokeDashoffset = offset;
         }
 
         function pauseTimer() {
@@ -644,11 +681,11 @@
             document.getElementById('pauseBtn').style.display = 'none';
             document.getElementById('stopBtn').style.display = 'none';
             document.getElementById('timerDisplay').innerText = "25:00";
+            document.getElementById('circleProgress').style.strokeDashoffset = 0;
         }
 
-        // تسجيل إحصائيات الوقت حسب اليوم
         function recordStudyTime(seconds) {
-            const todayIndex = new Date().getDay(); // 0 = الأحد, 1 = الإثنين...
+            const todayIndex = new Date().getDay();
             accounts[currentAccountIndex].weeklyStats[todayIndex] += seconds;
             saveAccountsToStorage();
             renderChart();
@@ -658,7 +695,7 @@
             const container = document.getElementById('chartContainer');
             container.innerHTML = '';
             const stats = accounts[currentAccountIndex].weeklyStats;
-            const maxSecs = Math.max(...stats, 3600); // الحد الأقصى الافتراضي ساعة للتناسب
+            const maxSecs = Math.max(...stats, 3600);
 
             daysOfWeek.forEach((day, idx) => {
                 const totalSec = stats[idx];
@@ -677,7 +714,6 @@
             });
         }
 
-        // إدارة الأهداف والتحفيز العشوائي
         function openGoalModal() { document.getElementById('goalModal').style.display = 'flex'; }
         function closeGoalModal() { document.getElementById('goalModal').style.display = 'none'; document.getElementById('goalInput').value = ''; }
 
@@ -697,7 +733,6 @@
             if(goal) {
                 goal.completed = !goal.completed;
                 if(goal.completed) {
-                    // إخراج جملة تحفيزية عشوائية من بين 30
                     const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
                     setTimeout(() => alert(randomQuote), 200);
                 }
