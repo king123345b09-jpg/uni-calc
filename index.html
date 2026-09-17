@@ -3,484 +3,667 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ حساب معدل المتوسط</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>منصة التحفيز والدراسة الذكية</title>
+    <!-- خط تجوال العصري -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-dark: #040610;
-            --card-bg: #0B0F1F;
-            --neon-color: #00F0FF;
-            --text-light: #F8FAFC;
-            --border-glow: rgba(0, 240, 255, 0.2);
-            --neon-green: #39FF14;
-            --neon-red: #FF3131;
+            --bg-dark: #0a0e17;
+            --bg-card: #131b2e;
+            --primary-gold: #ffd700;
+            --gold-hover: #ffae00;
+            --accent-blue: #0052cc;
+            --deep-blue: #021535;
+            --text-light: #f0f4f8;
+            --text-muted: #a0aec0;
+            --border-glow: rgba(255, 215, 0, 0.3);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; transition: background 0.3s ease, border-color 0.3s ease; }
-        body { background-color: var(--bg-dark); color: var(--text-light); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; overflow-x: hidden; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
 
-        .container { width: 100%; max-width: 850px; background: var(--card-bg); border: 2px solid var(--neon-color); border-radius: 25px; padding: 30px; box-shadow: 0 0 40px var(--border-glow); position: relative; }
-        
-        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px dashed rgba(255,255,255,0.1); padding-bottom: 20px; }
-        .header h1 { font-size: 2rem; font-weight: 900; color: var(--neon-color); text-shadow: 0 0 20px var(--neon-color); }
-        
-        .step-panel { display: none; }
-        .step-panel.active { display: block; animation: slideIn 0.4s ease forwards; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
-        label { display: block; font-size: 1.1rem; margin-bottom: 12px; font-weight: 600; color: #CBD5E1; }
-        .input-field { width: 100%; padding: 15px; background: #060914; border: 2px solid #1E293B; border-radius: 14px; color: #FFF; font-size: 1.1rem; outline: none; text-align: center; margin-bottom: 20px; }
-        .input-field:focus { border-color: var(--neon-color); box-shadow: 0 0 15px var(--border-glow); }
+        /* خلفية ديناميكية مع تأثيرات تنفس */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 82, 204, 0.15) 0%, rgba(10, 14, 23, 0.95) 70%);
+            z-index: -1;
+            animation: pulseBg 8s infinite alternate ease-in-out;
+        }
 
-        .btn-group { display: flex; gap: 15px; justify-content: center; margin-top: 25px; flex-wrap: wrap; }
-        .action-btn { padding: 14px 35px; background: var(--neon-color); border: none; color: #040610; font-weight: 800; font-size: 1.1rem; border-radius: 15px; cursor: pointer; box-shadow: 0 0 15px var(--neon-color); transform: scale(1); }
-        .action-btn:hover { transform: scale(1.03); filter: brightness(1.2); }
-        .btn-secondary { background: #1E293B; color: #FFF; box-shadow: none; border: 1px solid #334155; }
-        .btn-danger { background: var(--neon-red); color: white; box-shadow: 0 0 15px var(--neon-red); }
+        @keyframes pulseBg {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
 
-        .grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .option-card { background: #060914; border: 2px solid #1E293B; padding: 20px; border-radius: 16px; text-align: center; cursor: pointer; font-weight: 700; font-size: 1.1rem; }
-        .option-card:hover, .option-card.selected { border-color: var(--neon-color); background: rgba(0, 240, 255, 0.05); box-shadow: 0 0 15px var(--border-glow); color: var(--neon-color); }
+        /* تصميم الحاويات والشاشات التفاعلية */
+        .step-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px var(--border-glow);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            position: relative;
+            animation: fadeInTransition 0.8s ease-out forwards;
+        }
 
-        /* جداول متطورة */
-        .subjects-table { width: 100%; border-collapse: collapse; margin-top: 20px; margin-bottom: 25px; }
-        .subjects-table th { background: #060914; padding: 14px; text-align: center; color: var(--neon-color); font-weight: 700; border-bottom: 2px solid #1E293B; }
-        .subjects-table td { padding: 12px; border-bottom: 1px solid #1E293B; text-align: center; }
-        
-        /* حقول إدخال النقاط الذكية */
-        .sub-input { width: 75px; padding: 8px; background: #040610; border: 2px solid #334155; border-radius: 8px; color: #FFF; text-align: center; font-weight: 700; font-size: 1.05rem; }
-        .sub-input.score-pass { border-color: var(--neon-green) !important; color: var(--neon-green) !important; text-shadow: 0 0 5px rgba(57, 255, 20, 0.3); }
-        .sub-input.score-fail { border-color: var(--neon-red) !important; color: var(--neon-red) !important; text-shadow: 0 0 5px rgba(255, 49, 49, 0.3); }
+        /* تفاعل الحواف المضيئة عند مرور الفأرة */
+        .interactive-hover {
+            position: relative;
+            overflow: hidden;
+        }
 
-        .badge-coeff { background: #1E293B; padding: 4px 10px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; }
-        .optional-switch { background: #161B33; padding: 15px; border-radius: 12px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .interactive-hover:hover {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            transform: translateY(-4px);
+        }
 
-        /* واجهة النتيجة الإجمالية الملونة */
-        .result-box { text-align: center; padding: 30px; background: rgba(6, 9, 20, 0.7); border: 3px solid var(--neon-color); border-radius: 20px; margin-top: 20px; box-shadow: 0 0 30px var(--border-glow); }
-        .result-val { font-size: 3.8rem; font-weight: 900; margin: 15px 0; }
-        .result-val.pass { color: var(--neon-green); text-shadow: 0 0 30px var(--neon-green); }
-        .result-val.fail { color: var(--neon-red); text-shadow: 0 0 30px var(--neon-red); }
-        .status-text { font-size: 1.5rem; font-weight: 700; }
+        /* الشاشة الكبيرة للمستخدم الذكي (المتحدث) */
+        .avatar-box {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--primary-gold);
+            animation: avatarBreath 3s infinite ease-in-out;
+        }
 
-        /* مساحة مراجعة النقاط */
-        .review-section { margin-top: 30px; border-top: 2px dashed #334155; padding-top: 20px; text-align: right; }
-        .review-title { color: var(--neon-color); font-weight: 800; font-size: 1.3rem; margin-bottom: 15px; text-align: center; }
-        .text-pass { color: var(--neon-green) !important; font-weight: bold; }
-        .text-fail { color: var(--neon-red) !important; font-weight: bold; }
+        @keyframes avatarBreath {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px var(--primary-gold); }
+            50% { transform: scale(1.1); box-shadow: 0 0 30px var(--primary-gold), 0 0 10px #fff; }
+        }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 600px) { .subjects-table th { font-size: 0.8rem; padding: 6px; } .sub-input { width: 55px; font-size: 0.9rem; } .container { padding: 15px; } }
+        .avatar-box i {
+            font-size: 40px;
+            color: var(--bg-dark);
+        }
+
+        h2 {
+            color: var(--primary-gold);
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 12px;
+            background: var(--deep-blue);
+            border: 1px solid var(--accent-blue);
+            color: #fff;
+            font-size: 1.1rem;
+            outline: none;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 10px var(--border-glow);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--primary-gold), var(--gold-hover));
+            color: var(--bg-dark);
+            border: none;
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-blue);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-blue);
+            color: #fff;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* واجهة الموقع الرئيسية */
+        #mainDashboard {
+            display: none;
+            width: 95%;
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: var(--bg-card);
+            padding: 20px 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-glow);
+        }
+
+        .user-info h3 {
+            color: var(--primary-gold);
+            font-size: 1.4rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container { grid-template-columns: 1fr; }
+        }
+
+        /* قسم المؤقت */
+        .timer-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .timer-display {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--primary-gold);
+            margin: 15px 0;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+            font-family: monospace;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* شريط التقدم والأهداف */
+        .goals-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-bg {
+            background: var(--deep-blue);
+            height: 22px;
+            border-radius: 11px;
+            overflow: hidden;
+            border: 1px solid var(--accent-blue);
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-blue), var(--primary-gold));
+            box-shadow: 0 0 12px var(--primary-gold);
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .goals-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .goals-list {
+            list-style: none;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .goal-item {
+            background: var(--deep-blue);
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid transparent;
+        }
+
+        .goal-item.completed {
+            border-color: var(--primary-gold);
+            opacity: 0.7;
+        }
+
+        .goal-item.completed span {
+            text-decoration: line-through;
+        }
+
+        .goal-actions i {
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 1.1rem;
+        }
+
+        .goal-actions i.fa-check { color: var(--primary-gold); }
+        .goal-actions i.fa-trash { color: #e74c3c; }
+
+        /* نافذة إضافة هدف */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 2px solid var(--primary-gold);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+        }
+
+        /* حركات الانتقال */
+        @keyframes fadeInTransition {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container" id="mainContainer">
-        <div class="header">
-            <h1 id="appTitle">📊 نضام حساب المعدل في الطور المتوسط ⚡</h1>
-        </div>
+    <!-- الخطوة 1: الاسم -->
+    <div id="step1" class="step-card interactive-hover">
+        <div class="avatar-box"><i class="fa-solid fa-robot"></i></div>
+        <h2>مرحباً بك في عالم التميز!</h2>
+        <p>أنا مرشدك الدراسي، يسعدني التعرف عليك. ما هو اسمك؟</p>
+        <input type="text" id="userNameInput" placeholder="أدخل اسمك هنا..." autocomplete="off">
+        <button class="btn" onclick="goToStep2()">المتابعة <i class="fa-solid fa-arrow-left"></i></button>
+    </div>
 
-        <!-- الخطوة 1: طلب الاسم -->
-        <div class="step-panel active" id="step1">
-            <label for="userName">السلام عليكم ! واش إسمك؟</label>
-            <input type="text" id="userName" class="input-field" placeholder="اكتب اسمك هنا..." autocomplete="off">
-            <div class="btn-group">
-                <button class="action-btn" onclick="goToStep2()">التالي ⚡</button>
-            </div>
-        </div>
+    <!-- الخطوة 2: المستوى الدراسي -->
+    <div id="step2" class="step-card interactive-hover" style="display: none;">
+        <div class="avatar-box"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h2 id="welcomeUserText">أهلاً بك!</h2>
+        <p>في أي مستوى دراسي تدرس حالياً؟</p>
+        <select id="levelSelect">
+            <option value="الإبتدائي">المستوى الابتدائي</option>
+            <option value="المتوسط">المستوى المتوسط</option>
+            <option value="الثانوي">المستوى الثانوي</option>
+            <option value="الجامعة">المرحلة الجامعية</option>
+        </select>
+        <button class="btn" onclick="goToStep3()">التالي <i class="fa-solid fa-arrow-left"></i></button>
+    </div>
 
-        <!-- الخطوة 2: اختيار السنة الدراسية -->
-        <div class="step-panel" id="step2">
-            <label id="welcomeLabel">اختر السنة الدراسية:</label>
-            <div class="grid-options" id="yearOptionsContainer">
-                <div class="option-card" data-y="1" onclick="selectYear(1, this)">السنة الأولى متوسط</div>
-                <div class="option-card" data-y="2" onclick="selectYear(2, this)">السنة الثانية متوسط</div>
-                <div class="option-card" data-y="3" onclick="selectYear(3, this)">السنة الثالثة متوسط</div>
-                <div class="option-card" data-y="4" onclick="selectYear(4, this)">السنة الرابعة متوسط (BEM)</div>
-            </div>
-            <div class="btn-group">
-                <button class="action-btn btn-secondary" onclick="goBack(1)">رجوع</button>
-                <button class="action-btn" onclick="goToStep3()">التالي ⚡</button>
-            </div>
-        </div>
+    <!-- الخطوة 3: النصيحة حسب المستوى -->
+    <div id="step3" class="step-card interactive-hover" style="display: none;">
+        <div class="avatar-box"><i class="fa-solid fa-lightbulb"></i></div>
+        <h2>نصيحتك الذهبية اليوم</h2>
+        <p id="adviceText">جاري تحضير النصيحة...</p>
+        <button class="btn" onclick="startMainApp()">ابدأ الرحلة الآن <i class="fa-solid fa-rocket"></i></button>
+    </div>
 
-        <!-- الخطوة 3: اختيار الفصل أو الشهادة -->
-        <div class="step-panel" id="step3">
-            <label>إختر الفصل لي راك فيه:</label>
-            <div class="grid-options" id="periodOptions"></div>
-            <div class="btn-group">
-                <button class="action-btn btn-secondary" onclick="goBack(2)">رجوع</button>
-                <button class="action-btn" onclick="goToStep4()">اإدخال النقا 🔥</button>
+    <!-- واجهة الموقع الرئيسية -->
+    <div id="mainDashboard">
+        <div class="dashboard-header interactive-hover">
+            <div class="user-info">
+                <h3 id="dashUserName">مرحباً بك</h3>
+                <span id="dashUserLevel" style="color: var(--text-muted);">المستوى الدراسي</span>
             </div>
-        </div>
-
-        <!-- الخطوة 4: كشف وإدخال النقاط -->
-        <div class="step-panel" id="step4">
-            <h3 style="text-align: center; margin-bottom: 15px; color: var(--neon-color);" id="tableTitle">كشف النقاط</h3>
-            
-            <div class="optional-switch">
-                <span>هل تدرس مادة اللغة الأمازيغية؟</span>
-                <input type="checkbox" id="hasAmazigh" onchange="toggleAmazighData()" style="width: 20px; height: 20px; cursor: pointer;">
-            </div>
-            <div class="optional-switch" id="drawingContainer">
-                <span>هل تدرس التربية التشكيلية/الموسيقية؟</span>
-                <input type="checkbox" id="hasDrawing" checked onchange="toggleDrawingData()" style="width: 20px; height: 20px; cursor: pointer;">
-            </div>
-
-            <div style="overflow-x: auto;">
-                <table class="subjects-table">
-                    <thead>
-                        <tr id="tableHeaderRow"></tr>
-                    </thead>
-                    <tbody id="subjectsBody"></tbody>
-                </table>
-            </div>
-
-            <div class="btn-group">
-                <button class="action-btn btn-secondary" onclick="goBack(3)">رجوع</button>
-                <button class="action-btn" onclick="calculateFinalScore()">احسب المعدل  🚀</button>
+            <div class="avatar-box" style="width: 50px; height: 50px; margin:0;">
+                <i class="fa-solid fa-user-astronaut" style="font-size: 24px;"></i>
             </div>
         </div>
 
-        <!-- الخطوة 5: عرض النتيجة الخرافية والتقرير الشامل والذاكرة المكتوبة -->
-        <div class="step-panel" id="step5">
-            <div class="result-box">
-                <h2 id="congratsUser">ألف مبروك!</h2>
-                <p:>معدلك هو</p:></p>
-                <div class="result-val" id="finalGrade">00.00</div>
-                <div class="status-text" id="statusMessage">ناجح!</div>
-            </div>
+        <div class="grid-container">
+            <!-- قسم التايمر -->
+            <div class="timer-card interactive-hover">
+                <h3><i class="fa-solid fa-stopwatch" style="color: var(--primary-gold);"></i> مؤقت التركيز</h3>
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                
+                <div id="timerSetup" style="margin-bottom: 15px;">
+                    <label style="font-size: 0.9rem; color: var(--text-muted); display: block; margin-bottom: 5px;">حدد مدة الجلسة (بالدقائق):</label>
+                    <input type="number" id="customMinutes" value="25" min="1" max="300" style="width: 120px; padding: 8px;">
+                </div>
 
-            <!-- تقرير عرض كافة النقاط التي تم إدخالها مع تلوينها تلقائياً -->
-            <div class="review-section">
-                <div class="review-title">📋 نفاصيل نقاطك التي كتبتها:</div>
-                <div style="overflow-x: auto;">
-                    <table class="subjects-table" style="margin-top:10px;">
-                        <thead>
-                            <tr id="reviewHeaderRow"></tr>
-                        </thead>
-                        <tbody id="reviewTableBody"></tbody>
-                    </table>
+                <div class="timer-controls">
+                    <button class="btn" id="startBtn" onclick="handleStartTimer()"><i class="fa-solid fa-play"></i> ابدأ</button>
+                    <button class="btn btn-secondary" id="pauseBtn" onclick="pauseTimer()" style="display: none;"><i class="fa-solid fa-pause"></i> مؤقت</button>
+                    <button class="btn btn-danger" id="stopBtn" onclick="confirmStopTimer()" style="display: none;"><i class="fa-solid fa-square"></i> توقيف كلي</button>
                 </div>
             </div>
 
-            <div class="btn-group">
-                <button class="action-btn btn-secondary" onclick="goBack(4)">تعديل النقاط الحالية ✏️</button>
-                <button class="action-btn btn-danger" onclick="clearSavedMemory()">مسح المعلومات 🧹</button>
+            <!-- قسم الأهداف وشريط التقدم -->
+            <div class="goals-card interactive-hover">
+                <div class="goals-header">
+                    <h3><i class="fa-solid fa-bullseye" style="color: var(--primary-gold);"></i> أهدافي للسيشن</h3>
+                    <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;" onclick="openGoalModal()"><i class="fa-solid fa-plus"></i> إضافة هدف</button>
+                </div>
+
+                <!-- شريط التقدم -->
+                <div class="progress-container">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem;">
+                        <span>نسبة الإنجاز</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="progressBar"></div>
+                        <div class="progress-text" id="progressText">0 / 0 مكتمل</div>
+                    </div>
+                </div>
+
+                <ul class="goals-list" id="goalsList">
+                    <!-- الأهداف تظهر هنا -->
+                </ul>
             </div>
         </div>
+    </div>
 
+    <!-- نافذة إضافة هدف (Modal) -->
+    <div class="modal" id="goalModal">
+        <div class="modal-content">
+            <h3 style="color: var(--primary-gold); margin-bottom: 15px;"><i class="fa-solid fa-pen-to-square"></i> اكتب هدفك الجديد</h3>
+            <input type="text" id="goalInput" placeholder="مثال: حل 5 تمارين رياضيات..." style="margin-bottom: 20px;">
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button class="btn btn-secondary" onclick="closeGoalModal()">إلغاء</button>
+                <button class="btn" onclick="addGoal()">حفظ الهدف</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        let userData = { name: "", year: 0, period: "" };
-        let scoresStorageKey = "ALGERIAN_BEM_SCORES_STORAGE";
-        
-        const coefficientsData = {
-            1: { arabic: 2, math: 2, french: 1, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
-            2: { arabic: 3, math: 3, french: 2, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
-            3: { arabic: 3, math: 3, french: 2, science: 1, physics: 1, history_geo: 2, islamic: 1, civic: 1, english: 1, sport: 1, drawing: 1, amazigh: 2 },
-            4: { 
-                fasp: { arabic: 5, math: 4, french: 3, english: 2, science: 2, physics: 2, history_geo: 3, islamic: 2, civic: 1, sport: 1, drawing: 1, amazigh: 2 },
-                bem: { arabic: 5, math: 4, french: 3, english: 2, science: 2, physics: 2, history_geo: 3, islamic: 2, civic: 1, sport: 1, drawing: 1, amazigh: 2 }
-            }
+        // البيانات الأساسية
+        let userData = {
+            name: '',
+            level: '',
+            goals: []
         };
 
-        const subjectNames = {
-            arabic: "اللغة العربية", math: "الرياضيات", french: "اللغة الفرنسية", english: "اللغة الإنجليزية",
-            science: "علوم الطبيعة والحياة", physics: "العلوم الفيزيائية", history_geo: "التاريخ والجغرافيا",
-            islamic: "التربية الإسلامية", civic: "التربية المدنية", sport: "التربية البدنية",
-            drawing: "الرسم / الموسيقى", amazigh: "اللغة الأمازيغية"
+        let timerInterval = null;
+        let totalSeconds = 0;
+        let isPaused = false;
+
+        // نصائح حسب المستوى
+        const advices = {
+            "الإبتدائي": "التعلم هو مغامرة ممتعة! ركز على فهم الأساسيات ولا تخف من الخطأ، فكل خطوة تقربك أكثر للنجاح.",
+            "المتوسط": "هذه مرحلة بناء شخصيتك الدراسية! تنظيم الوقت والتركيز في القسم يوفر عليك نصف جهد المراجعة.",
+            "الثانوي": "أنت في مرحلة حاسمة تبني بها مستقبلك! انضبط الآن وابتعد عن المشتتات، فكل دقيقة تعني نقطة فارقة.",
+            "الجامعة": "المعرفة لا حدود لها! لا تكتفِ بما تتلقاه، ابحث واكتشف وتعمق، فالتميز يكمن في التعلم الذاتي."
         };
 
-        function triggerInfiniteNeon() {
-            const randomHue = Math.floor(Math.random() * 360);
-            document.documentElement.style.setProperty('--neon-color', `hsl(${randomHue}, 100%, 50%)`);
+        // توليد أصوات تحفيزية باستخدام Web Audio API
+        function playTone(type) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if(type === 'start') {
+                    osc.frequency.setValueAtTime(440, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.5);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.5);
+                } else if(type === 'complete') {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.2);
+                    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.4);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.6);
+                }
+            } catch(e) { console.log('Audio error:', e); }
         }
 
-        // دالة فحص وتلوين حقول الإدخال حية عند الكتابة (خضر أو حمر)
-        function colorizeInput(inputEl) {
-            let val = parseFloat(inputEl.value);
-            if(isNaN(val)) {
-                inputEl.classList.remove("score-pass", "score-fail");
-            } else if (val >= 10) {
-                inputEl.classList.add("score-pass");
-                inputEl.classList.remove("score-fail");
-            } else {
-                inputEl.classList.add("score-fail");
-                inputEl.classList.remove("score-pass");
-            }
-            saveCurrentInputsToMemory(); // حفظ فوري للنقاط في الذاكرة
-        }
-
+        // التنقل بين الخطوات
         function goToStep2() {
-            const nameInput = document.getElementById("userName").value.trim();
-            if(nameInput === "") { alert("من فضلك اكتب اسمك أولاً!"); return; }
-            userData.name = nameInput;
-            document.getElementById("welcomeLabel").innerText = `يا ${userData.name}، اختر السنة الدراسية الحالية:`;
-            saveCurrentInputsToMemory();
-            switchPanel(1, 2);
-        }
-
-        function selectYear(yearNum, element) {
-            userData.year = yearNum;
-            document.querySelectorAll("#step2 .option-card").forEach(el => el.classList.remove("selected"));
-            element.classList.add("selected");
-            saveCurrentInputsToMemory();
-            triggerInfiniteNeon();
+            const name = document.getElementById('userNameInput').value.trim();
+            if(!name) {
+                alert('من فضلك اكتب اسمك أولاً!');
+                return;
+            }
+            userData.name = name;
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            document.getElementById('welcomeUserText').innerText = `أهلاً بك يا ${userData.name}!`;
         }
 
         function goToStep3() {
-            if(userData.year === 0) { alert("من فضلك اختر السنة الدراسية!"); return; }
-            const periodOptions = document.getElementById("periodOptions");
-            periodOptions.innerHTML = "";
-
-            if(userData.year === 4) {
-                periodOptions.innerHTML = `
-                    <div class="option-card" data-p="1" onclick="selectPeriod('1', this)">الفصل الأول</div>
-                    <div class="option-card" data-p="2" onclick="selectPeriod('2', this)">الفصل الثاني</div>
-                    <div class="option-card" data-p="3" onclick="selectPeriod('3', this)">الفصل الثالث</div>
-                    <div class="option-card" data-p="bem" onclick="selectPeriod('bem', this)">📥 حساب معدل شهادة الـ BEM</div>
-                `;
-            } else {
-                periodOptions.innerHTML = `
-                    <div class="option-card" data-p="1" onclick="selectPeriod('1', this)">الفصل الأول</div>
-                    <div class="option-card" data-p="2" onclick="selectPeriod('2', this)">الفصل الثاني</div>
-                    <div class="option-card" data-p="3" onclick="selectPeriod('3', this)">الفصل الثالث</div>
-                `;
-            }
-
-            // استعادة الاختيار المحفوظ إن وُجد
-            let saved = getMemory();
-            if(saved && saved.period) {
-                let card = periodOptions.querySelector(`[data-p="${saved.period}"]`);
-                if(card) selectPeriod(saved.period, card);
-            }
-
-            switchPanel(2, 3);
+            userData.level = document.getElementById('levelSelect').value;
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+            document.getElementById('adviceText').innerText = advices[userData.level];
         }
 
-        function selectPeriod(p, element) {
-            userData.period = p;
-            document.querySelectorAll("#step3 .option-card").forEach(el => el.classList.remove("selected"));
-            element.classList.add("selected");
-            saveCurrentInputsToMemory();
-            triggerInfiniteNeon();
+        function startMainApp() {
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('mainDashboard').style.display = 'block';
+            document.getElementById('dashUserName').innerText = `المحارب: ${userData.name}`;
+            document.getElementById('dashUserLevel').innerText = `المستوى: ${userData.level}`;
+            loadGoals();
         }
 
-        function goToStep4() {
-            if(!userData.period) { alert("من فضلك اختر الفصل الدراسي!"); return; }
-            if(userData.period === 'bem') {
-                document.getElementById("tableTitle").innerText = `نقاط شهادة التعليم المتوسط (BEM) - يا ${userData.name}`;
-                document.getElementById("drawingContainer").style.display = "none";
-            } else {
-                document.getElementById("tableTitle").innerText = `نقاط الفصل ${userData.period} - الطور ${userData.year} متوسط`;
-                document.getElementById("drawingContainer").style.display = "flex";
-            }
-
-            renderSubjectsTable();
-            switchPanel(3, 4);
-        }
-
-        function toggleAmazighData() { saveCurrentInputsToMemory(); renderSubjectsTable(); }
-        function toggleDrawingData() { saveCurrentInputsToMemory(); renderSubjectsTable(); }
-
-        function renderSubjectsTable() {
-            const headerRow = document.getElementById("tableHeaderRow");
-            const body = document.getElementById("subjectsBody");
-            body.innerHTML = "";
-
-            if(userData.period === 'bem') {
-                headerRow.innerHTML = `<th>المادة</th><th>المعامل</th><th>نقطة الشهادة (من 20)</th>`;
-            } else {
-                headerRow.innerHTML = `<th>المادة</th><th>المعامل</th><th>تقويم مستمر</th><th>الفرض</th><th>الاختبار</th>`;
-            }
-
-            let coeffs = (userData.year === 4) ? coefficientsData[4].fasp : coefficientsData[userData.year];
-            if(userData.period === 'bem') coeffs = coefficientsData[4].bem;
-
-            let saved = getMemory();
-
-            for (let subKey in coeffs) {
-                if(subKey === 'amazigh' && !document.getElementById("hasAmazigh").checked) continue;
-                if(subKey === 'drawing' && !document.getElementById("hasDrawing").checked && userData.period !== 'bem') continue;
-
-                const tr = document.createElement("tr");
-                
-                // جلب القيم القديمة المحفوظة في ذاكرة الكومبيوتر للتعرف عليها تلقائياً
-                let oldExam = (saved && saved.scores && saved.scores[subKey] && saved.scores[subKey].exam) ? saved.scores[subKey].exam : "";
-                let oldCa = (saved && saved.scores && saved.scores[subKey] && saved.scores[subKey].ca) ? saved.scores[subKey].ca : "";
-                let oldQuiz = (saved && saved.scores && saved.scores[subKey] && saved.scores[subKey].quiz) ? saved.scores[subKey].quiz : "";
-
-                if(userData.period === 'bem') {
-                    tr.innerHTML = `
-                        <td style="font-weight:bold;">${subjectNames[subKey]}</td>
-                        <td><span class="badge-coeff">${coeffs[subKey]}</span></td>
-                        <td><input type="number" step="0.01" value="${oldExam}" class="sub-input score-field" data-subject="${subKey}" data-type="exam" oninput="colorizeInput(this)"></td>
-                    `;
-                } else {
-                    tr.innerHTML = `
-                        <td style="font-weight:bold;">${subjectNames[subKey]}</td>
-                        <td><span class="badge-coeff">${coeffs[subKey]}</span></td>
-                        <td><input type="number" step="0.01" value="${oldCa}" class="sub-input" data-subject="${subKey}" data-type="ca" oninput="colorizeInput(this)"></td>
-                        <td><input type="number" step="0.01" value="${oldQuiz}" class="sub-input" data-subject="${subKey}" data-type="quiz" oninput="colorizeInput(this)"></td>
-                        <td><input type="number" step="0.01" value="${oldExam}" class="sub-input" data-subject="${subKey}" data-type="exam" oninput="colorizeInput(this)"></td>
-                    `;
+        // إدارة المؤقت
+        function handleStartTimer() {
+            const minsInput = parseInt(document.getElementById('customMinutes').value);
+            
+            if(!isPaused) {
+                if (isNaN(minsInput) || minsInput < 1) {
+                    alert('يرجى تحديد وقت صحيح بالدقائق!');
+                    return;
                 }
-                body.appendChild(tr);
-                
-                // تلوين الحقول بعد استرجاعها مباشرة
-                tr.querySelectorAll("input").forEach(inp => colorizeInput(inp));
+
+                // تنبيه في حال اختيار وقت كبير جداً
+                if(minsInput > 90) {
+                    alert("أنت هنا لتدرس وقتاً كافياً لتعليمك وليس لتتعب نفسك! إن كنت تعرف ما تفعله اختر الوقت المناسب وابدأ.");
+                }
+
+                totalSeconds = minsInput * 60;
+            }
+
+            playTone('start');
+            
+            document.getElementById('timerSetup').style.display = 'none';
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('pauseBtn').style.display = 'inline-flex';
+            document.getElementById('stopBtn').style.display = 'inline-flex';
+
+            isPaused = false;
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                playTone('complete');
+                alert("ممتاز جداً! أنهيت الجلسة الدراسية بنجاح، خذ قسطاً من الراحة.");
+                resetTimer();
+                return;
+            }
+
+            totalSeconds--;
+            const mins = Math.floor(totalSeconds / 60);
+            const secs = totalSeconds % 60;
+            document.getElementById('timerDisplay').innerText = 
+                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            isPaused = true;
+            document.getElementById('startBtn').style.display = 'inline-flex';
+            document.getElementById('startBtn').innerHTML = `<i class="fa-solid fa-play"></i> استئناف`;
+            document.getElementById('pauseBtn').style.display = 'none';
+        }
+
+        function confirmStopTimer() {
+            const result = confirm("هل أنت غير قادر أم لا تريد الوصول لمستواك الأفضل؟ تفكر في ذلك جيداً ثم واصل!");
+            if(result) {
+                clearInterval(timerInterval);
+                resetTimer();
             }
         }
 
-        // حفظ قاع المعطيات الحالية في LocalStorage
-        function saveCurrentInputsToMemory() {
-            let currentScores = {};
-            document.querySelectorAll("#subjectsBody tr").forEach(tr => {
-                let examInp = tr.querySelector('[data-type="exam"]');
-                if(!examInp) return;
-                let subKey = examInp.getAttribute("data-subject");
-                
-                currentScores[subKey] = {
-                    exam: examInp.value,
-                    ca: tr.querySelector('[data-type="ca"]') ? tr.querySelector('[data-type="ca"]').value : "",
-                    quiz: tr.querySelector('[data-type="quiz"]') ? tr.querySelector('[data-type="quiz"]').value : ""
-                };
+        function resetTimer() {
+            isPaused = false;
+            document.getElementById('timerSetup').style.display = 'block';
+            document.getElementById('startBtn').style.display = 'inline-flex';
+            document.getElementById('startBtn').innerHTML = `<i class="fa-solid fa-play"></i> ابدأ`;
+            document.getElementById('pauseBtn').style.display = 'none';
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('timerDisplay').innerText = "25:00";
+        }
+
+        // إدارة الأهداف وشريط التقدم
+        function openGoalModal() {
+            document.getElementById('goalModal').style.display = 'flex';
+        }
+
+        function closeGoalModal() {
+            document.getElementById('goalModal').style.display = 'none';
+            document.getElementById('goalInput').value = '';
+        }
+
+        function addGoal() {
+            const text = document.getElementById('goalInput').value.trim();
+            if(!text) return;
+
+            userData.goals.push({ id: Date.now(), text: text, completed: false });
+            saveGoals();
+            renderGoals();
+            closeGoalModal();
+        }
+
+        function toggleGoal(id) {
+            userData.goals = userData.goals.map(g => {
+                if(g.id === id) g.completed = !g.completed;
+                return g;
+            });
+            saveGoals();
+            renderGoals();
+        }
+
+        function deleteGoal(id) {
+            userData.goals = userData.goals.filter(g => g.id !== id);
+            saveGoals();
+            renderGoals();
+        }
+
+        function renderGoals() {
+            const list = document.getElementById('goalsList');
+            list.innerHTML = '';
+
+            const total = userData.goals.length;
+            const completedCount = userData.goals.filter(g => g.completed).length;
+
+            userData.goals.forEach(g => {
+                const li = document.createElement('li');
+                li.className = `goal-item ${g.completed ? 'completed' : ''}`;
+                li.innerHTML = `
+                    <span>${g.text}</span>
+                    <div class="goal-actions">
+                        <i class="fa-solid fa-check" onclick="toggleGoal(${g.id})"></i>
+                        <i class="fa-solid fa-trash" onclick="deleteGoal(${g.id})"></i>
+                    </div>
+                `;
+                list.appendChild(li);
             });
 
-            let fullPackage = {
-                name: document.getElementById("userName").value,
-                year: userData.year,
-                period: userData.period,
-                hasAmazigh: document.getElementById("hasAmazigh").checked,
-                hasDrawing: document.getElementById("hasDrawing").checked,
-                scores: currentScores
-            };
-            localStorage.setItem(scoresStorageKey, JSON.stringify(fullPackage));
+            // حساب نسبة شريط التقدم القابل للتقسيم تلقائياً
+            let percent = total === 0 ? 0 : Math.round((completedCount / total) * 100);
+            document.getElementById('progressBar').style.width = `${percent}%`;
+            document.getElementById('progressPercent').innerText = `${percent}%`;
+            document.getElementById('progressText').innerText = `${completedCount} / ${total} مكتمل`;
         }
 
-        function getMemory() {
-            let data = localStorage.getItem(scoresStorageKey);
-            return data ? JSON.parse(data) : null;
+        function saveGoals() {
+            localStorage.setItem('study_goals', JSON.stringify(userData.goals));
         }
 
-        function calculateFinalScore() {
-            saveCurrentInputsToMemory(); // تأكيد الحفظ
-            let totalPoints = 0;
-            let totalCoeffs = 0;
-            let error = false;
-
-            let coeffs = (userData.year === 4) ? coefficientsData[4].fasp : coefficientsData[userData.year];
-            if(userData.period === 'bem') coeffs = coefficientsData[4].bem;
-
-            const reviewBody = document.getElementById("reviewTableBody");
-            const reviewHeaderRow = document.getElementById("reviewHeaderRow");
-            reviewBody.innerHTML = "";
-
-            if(userData.period === 'bem') {
-                reviewHeaderRow.innerHTML = `<th>المادة</th><th>المعامل</th><th>الدرجة المكتوبة</th>`;
-            } else {
-                reviewHeaderRow.innerHTML = `<th>المادة</th><th>المعامل</th><th>تقويم</th><th>فرض</th><th>اختبار</th><th>معدل المادة</th>`;
-            }
-
-            document.querySelectorAll("#subjectsBody tr").forEach(tr => {
-                if(error) return;
-                let examInput = tr.querySelector('[data-type="exam"]');
-                let subKey = examInput.getAttribute("data-subject");
-                let coeff = coeffs[subKey];
-                let examVal = parseFloat(examInput.value);
-
-                if(isNaN(examVal) || examVal < 0 || examVal > 20) { error = true; return; }
-
-                let revTr = document.createElement("tr");
-
-                if(userData.period === 'bem') {
-                    let cls = examVal >= 10 ? 'text-pass' : 'text-fail';
-                    revTr.innerHTML = `<td>${subjectNames[subKey]}</td><td><span class="badge-coeff">${coeff}</span></td><td class="${cls}">${examVal.toFixed(2)}</td>`;
-                    totalPoints += examVal * coeff;
-                    totalCoeffs += coeff;
-                } else {
-                    let caVal = parseFloat(tr.querySelector('[data-type="ca"]').value);
-                    let quizVal = parseFloat(tr.querySelector('[data-type="quiz"]').value);
-
-                    if(isNaN(caVal) || caVal < 0 || caVal > 20 || isNaN(quizVal) || quizVal < 0 || quizVal > 20) { error = true; return; }
-
-                    let subAvgActivity = (caVal + quizVal) / 2;
-                    let subjectFinalAvg = (subAvgActivity + (examVal * 2)) / 3;
-
-                    totalPoints += subjectFinalAvg * coeff;
-                    totalCoeffs += coeff;
-
-                    let cCls = caVal >= 10 ? 'text-pass' : 'text-fail';
-                    let qCls = quizVal >= 10 ? 'text-pass' : 'text-fail';
-                    let eCls = examVal >= 10 ? 'text-pass' : 'text-fail';
-                    let fCls = subjectFinalAvg >= 10 ? 'text-pass' : 'text-fail';
-
-                    revTr.innerHTML = `
-                        <td>${subjectNames[subKey]}</td><td><span class="badge-coeff">${coeff}</span></td>
-                        <td class="${cCls}">${caVal.toFixed(2)}</td><td class="${qCls}">${quizVal.toFixed(2)}</td>
-                        <td class="${eCls}">${examVal.toFixed(2)}</td><td class="${fCls}">${subjectFinalAvg.toFixed(2)}</td>
-                    `;
-                }
-                reviewBody.appendChild(revTr);
-            });
-
-            if(error) { alert("خطأ: يرجى ملء وتصحيح كافة حقول وعلامات المواد بين 0 و 20!"); return; }
-
-            let finalAvg = totalPoints / totalCoeffs;
-            let gradeEl = document.getElementById("finalGrade");
-            gradeEl.innerText = finalAvg.toFixed(2);
-
-            // تلوين النتيجة النهائية الكبرى
-            if(finalAvg >= 10) {
-                gradeEl.className = "result-val pass";
-                document.getElementById("statusMessage").innerText = finalAvg >= 16 ? "ناجح بتفوق وامتياز باهر! 🏆" : "ناجح ومبروك الانتقال! 🎓";
-                document.getElementById("congratsUser").innerText = `ألف مبروك يا ${userData.name}! ✨`;
-            } else {
-                gradeEl.className = "result-val fail";
-                document.getElementById("statusMessage").innerText = "النتيجة دون المعدل المطلوب، يمكنك التعويض!";
-                document.getElementById("congratsUser").innerText = `حظ أوفر في المرة القادمة يا ${userData.name} 💪`;
-            }
-
-            switchPanel(4, 5);
-        }
-
-        function switchPanel(from, to) {
-            document.getElementById(`step${from}`).classList.remove("active");
-            document.getElementById(`step${to}`).classList.add("active");
-            triggerInfiniteNeon();
-        }
-
-        function goBack(toStep) { switchPanel(toStep + 1, toStep); }
-
-        function clearSavedMemory() {
-            if(confirm("هل أنت متأكد من مسح كافة النقاط المكتوبة والبيانات المحفوظة؟")) {
-                localStorage.removeItem(scoresStorageKey);
-                document.getElementById("userName").value = "";
-                document.getElementById("hasAmazigh").checked = false;
-                document.getElementById("hasDrawing").checked = true;
-                userData = { name: "", year: 0, period: "" };
-                document.querySelectorAll(".option-card").forEach(el => el.classList.remove("selected"));
-                switchPanel(5, 1);
-            }
-        }
-
-        // كود استعادة الذاكرة الفوري عند فتح الموقع
-        window.onload = function() {
-            let saved = getMemory();
-            if(saved && saved.name) {
-                document.getElementById("userName").value = saved.name;
-                userData.name = saved.name;
-                
-                if(saved.year) {
-                    userData.year = saved.year;
-                    let yearCard = document.querySelector(`[data-y="${saved.year}"]`);
-                    if(yearCard) yearCard.classList.add("selected");
-                }
-                if(saved.hasAmazigh) document.getElementById("hasAmazigh").checked = saved.hasAmazigh;
-                if(saved.hasDrawing !== undefined) document.getElementById("hasDrawing").checked = saved.hasDrawing;
-                
-                // نقله مباشرة لخطوة اختيار الفصل لتوفير الوقت
-                goToStep3();
+        function loadGoals() {
+            const saved = localStorage.getItem('study_goals');
+            if(saved) {
+                userData.goals = JSON.parse(saved);
+                renderGoals();
             }
         }
     </script>
