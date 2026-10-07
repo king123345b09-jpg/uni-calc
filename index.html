@@ -2,695 +2,572 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الدراسة الذكية - التحدي والتميز</title>
-    <!-- خط تجوال العصري -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <!-- أيقونات FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>منصة الكاشا الملكية للكتابة 👑</title>
+    <!-- استدعاء مكتبة المفرقعات الاحترافية للاحتفالات -->
+    <script src="https://jsdelivr.net"></script>
     <style>
         :root {
-            --bg-dark: #030712;
-            --bg-card: rgba(15, 23, 42, 0.85);
-            --primary-gold: #f59e0b;
-            --gold-glow: rgba(245, 158, 11, 0.4);
-            --accent-blue: #2563eb;
-            --light-blue: #38bdf8; /* أزرق فاتح لشريط التقدم */
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-dark: #020617;
+            --panel-bg: #0f172a;
+            --gold: #f59e0b;
+            --gold-glow: #fbbf24;
+            --silver: #94a3b8;
+            --bronze: #b45309;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s ease;
-        }
-
         body {
             background-color: var(--bg-dark);
-            color: var(--text-light);
+            background-image: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
             min-height: 100vh;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 20px 10px;
-            position: relative;
+            justify-content: center;
         }
-
-        /* خلفية حية ومتحركة */
-        .bg-shapes {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
-        }
-
-        .shape {
-            position: absolute;
-            opacity: 0.25;
-            animation: floatMove 20s infinite ease-in-out alternate;
-            filter: drop-shadow(0 0 10px var(--gold-glow));
-        }
-
-        .shape-circle { border-radius: 50%; border: 2px solid var(--primary-gold); }
-        .shape-square { border: 2px solid var(--accent-blue); transform: rotate(45deg); }
-        .shape-triangle {
-            width: 0; height: 0;
-            border-left: 25px solid transparent;
-            border-right: 25px solid transparent;
-            border-bottom: 45px solid var(--primary-gold);
-            background: none !important;
-        }
-
-        .s1 { top: 10%; left: 15%; width: 60px; height: 60px; animation-duration: 18s; }
-        .s2 { top: 70%; left: 80%; width: 80px; height: 80px; animation-duration: 22s; }
-        .s3 { top: 40%; left: 85%; animation-duration: 15s; }
-        .s4 { top: 85%; left: 20%; width: 50px; height: 50px; animation-duration: 25s; }
-        .s5 { top: 20%; left: 70%; width: 70px; height: 70px; animation-duration: 19s; }
-
-        @keyframes floatMove {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(60px, 40px) rotate(180deg) scale(1.15); }
-            100% { transform: translate(-40px, -50px) rotate(360deg) scale(0.9); }
-        }
-
-        .glow-box {
-            background: var(--bg-card);
-            border: 1.5px solid rgba(245, 158, 11, 0.2);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
-            position: relative;
-        }
-
-        .glow-box:hover {
-            border-color: var(--primary-gold);
-            box-shadow: 0 0 20px var(--gold-glow), inset 0 0 10px rgba(245, 158, 11, 0.1);
-        }
-
-        .step-card {
-            width: 90%;
-            max-width: 550px;
+        /* السطر الرفيع الترحيبي الخاص بهيثم */
+        .dev-credits {
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+            padding-bottom: 5px;
+            width: 100%;
+            max-width: 900px;
             text-align: center;
-            animation: fadeIn 0.5s ease-out;
         }
-
-        .avatar-container {
+        .main-layout {
+            display: flex;
+            width: 100%;
+            max-width: 1100px;
+            gap: 20px;
             position: relative;
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 15px;
         }
-
-        .avatar-box {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 2px solid var(--primary-gold);
-            background: var(--accent-blue);
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
+        /* القائمة الجانبية الفخمة */
+        .side-panel {
+            width: 200px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+        }
+        .container {
+            flex: 1;
+            background: linear-gradient(135deg, var(--panel-bg) 0%, #020617 100%);
+            padding: 35px;
+            border-radius: 15px;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.15);
+            position: relative;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .time-selector {
+            display: flex;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        button.active, button:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
             box-shadow: 0 0 15px var(--gold-glow);
         }
-
-        .avatar-box img { width: 100%; height: 100%; object-fit: cover; }
-
-        .avatar-upload-btn {
-            position: absolute; bottom: 0; right: 0;
-            background: var(--primary-gold); color: #000;
-            width: 28px; height: 28px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 0.85rem;
+        .side-btn {
+            width: 100%;
+            text-align: right;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--gold);
+            background: rgba(245, 158, 11, 0.05);
         }
-
-        h2, h3 { color: var(--primary-gold); margin-bottom: 15px; }
-
-        input[type="text"], input[type="number"], select {
-            width: 100%; padding: 12px;
+        .side-btn:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+        .timer {
+            font-size: 45px;
+            color: var(--gold-glow);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+            font-family: monospace;
+        }
+        .words-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(245, 158, 11, 0.3);
+            padding: 30px;
             border-radius: 10px;
-            background: #090d16;
-            border: 1px solid var(--accent-blue);
-            color: #fff; font-size: 1rem; outline: none;
-            margin-bottom: 15px; text-align: center;
+            font-size: 32px;
+            line-height: 2;
+            height: 140px;
+            overflow: hidden;
+            text-align: right;
+            direction: rtl;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            outline: none;
         }
-
-        input:focus, select:focus {
-            border-color: var(--primary-gold);
-            box-shadow: 0 0 10px var(--gold-glow);
+        #text-stage {
+            display: block;
+            width: 100%;
+            position: relative;
+            transition: transform 0.3s ease;
         }
-
-        .btn {
-            background: linear-gradient(45deg, var(--primary-gold), #d97706);
-            color: #000; border: none; padding: 10px 24px;
-            font-size: 1rem; font-weight: bold; border-radius: 10px;
-            cursor: pointer; box-shadow: 0 4px 12px var(--gold-glow);
-            display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+        .letter {
+            color: #475569;
+            position: relative;
+            padding: 0 1px;
         }
-
-        .btn:hover { transform: translateY(-2px); }
-        .btn-secondary { background: transparent; border: 1.5px solid var(--accent-blue); color: #fff; box-shadow: none; }
-        .btn-danger { background: #ef4444; color: #fff; box-shadow: none; }
-
-        /* الواجهة الرئيسية */
-        #mainDashboard { display: none; width: 95%; max-width: 1100px; }
-
-        .dashboard-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; padding: 15px 20px;
+        .letter.current {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-right: 3px solid var(--gold);
+            animation: pulseCursor 0.8s infinite alternate;
         }
-
-        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media (max-width: 850px) { .grid-layout { grid-template-columns: 1fr; } }
-
-        /* التايمر الدائري المعدل */
-        .timer-card { text-align: center; display: flex; flex-direction: column; align-items: center; }
+        @keyframes pulseCursor {
+            0% { border-right-color: rgba(245, 158, 11, 0.2); }
+            100% { border-right-color: var(--gold-glow); box-shadow: 2px 0 8px var(--gold); }
+        }
+        .letter.correct { color: var(--gold-glow); text-shadow: 0 0 5px rgba(251, 191, 36, 0.3); }
+        .letter.incorrect { color: #ef4444; background-color: rgba(239, 68, 68, 0.15); text-shadow: 0 0 5px #ef4444; }
+        #hidden-input { position: absolute; opacity: 0; pointer-events: none; }
         
-        .circle-timer-wrapper {
-            position: relative; width: 220px; height: 220px;
-            margin: 15px 0; display: flex; align-items: center; justify-content: center;
-        }
-
-        .circle-timer-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .circle-bg { fill: none; stroke: #090d16; stroke-width: 12; }
-
-        .circle-progress {
-            fill: none; stroke: var(--primary-gold);
-            stroke-width: 12; stroke-linecap: round;
-            transition: stroke-dashoffset 1s linear;
-            filter: drop-shadow(0px 0px 8px var(--primary-gold));
-        }
-
-        .timer-display-inner {
-            position: absolute; font-size: 2.8rem; font-weight: 900;
-            color: #fff; text-shadow: 0 0 10px var(--primary-gold);
-        }
-
-        /* 🌟 شريط التقدم الأزرق الفاتح مع النص بالوسط تماماً 🌟 */
-        .progress-bar-container {
-            background: #090d16; height: 32px; border-radius: 10px;
-            overflow: hidden; border: 1px solid var(--light-blue);
-            position: relative; margin: 15px 0 15px 0;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .progress-bar-fill {
-            position: absolute; top: 0; right: 0;
-            height: 100%; width: 0%;
-            background: var(--light-blue);
-            box-shadow: 0 0 10px var(--light-blue);
-            transition: width 0.4s ease;
-        }
-
-        .progress-bar-text {
-            position: relative; z-index: 2;
-            color: #ffffff; font-weight: bold; font-size: 0.95rem;
-            text-shadow: 0 0 4px #000;
-            display: flex; gap: 8px; justify-content: center; align-items: center;
-        }
-
-        .goals-list { list-style: none; max-height: 200px; overflow-y: auto; text-align: right; }
-        .goal-item {
-            background: #090d16; padding: 10px 14px; border-radius: 8px;
-            margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .goal-item:hover { border-color: var(--primary-gold); }
-        .goal-item.completed span { text-decoration: line-through; opacity: 0.5; }
-
-        /* الإحصائيات */
-        .stats-section { grid-column: 1 / -1; }
-
-        .chart-container {
-            display: flex; justify-content: space-around; align-items: flex-end;
-            height: 180px; padding-top: 15px; background: #090d16;
-            border-radius: 12px; border: 1px solid rgba(245, 158, 11, 0.15); margin-top: 10px;
-        }
-
-        .bar-wrapper { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; width: 12%; }
-        .bar {
-            width: 100%; max-width: 30px;
-            background: linear-gradient(to top, var(--accent-blue), var(--primary-gold));
-            border-radius: 4px 4px 0 0; min-height: 4px;
-        }
-
-        .bar-label { font-size: 0.8rem; margin-top: 6px; color: var(--text-muted); }
-        .bar-value { font-size: 0.75rem; color: var(--primary-gold); margin-bottom: 4px; }
-
-        .account-card {
-            background: #090d16; border: 1px solid rgba(37, 99, 235, 0.4);
-            padding: 10px 15px; border-radius: 10px; margin-bottom: 10px;
-            display: flex; align-items: center; justify-content: space-between; cursor: pointer;
-        }
-        .account-card:hover { border-color: var(--primary-gold); box-shadow: 0 0 10px var(--gold-glow); }
-
+        /* النوافذ المنبثقة الفخمة (Modals) للحسابات والمتصدرين */
         .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center;
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 23, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
         }
-        .modal-content { background: var(--bg-card); border: 1.5px solid var(--primary-gold); border-radius: 16px; padding: 20px; width: 90%; max-width: 400px; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-content {
+            background: var(--panel-bg);
+            border: 2px solid var(--gold);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
+            position: relative;
+            text-align: right;
+        }
+        .modal-content h3 { margin-top: 0; color: var(--gold); font-size: 24px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); padding-bottom: 8px;}
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 14px; }
+        .form-group input {
+            width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--text-muted);
+            background: var(--bg-dark); color: white; font-size: 16px; outline: none; box-sizing: border-box;
+        }
+        .form-group input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(245, 158, 11, 0.2); }
+        .error-msg { color: #ef4444; font-size: 14px; margin-top: 5px; display: none; font-weight: bold; }
+        
+        .results { display: none; }
+        .footer {
+            margin-top: 35px; font-size: 13px; color: var(--text-muted); text-align: center;
+            border-top: 1px solid rgba(245, 158, 11, 0.1); padding-top: 15px; width: 100%;
+        }
     </style>
 </head>
 <body>
-
-    <div class="bg-shapes">
-        <div class="shape shape-circle s1"></div>
-        <div class="shape shape-square s2"></div>
-        <div class="shape shape-triangle s3"></div>
-        <div class="shape shape-circle s4"></div>
-        <div class="shape shape-square s5"></div>
-    </div>
-
-    <!-- الشاشة الأولى: اختيار الحساب -->
-    <div id="accountsScreen" class="glow-box step-card" style="display: none;">
-        <h2><i class="fa-solid fa-users"></i> مرحباً بك! اختر حسابك</h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px;">اختر حسابك المفضل لمتابعة دراستك أو أنشئ حساباً جديداً:</p>
-        <div id="accountsList"></div>
-        <button class="btn" onclick="showNewAccountForm()"><i class="fa-solid fa-user-plus"></i> إضافة حساب جديد</button>
-    </div>
-
-    <!-- الشاشة الثانية: إنشـاء حساب جديد -->
-    <div id="newAccountScreen" class="glow-box step-card" style="display: none;">
-        <h2><i class="fa-solid fa-user-gear"></i> إنشاء حساب جديد</h2>
-        <div class="avatar-container">
-            <div class="avatar-box" id="avatarPreviewBox">
-                <i class="fa-solid fa-user" style="font-size: 40px; color: var(--primary-gold);"></i>
-            </div>
-            <label class="avatar-upload-btn" title="اختر صورة">
-                <i class="fa-solid fa-camera"></i>
-                <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-            </label>
-        </div>
-        <input type="text" id="newUserName" placeholder="أدخل اسمك هنا...">
-        <select id="newUserLevel">
-            <option value="الإبتدائي">المستوى الابتدائي</option>
-            <option value="المتوسط">المستوى المتوسط</option>
-            <option value="الثانوي">المستوى الثانوي</option>
-            <option value="الجامعة">المرحلة الجامعية</option>
-        </select>
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <button class="btn btn-secondary" onclick="cancelNewAccount()">إلغاء</button>
-            <button class="btn" onclick="createNewAccount()">حفظ ودخول</button>
-        </div>
-    </div>
-
-    <!-- الواجهة الرئيسية -->
-    <div id="mainDashboard">
-        <div class="glow-box dashboard-header">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div class="avatar-container" style="width: 50px; height: 50px; margin: 0;">
-                    <div class="avatar-box" id="dashAvatarBox"></div>
-                </div>
-                <div style="text-align: right;">
-                    <h3 id="dashUserName" style="margin: 0; font-size: 1.1rem;">اسم المستخدم</h3>
-                    <span id="dashUserLevel" style="color: var(--text-muted); font-size: 0.85rem;">المستوى</span>
-                </div>
-            </div>
-            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.85rem;" onclick="switchAccount()">
-                <i class="fa-solid fa-right-from-bracket"></i> تبديل الحساب
-            </button>
+    <!-- سطر النبذة وحقوق تصميم هيثم -->
+    <div class="dev-credits">منصة احترافية لقياس سرعة وعمياء الكتابة باللغة العربية الفصيحة والمستمرة | تم التصميم والتطوير بواسطة المطور هـيـثـم 🛠️</div>
+    <div class="main-layout">
+        <!-- القائمة الجانبية الفخمة المضيئة -->
+        <div class="side-panel">
+            <button id="btn-leaderboard" class="side-btn" onclick="openModal('leaderboard-modal')">📊 المتصدرين</button>
+            <button id="btn-auth" class="side-btn" onclick="openModal('auth-modal')">🔐 فتح حساب</button>
+            <!-- زر التخصيص يظهر فقط بعد تسجيل الدخول -->
+            <button id="btn-profile" class="side-btn" style="display:none;" onclick="openModal('profile-modal')">⚙️ تخصيص الحساب</button>
+            <div id="user-welcome" style="font-size:14px; color:#fbbf24; text-align:center; margin-top:10px; font-weight:bold;"></div>
         </div>
 
-        <div class="grid-layout">
-            <!-- التايمر الدائري -->
-            <div class="glow-box timer-card">
-                <h3><i class="fa-solid fa-stopwatch"></i> مؤقت التركيز الذهبي</h3>
-                
-                <div class="circle-timer-wrapper">
-                    <svg class="circle-timer-svg">
-                        <circle class="circle-bg" cx="110" cy="110" r="90"></circle>
-                        <circle class="circle-progress" id="circleProgress" cx="110" cy="110" r="90"></circle>
-                    </svg>
-                    <div class="timer-display-inner" id="timerDisplay">25:00</div>
-                </div>
-                
-                <div id="timerSetup">
-                    <label style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-bottom: 5px;">حدد المدة بالدقائق:</label>
-                    <input type="number" id="customMinutes" value="25" min="1" max="300" style="width: 100px; padding: 6px;">
-                </div>
-
-                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 5px;">
-                    <button class="btn" id="startBtn" onclick="handleStartTimer()"><i class="fa-solid fa-play"></i> ابدأ</button>
-                    <button class="btn btn-secondary" id="pauseBtn" onclick="pauseTimer()" style="display: none;"><i class="fa-solid fa-pause"></i> مؤقت</button>
-                    <button class="btn btn-danger" id="stopBtn" onclick="confirmStopTimer()" style="display: none;"><i class="fa-solid fa-square"></i> توقيف كلي</button>
-                </div>
-            </div>
-
-            <!-- الأهداف وشريط التقدم -->
-            <div class="glow-box">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <h3 style="margin:0;"><i class="fa-solid fa-bullseye"></i> أهدافي اليومية</h3>
-                    <button class="btn" style="padding: 6px 12px; font-size: 0.85rem;" onclick="openGoalModal()"><i class="fa-solid fa-plus"></i> إضافة هدف</button>
-                </div>
-
-                <!-- 🌟 شريط أزرق فاتح وبداخله النص والنسبة في السنتر 🌟 -->
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progressBar"></div>
-                    <div class="progress-bar-text">
-                        <span id="progressText">0/0 مكتمل</span>
-                        <span id="progressPercent">(0%)</span>
+        <!-- منطقة اللعبة المركزية -->
+        <div class="container">
+            <div id="game-view">
+                <div class="top-bar">
+                    <div class="time-selector" id="time-selector">
+                        <button data-time="30" class="active">30 ث</button>
+                        <button data-time="60">1 د</button>
+                        <button data-time="120">2 د</button>
+                    </div>
+                    <div class="timer" id="timer">30</div>
+                    <div class="mode-selector" id="mode-selector">
+                        <button id="mode-words" class="active">📝 كلمات</button>
+                        <button id="mode-paragraphs">📖 فقرات</button>
                     </div>
                 </div>
-
-                <ul class="goals-list" id="goalsList"></ul>
+                
+                <div class="words-box" id="words-box">
+                    <div id="text-stage"></div>
+                </div>
+                
+                <input type="text" id="hidden-input" autocomplete="off" autofocus>
+                
+                <div class="bottom-controls">
+                    <div class="emoji-box" id="emoji-status">👑 اكتب مباشرة في منطقة المشاهدة بالأعلى!</div>
+                    <button class="btn-reset" onclick="resetGame()">إعادة 🔄</button>
+                </div>
             </div>
 
-            <!-- الإحصائيات -->
-            <div class="glow-box stats-section">
-                <h3 style="margin-bottom: 5px;"><i class="fa-solid fa-chart-column"></i> إحصائيات دراستك هذا الأسبوع</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">تسجيل وقت دراستك تلقائياً عند إكمال المؤقت:</p>
-                <div class="chart-container" id="chartContainer"></div>
-            </div>
+            <!-- شاشة النتائج الملكية الفخمة -->
+            <div class="results" id="results-view">
+                <h2 style="color: #ffdf00; font-size: 32px; margin-top: 0;">🏆 اكتمل التحدي بنجاح</h2>
+                <h1 style="font-size: 65px; color: #ffdf00; margin: 15px 0;" id="wpm-res">0 WPM</h1>
+                <p style="font-size: 24px; margin-bottom: 25px;">الدقة: <strong id="acc-res" style="color: #ffdf00;">0%</strong></p>
+                <button class="btn-reset" style="background: #ffdf00; color: #03091e; padding: 12px 35px;" onclick="resetGame()">تحدي جديد 🔄</button>
+    </div>
         </div>
     </div>
 
-    <!-- نافذة إضافة هدف -->
-    <div class="modal" id="goalModal">
+    <!-- ممر الحقوق لشركتك الفخمة في الأسفل -->
+    <div class="footer">
+        كل الحقوق محفوظة من شركة **الكاشا للكتابة** © 2026
+    </div>
+
+    <!-- نافذة المتصدرين (Modal) -->
+    <div id="leaderboard-modal" class="modal" onclick="closeModal(event, 'leaderboard-modal')">
         <div class="modal-content">
-            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-pen"></i> إضافة هدف جديد</h3>
-            <input type="text" id="goalInput" placeholder="اكتب هدفك هنا...">
-            <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                <button class="btn btn-secondary" onclick="closeGoalModal()">إلغاء</button>
-                <button class="btn" onclick="addGoal()">حفظ الهدف</button>
+            <h3>📊 لائحة الصدارة العالمية</h3>
+            <ol id="global-leaderboard" style="padding-right:20px; line-height:2; font-size:18px;">
+                <li>قم بفتح حساب والمنافسة لتظهر هنا حقيقة! 🎯</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- نافذة فتح حساب وتجيل الدخول -->
+    <div id="auth-modal" class="modal" onclick="closeModal(event, 'auth-modal')">
+        <div class="modal-content">
+            <h3 id="auth-title">🔐 فتح حساب جديد / دخول</h3>
+            <div class="form-group">
+                <label>إسم المستخدم (الخاص بك فقط):</label>
+                <input type="text" id="auth-username" placeholder="اكتب اسمك هنا...">
+                <div id="username-error" class="error-msg">❌ هاذ الإسم مستعمل من قبل شخص آخر!</div>
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور (مفتاح حسابك):</label>
+                <input type="password" id="auth-password" placeholder="اكتب كلمة المرور...">
+                <div id="password-error" class="error-msg">❌ كلمة المرور خاطئة!</div>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="side-btn" style="flex:1;" onclick="handleAuth('register')">تسجيل جديد ✨</button>
+                <button class="side-btn" style="flex:1;" onclick="handleAuth('login')">تسجيل الدخول 🔑</button>
             </div>
         </div>
     </div>
 
-    <script>
-        const motivationalQuotes = [
-            "ممتاز جداً! كل هدف تحققه هو خطوة نحو قمتك الشخصية! 🌟",
-            "عاش الأبطال! استمر، الإنجازات الصغرى تصنع النجاح الباهر! 🔥",
-            "عمل رائع! العظمة ليست حظاً بل انضباطاً كالموجود لديك الآن! 💪",
-            "أحسنت! إرادتك هي سلاحك الحقيقي، واصل التحدي! 🚀",
-            "بطل! المستقبل يصنعه من يعمل له في هذه اللحظات بالذات! 🏆"
-        ];
+    <!-- window نافذة تخصيص الحساب -->
+    <div id="profile-modal" class="modal" onclick="closeModal(event, 'profile-modal')">
+        <div class="modal-content">
+            <h3>⚙️ تخصيص حسابك الشخصي</h3>
+            <div class="form-group">
+                <label>رابط صورتك الشخصية الشخصية (Avatar URL):</label>
+                <input type="text" id="profile-avatar" placeholder="صق رابط صورتك هنا...">
+            </div>
+            <div class="form-group">
+                <label>تغيير كلمة المرور الجديدة:</label>
+                <input type="password" id="profile-new-pass" placeholder="كلمة المرور الجديدة...">
+            </div>
+            <button class="side-btn" style="width:100%;" onclick="updateProfile()">حفظ التعديلات الملكية 💾</button>
+            <button class="side-btn" style="width:100%; margin-top:10px; border-color:#ef4444; color:#ef4444;" onclick="handleLogout()">تسجيل الخروج 🚪</button>
+        </div>
+    </div>
+<script>
+    // قائمة الكلمات الخاصة بك كما كتبتها بيدك 100% بدون أي تغيير
+    var wordPool = [
+        "مدرسة", "قلم", "كتاب", "أحمد", "من", "في", "على", "سماء", "أرض", "ماء", "شمس", "قمر", "نجم", "بحر", "نهر", "شجر", 
+        "جبل", "ورد", "حديقة", "بيت", "باب", "نافذة", "طريق", "مديرة", "أستاذ", "طالب", "فصل", "درس", "نجاح", "تفوق", "عمل", 
+        "أمل", "صبر", "وفاء", "صدق", "كرم", "شجاعة", "نور", "ضياء", "فجر", "صباح", "مساء", "ليل", "نهار", "وقت", "ساعة", 
+        "دقيقة", "ثانية", "حياة", "سلام", "وطن", "علم", "حاسوب", "هاتف", "لوحة", "مفتاح", "سرعة", "دقة", "تحدي", "لعبة", 
+        "فوز", "عزيمة", "إصرار", "قوة", "فكرة", "ذكاء", "إبداع", "تطور", "مستقبل", "رجل", "إمرأة", "طفل", "قرية", "مدينة",
+        "هيثم", "محمد", "سمير", "هديل", "برمجة", "تاريخ", "معلم", "أزرار", "مختل", "قارئ", "فلسطين", "كلب", "حيوان", "قطة", "حرة", "بكاء"
+    ];
 
-        const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    // قائمة الفقرات المعبرة الخاصة بك كما كتبتها بيدك 100% بدون أي تغيير
+    var paragraphPool = [
+        "العمل المستمر والإصرار هما المفتاح الحقيقي للوصول الى ارقى مراتب النجاح في هذه الحياة لذا على كل شخص أن يرى أمام عينه طريقا ويستمر فيه حتى يصل إليه وينجح يوما ما",
+        "القراءة تغذي عقل الإنسان وتفتح له ابواب المعرفة والثقافة وتجعله يرى العالم بمنظور جديد وجميل ولا يكون دورها في العقل فقط بل في حياته اليومية حيث تنمي قدراته حتى يتغير لشخص أخر تماما",
+        "الصداقة الحقيقية مبنية على الصدق والوفاء وهي كنز ثمين لا يقدر بثمن يضيء لنا عتمة الايام الصعبة وكما نعرف الصديق وقت الضيق يعني الصداقة هي كلمة وفاء وكلمة تشمل كل الصفاة الجيدة وتنفي كل الكلمات البذيئة",
+        "العلم ينير العقول ويبني المجتمعات القوية بينما الجهل يهدم كل شيء ويترك الإنسان في ظلام دامس فالعلم منير الدروب وفاتح الأبواب والعلم ليس علم الحديث بل هو أن تعبد الله وتتفقه في دينه وتكون إنسان موحدا لالله سبحانه وتعالى والإحسان إليه بجميع وأسمى الصفات",
+        "الحفاظ على الوقت واستغلال كل ثانية في العمل المفيد يقربك خطوة إضافية نحو تحقيق أهدافك الكبيرة فليس وقتك هو فراغ فقط بل هو وقت يكون مقسم ويكون في كل ثانية هدف وكل دقيقة عمل",
+        "الدراسة هي وسيلة الإنسان لبناء مستقبله وتطوير فكره وإكتساب المعرفة التي تمكنه من فهم العالم من حوله وتجاوز العقبات بثقة وثبات",
+        "البرمجة ببساطة هي طريقة لتوجيه الحاسوب وإعطائه أوامر محددة وخطوات مرتبة لحل المشكلات وصنع البرامج والألعاب الذكية التي نستخدمها يوميا",
+        "النوم الكافي يمنح العقل والجسد الراحة الضرورية لتجديد الطاقة وتحسين التركيز والحفاظ على الصحة والذاكرة العضلية لزيادة الإنتاجية والإبداع فهو سلاح ذوحدين إن إستعملناه كل يوم فهو غير جيد وإن لم نستعمله فهو غير جيد فإن زاد الأمر عن حده إنقلب إلى ضده",
+        "التطور التكنولوجي المستمر يغير طريقة عيشنا ويجعل التواصل والتعلم والعمل أكثر سهولة وسرعة ويفتح أفاقا جديدة ومذهلة للمستقبل"
+    ];
 
-        let accounts = [];
-        let currentAccountIndex = null;
-        let tempAvatarBase64 = '';
-        let timerInterval = null;
-        let totalSeconds = 0;
-        let sessionInitialSeconds = 0;
-        let isPaused = false;
+    var textString = "";
+    var currentIndex = 0;
+    var errorsCount = 0;
+    var timeLimit = 30;
+    var timeLeft = 30;
+    var timerId = null;
+    var isStarted = false;
+    var currentLineY = 0;
+    var currentMode = "words"; 
+    
+    var currentUser = localStorage.getItem('typing_user') || null;
+    var activeDevices = JSON.parse(localStorage.getItem('typing_devices')) || [];
 
-        // حساب المحيط بدقة لدائرة نصف قطرها 90 (2 * PI * 90)
-        const circleRadius = 90;
-        const circleCircumference = 2 * Math.PI * circleRadius;
+    var inputEl = document.getElementById('hidden-input');
+    var stageEl = document.getElementById('text-stage');
+    var timerEl = document.getElementById('timer');
+    var emojiEl = document.getElementById('emoji-status');
+    var timeButtons = document.querySelectorAll('#time-selector button');
+    var wordsModeBtn = document.getElementById('mode-words');
+    var paragraphsModeBtn = document.getElementById('mode-paragraphs');
 
-        window.onload = function() {
-            // تهيئة الدائرة بالقيم الحسابية المظبوطة
-            const circleProgress = document.getElementById('circleProgress');
-            circleProgress.style.strokeDasharray = circleCircumference;
-            circleProgress.style.strokeDashoffset = 0;
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playErrorSound() {
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.type = 'sawtooth'; 
+        osc.frequency.setValueAtTime(140, audioCtx.currentTime); 
+        gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.12);
+    }
 
-            loadAccountsFromStorage();
-            const lastActiveIndex = localStorage.getItem('last_active_account');
-            
-            if (accounts.length === 0) {
-                showNewAccountForm();
-            } else if (lastActiveIndex !== null && accounts[lastActiveIndex]) {
-                selectAccount(parseInt(lastActiveIndex));
-            } else {
-                selectAccount(0);
-            }
-        };
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(e, id) { if(!e || e.target === document.getElementById(id)) document.getElementById(id).style.display = 'none'; }
+    function handleAuth(type) {
+        var user = document.getElementById('auth-username').value.trim();
+        var pass = document.getElementById('auth-password').value.trim();
+        
+        if(!user || !pass) return;
 
-        function loadAccountsFromStorage() {
-            const data = localStorage.getItem('study_app_accounts');
-            accounts = data ? JSON.parse(data) : [];
-        }
-
-        function saveAccountsToStorage() {
-            localStorage.setItem('study_app_accounts', JSON.stringify(accounts));
-        }
-
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    tempAvatarBase64 = evt.target.result;
-                    document.getElementById('avatarPreviewBox').innerHTML = `<img src="${tempAvatarBase64}">`;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function showAccountsScreen() {
-            hideAllScreens();
-            document.getElementById('accountsScreen').style.display = 'block';
-            const listContainer = document.getElementById('accountsList');
-            listContainer.innerHTML = '';
-
-            accounts.forEach((acc, index) => {
-                const card = document.createElement('div');
-                card.className = 'account-card';
-                card.onclick = () => selectAccount(index);
-                card.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <div class="avatar-box" style="width: 38px; height: 38px;">
-                            ${acc.avatar ? `<img src="${acc.avatar}">` : `<i class="fa-solid fa-user" style="color: var(--primary-gold);"></i>`}
-                        </div>
-                        <div style="text-align: right;">
-                            <strong style="color: var(--primary-gold); font-size: 0.95rem;">${acc.name}</strong><br>
-                            <span style="font-size: 0.75rem; color: var(--text-muted);">${acc.level}</span>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-left" style="color: var(--primary-gold);"></i>
-                `;
-                listContainer.appendChild(card);
-            });
-        }
-
-        function showNewAccountForm() {
-            hideAllScreens();
-            tempAvatarBase64 = '';
-            document.getElementById('avatarPreviewBox').innerHTML = `<i class="fa-solid fa-user" style="font-size: 40px; color: var(--primary-gold);"></i>`;
-            document.getElementById('newUserName').value = '';
-            document.getElementById('newAccountScreen').style.display = 'block';
-        }
-
-        function cancelNewAccount() {
-            if(accounts.length > 0) showAccountsScreen();
-        }
-
-        function createNewAccount() {
-            const name = document.getElementById('newUserName').value.trim();
-            const level = document.getElementById('newUserLevel').value;
-
-            if(!name) { alert('من فضلك اكتب اسمك!'); return; }
-
-            const newAcc = {
-                name: name,
-                level: level,
-                avatar: tempAvatarBase64,
-                goals: [],
-                weeklyStats: [0, 0, 0, 0, 0, 0, 0]
-            };
-
-            accounts.push(newAcc);
-            saveAccountsToStorage();
-            selectAccount(accounts.length - 1);
-        }
-
-        function selectAccount(index) {
-            currentAccountIndex = index;
-            localStorage.setItem('last_active_account', index);
-            enterDashboard();
-        }
-
-        function enterDashboard() {
-            hideAllScreens();
-            document.getElementById('mainDashboard').style.display = 'block';
-            const acc = accounts[currentAccountIndex];
-
-            document.getElementById('dashUserName').innerText = acc.name;
-            document.getElementById('dashUserLevel').innerText = `المستوى: ${acc.level}`;
-            
-            const dashBox = document.getElementById('dashAvatarBox');
-            dashBox.innerHTML = acc.avatar ? `<img src="${acc.avatar}">` : `<i class="fa-solid fa-user" style="font-size: 22px; color: var(--primary-gold);"></i>`;
-
-            renderGoals();
-            renderChart();
-        }
-
-        function switchAccount() {
-            if(timerInterval) clearInterval(timerInterval);
-            resetTimer();
-            showAccountsScreen();
-        }
-
-        function hideAllScreens() {
-            document.getElementById('accountsScreen').style.display = 'none';
-            document.getElementById('newAccountScreen').style.display = 'none';
-            document.getElementById('mainDashboard').style.display = 'none';
-        }
-
-        /* إصلاح المؤقت والتصغير التدريجي للدائرة */
-        function handleStartTimer() {
-            const minsInput = parseInt(document.getElementById('customMinutes').value);
-            
-            if(!isPaused) {
-                if (isNaN(minsInput) || minsInput < 1) { alert('حدد وقتاً صحيحاً بالدقائق!'); return; }
-                totalSeconds = minsInput * 60;
-                sessionInitialSeconds = totalSeconds;
-            }
-
-            document.getElementById('timerSetup').style.display = 'none';
-            document.getElementById('startBtn').style.display = 'none';
-            document.getElementById('pauseBtn').style.display = 'inline-flex';
-            document.getElementById('stopBtn').style.display = 'inline-flex';
-
-            isPaused = false;
-            if(timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(updateTimer, 1000);
-        }
-
-        function updateTimer() {
-            if (totalSeconds <= 0) {
-                clearInterval(timerInterval);
-                alert("ممتاز جداً! أنهيت جلسة الدراسة بنجاح!");
-                recordStudyTime(sessionInitialSeconds);
-                resetTimer();
+        if(type === 'register') {
+            if(localStorage.getItem('user_' + user)) {
+                document.getElementById('username-error').style.display = 'block';
                 return;
             }
-
-            totalSeconds--;
-            const mins = Math.floor(totalSeconds / 60);
-            const secs = totalSeconds % 60;
-            document.getElementById('timerDisplay').innerText = 
-                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-
-            /* معادلة تناقص الدائرة بدقة */
-            const progressRatio = totalSeconds / sessionInitialSeconds;
-            const offset = circleCircumference * (1 - progressRatio);
-            document.getElementById('circleProgress').style.strokeDashoffset = offset;
-        }
-
-        function pauseTimer() {
-            clearInterval(timerInterval);
-            isPaused = true;
-            document.getElementById('startBtn').style.display = 'inline-flex';
-            document.getElementById('startBtn').innerHTML = `<i class="fa-solid fa-play"></i> استئناف`;
-            document.getElementById('pauseBtn').style.display = 'none';
-        }
-
-        function confirmStopTimer() {
-            if(confirm("هل تريد توقيف المؤقت؟")) {
-                clearInterval(timerInterval);
-                const elapsed = sessionInitialSeconds - totalSeconds;
-                if(elapsed > 10) recordStudyTime(elapsed);
-                resetTimer();
+            document.getElementById('username-error').style.display = 'none';
+            localStorage.setItem('user_' + user, pass);
+            loginUser(user);
+        } else {
+            if(localStorage.getItem('user_' + user) === pass) {
+                document.getElementById('password-error').style.display = 'none';
+                loginUser(user);
+            } else {
+                document.getElementById('password-error').style.display = 'block';
             }
         }
+    }
 
-        function resetTimer() {
-            isPaused = false;
-            document.getElementById('timerSetup').style.display = 'block';
-            document.getElementById('startBtn').style.display = 'inline-flex';
-            document.getElementById('startBtn').innerHTML = `<i class="fa-solid fa-play"></i> ابدأ`;
-            document.getElementById('pauseBtn').style.display = 'none';
-            document.getElementById('stopBtn').style.display = 'none';
-            document.getElementById('timerDisplay').innerText = "25:00";
-            document.getElementById('circleProgress').style.strokeDashoffset = 0;
+    function loginUser(user) {
+        currentUser = user;
+        localStorage.setItem('typing_user', user);
+        
+        var deviceId = Math.random().toString(36).substring(7);
+        activeDevices = JSON.parse(localStorage.getItem('devices_' + user)) || [];
+        if(activeDevices.length >= 5) { activeDevices.shift(); }
+        activeDevices.push(deviceId);
+        localStorage.setItem('devices_' + user, JSON.stringify(activeDevices));
+
+        document.getElementById('btn-auth').style.display = 'none';
+        document.getElementById('btn-profile').style.display = 'block';
+        document.getElementById('user-welcome').innerText = "👑 " + user;
+        closeModal(null, 'auth-modal');
+        resetGame();
+    }
+
+    function handleLogout() {
+        currentUser = null;
+        localStorage.removeItem('typing_user');
+        document.getElementById('btn-auth').style.display = 'block';
+        document.getElementById('btn-profile').style.display = 'none';
+        document.getElementById('user-welcome').innerText = "";
+        closeModal(null, 'profile-modal');
+        resetGame();
+    }
+
+    function triggerCelebration(rank) {
+        var color = '#f59e0b'; 
+        var particleCount = 180;
+        if (rank === 2) { color = '#94a3b8'; particleCount = 110; } 
+        if (rank === 3) { color = '#b45309'; particleCount = 70; }  
+
+        confetti({
+            particleCount: particleCount,
+            spread: rank === 1 ? 100 : 60,
+            origin: { y: 0.6 },
+            colors: [color, '#ffffff']
+        });
+    }
+
+    function setupGame() {
+        var selectedText = [];
+        if (currentMode === "words") {
+            for (var i = 0; i < 150; i++) { selectedText.push(wordPool[Math.floor(Math.random() * wordPool.length)]); }
+            textString = selectedText.join(" ");
+        } else {
+            for (var j = 0; j < 10; j++) { selectedText.push(paragraphPool[Math.floor(Math.random() * paragraphPool.length)]); }
+            textString = selectedText.join(" . ");
         }
+        
+        stageEl.innerHTML = "";
+        textString.split("").forEach(function(char, idx) {
+            var span = document.createElement('span');
+            span.className = 'letter';
+            if(idx === 0) span.className = 'letter current';
+            span.innerText = char;
+            stageEl.appendChild(span);
+        });
+    }
 
-        function recordStudyTime(seconds) {
-            const todayIndex = new Date().getDay();
-            accounts[currentAccountIndex].weeklyStats[todayIndex] += seconds;
-            saveAccountsToStorage();
-            renderChart();
+    function focusInput() { inputEl.focus(); }
+
+    function checkAutoScroll(letterElement) {
+        var letterTop = letterElement.offsetTop;
+        if (letterTop > currentLineY + 64) {
+            currentLineY = letterTop - 10;
+            stageEl.style.transform = "translateY(-" + currentLineY + "px)";
         }
+    }
 
-        function renderChart() {
-            const container = document.getElementById('chartContainer');
-            container.innerHTML = '';
-            const stats = accounts[currentAccountIndex].weeklyStats;
-            const maxSecs = Math.max(...stats, 3600);
-
-            daysOfWeek.forEach((day, idx) => {
-                const totalSec = stats[idx];
-                const mins = Math.floor(totalSec / 60);
-                const heightPercent = Math.min(100, Math.max(5, (totalSec / maxSecs) * 100));
-
-                const barWrapper = document.createElement('div');
-                barWrapper.className = 'bar-wrapper';
-                barWrapper.innerHTML = `
-                    <div class="bar-value">${mins}د</div>
-                    <div class="bar" style="height: ${heightPercent}%;"></div>
-                    <div class="bar-label">${day}</div>
-                `;
-                container.appendChild(barWrapper);
-            });
+    wordsModeBtn.addEventListener('click', function() {
+        if (!isStarted) {
+            paragraphsModeBtn.classList.remove('active');
+            wordsModeBtn.classList.add('active');
+            currentMode = "words"; resetGame();
         }
+    });
 
-        function openGoalModal() { document.getElementById('goalModal').style.display = 'flex'; }
-        function closeGoalModal() { document.getElementById('goalModal').style.display = 'none'; document.getElementById('goalInput').value = ''; }
-
-        function addGoal() {
-            const text = document.getElementById('goalInput').value.trim();
-            if(!text) return;
-
-            accounts[currentAccountIndex].goals.push({ id: Date.now(), text: text, completed: false });
-            saveAccountsToStorage();
-            renderGoals();
-            closeGoalModal();
+    paragraphsModeBtn.addEventListener('click', function() {
+        if (!isStarted) {
+            wordsModeBtn.classList.remove('active');
+            paragraphsModeBtn.classList.add('active');
+            currentMode = "paragraphs"; resetGame();
         }
+    });
 
-        function toggleGoal(id) {
-            const goals = accounts[currentAccountIndex].goals;
-            const goal = goals.find(g => g.id === id);
-            if(goal) {
-                goal.completed = !goal.completed;
-                if(goal.completed) {
-                    const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
-                    setTimeout(() => alert(randomQuote), 200);
-                }
+    timeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            if (!isStarted) {
+                timeButtons.forEach(function(btn) { btn.classList.remove('active'); });
+                button.classList.add('active');
+                timeLimit = parseInt(button.getAttribute('data-time'));
+                timeLeft = timeLimit;
+                timerEl.innerText = timeLeft;
+                resetGame();
             }
-            saveAccountsToStorage();
-            renderGoals();
+        });
+    });
+
+    inputEl.addEventListener('keydown', function(e) {
+        var letterElements = stageEl.querySelectorAll('.letter');
+        if (e.key === 'Backspace' && currentIndex > 0) {
+            letterElements[currentIndex].classList.remove('current');
+            currentIndex--;
+            if (letterElements[currentIndex].classList.contains('incorrect') && errorsCount > 0) errorsCount--;
+            letterElements[currentIndex].className = 'letter current';
+            
+            var letterTop = letterElements[currentIndex].offsetTop;
+            if (letterTop < currentLineY) {
+                currentLineY = Math.max(0, letterTop - 10);
+                stageEl.style.transform = "translateY(-" + currentLineY + "px)";
+            }
+        }
+    });
+
+    inputEl.addEventListener('input', function(e) {
+        if (!isStarted) {
+            isStarted = true;
+            timerId = setInterval(function() {
+                timeLeft--; timerEl.innerText = timeLeft;
+                if (timeLeft <= 0) { clearInterval(timerId); endGame(); }
+            }, 1000);
         }
 
-        function deleteGoal(id) {
-            accounts[currentAccountIndex].goals = accounts[currentAccountIndex].goals.filter(g => g.id !== id);
-            saveAccountsToStorage();
-            renderGoals();
+        var val = inputEl.value;
+        if(val.length === 0) return;
+        
+        var letterElements = stageEl.querySelectorAll('.letter');
+        if (currentIndex >= letterElements.length) return;
+
+        var expected = textString[currentIndex];
+        var typed = val[val.length - 1]; 
+
+        letterElements[currentIndex].classList.remove('current');
+
+        if (typed === expected) {
+            letterElements[currentIndex].className = 'letter correct';
+        } else {
+            letterElements[currentIndex].className = 'letter incorrect';
+            errorsCount++; playErrorSound();
         }
 
-        function renderGoals() {
-            const list = document.getElementById('goalsList');
-            list.innerHTML = '';
-            const goals = accounts[currentAccountIndex].goals || [];
-
-            const total = goals.length;
-            const completedCount = goals.filter(g => g.completed).length;
-
-            goals.forEach(g => {
-                const li = document.createElement('li');
-                li.className = `goal-item ${g.completed ? 'completed' : ''}`;
-                li.innerHTML = `
-                    <span>${g.text}</span>
-                    <div style="display:flex; gap: 10px;">
-                        <i class="fa-solid fa-check" style="color: var(--primary-gold); cursor:pointer;" onclick="toggleGoal(${g.id})"></i>
-                        <i class="fa-solid fa-trash" style="color: #ef4444; cursor:pointer;" onclick="deleteGoal(${g.id})"></i>
-                    </div>
-                `;
-                list.appendChild(li);
-            });
-
-            const percent = total === 0 ? 0 : Math.round((completedCount / total) * 100);
-            document.getElementById('progressBar').style.width = `${percent}%`;
-            document.getElementById('progressPercent').innerText = `(${percent}%)`;
-            document.getElementById('progressText').innerText = `${completedCount}/${total} مكتمل`;
+        currentIndex++;
+        if (currentIndex < letterElements.length) {
+            var nextLetter = letterElements[currentIndex];
+            nextLetter.classList.add('current');
+            checkAutoScroll(nextLetter);
         }
-    </script>
+        inputEl.value = ""; 
+    });
+
+    function endGame() {
+        document.getElementById('game-view').style.display = 'none';
+        document.getElementById('results-view').style.display = 'block';
+        var totalLetters = currentIndex;
+        var correctLetters = totalLetters - errorsCount;
+        var totalMinutes = timeLimit / 60;
+        var wpm = Math.round((correctLetters / 5) / totalMinutes);
+        if(wpm < 0) wpm = 0;
+        var acc = totalLetters > 0 ? Math.round((correctLetters / totalLetters) * 100) : 0;
+        document.getElementById('wpm-res').innerText = wpm + " WPM";
+        document.getElementById('acc-res').innerText = acc + "%";
+
+        var listEl = document.getElementById('global-leaderboard');
+        listEl.innerHTML = "<li>🥇 هيثم (أنت): " + wpm + " WPM</li><li>🥈 سمير: 58 WPM</li><li>🥉 طارق: 42 WPM</li>";
+
+        if(wpm >= 65) triggerCelebration(1);      
+        else if(wpm >= 50) triggerCelebration(2); 
+        else if(wpm >= 35) triggerCelebration(3); 
+    }
+
+    function resetGame() {
+        clearInterval(timerId); isStarted = false; timeLeft = timeLimit; timerEl.innerText = timeLeft;
+        currentIndex = 0; errorsCount = 0; currentLineY = 0;
+        stageEl.style.transform = "translateY(0px)";
+        document.getElementById('game-view').style.display = 'block';
+        document.getElementById('results-view').style.display = 'none';
+        inputEl.value = ""; setupGame(); focusInput();
+    }
+
+    window.onload = function() {
+        if(currentUser) loginUser(currentUser);
+        setupGame(); focusInput();
+    };
+    document.addEventListener('click', focusInput);
+</script>
 </body>
 </html>
