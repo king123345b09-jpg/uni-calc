@@ -321,7 +321,6 @@
         "النوم الكافي يمنح العقل والجسد الراحة الضرورية لتجديد الطاقة وتحسين التركيز والحفاظ على الصحة والذاكرة العضلية لزيادة الإنتاجية والإبداع فهو سلاح ذوحدين إن إستعملناه كل يوم فهو غير جيد وإن لم نستعمله فهو غير جيد فإن زاد الأمر عن حده إنقلب إلى ضده",
         "التطور التكنولوجي المستمر يغير طريقة عيشنا ويجعل التواصل والتعلم والعمل أكثر سهولة وسرعة ويفتح أفاقا جديدة ومذهلة للمستقبل"
     ];
-
     var textString = "";
     var currentIndex = 0;
     var errorsCount = 0;
@@ -356,8 +355,22 @@
         osc.stop(audioCtx.currentTime + 0.12);
     }
 
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(e, id) { if(!e || e.target === document.getElementById(id)) document.getElementById(id).style.display = 'none'; }
+    // دالة فتح النوافذ مع إيقاف مستشعرات اللعبة منعاً للتداخل
+    function openModal(id) { 
+        document.getElementById(id).style.display = 'flex'; 
+        document.removeEventListener('click', focusInput);
+    }
+    
+    // دالة غلق النوافذ وإعادة تفعيل مستشعرات اللعبة
+    function closeModal(e, id) { 
+        if(!e || e.target === document.getElementById(id)) {
+            document.getElementById(id).style.display = 'none';
+            setTimeout(function() {
+                document.addEventListener('click', focusInput);
+                focusInput();
+            }, 100);
+        }
+    }
     function handleAuth(type) {
         var user = document.getElementById('auth-username').value.trim();
         var pass = document.getElementById('auth-password').value.trim();
@@ -443,7 +456,14 @@
         });
     }
 
-    function focusInput() { inputEl.focus(); }
+    function focusInput() { 
+        if(document.getElementById('auth-modal').style.display === 'flex' || 
+           document.getElementById('profile-modal').style.display === 'flex' || 
+           document.getElementById('leaderboard-modal').style.display === 'flex') {
+            return;
+        }
+        inputEl.focus(); 
+    }
 
     function checkAutoScroll(letterElement) {
         var letterTop = letterElement.offsetTop;
@@ -487,7 +507,9 @@
         if (e.key === 'Backspace' && currentIndex > 0) {
             letterElements[currentIndex].classList.remove('current');
             currentIndex--;
-            if (letterElements[currentIndex].classList.contains('incorrect') && errorsCount > 0) errorsCount--;
+            if (letterElements[currentIndex].classList.contains('incorrect')) {
+                if (errorsCount > 0) errorsCount--;
+            }
             letterElements[currentIndex].className = 'letter current';
             
             var letterTop = letterElements[currentIndex].offsetTop;
