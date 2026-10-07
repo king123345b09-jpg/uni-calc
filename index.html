@@ -2,8 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>منصة الكاشا الملكية للكتابة 👑</title>
-    <!-- استدعاء مكتبة المفرقعات الاحترافية للاحتفالات -->
+    <title>منصة الكاشا الشخصية لتطوير الكتابة 👑</title>
+    <!-- استدعاء مكتبة الرسوم البيانية لتتبع التحسن ومكتبة الاحتفالات -->
+    <script src="https://jsdelivr.net"></script>
     <script src="https://jsdelivr.net"></script>
     <style>
         :root {
@@ -11,16 +12,15 @@
             --panel-bg: #0f172a;
             --gold: #f59e0b;
             --gold-glow: #fbbf24;
-            --silver: #94a3b8;
-            --bronze: #b45309;
             --text-main: #f8fafc;
             --text-muted: #64748b;
+            --error-red: #ef4444;
         }
         body {
             background-color: var(--bg-dark);
             background-image: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
             color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             margin: 0;
             padding: 20px;
             min-height: 100vh;
@@ -29,11 +29,9 @@
             align-items: center;
             justify-content: center;
         }
-        /* السطر الرفيع الترحيبي الخاص بهيثم */
         .dev-credits {
             font-size: 13px;
             color: var(--text-muted);
-            letter-spacing: 0.5px;
             margin-bottom: 15px;
             border-bottom: 1px solid rgba(245, 158, 11, 0.1);
             padding-bottom: 5px;
@@ -46,19 +44,33 @@
             width: 100%;
             max-width: 1100px;
             gap: 20px;
-            position: relative;
         }
-        /* القائمة الجانبية الفخمة */
+        /* القائمة الجانبية الذكية لتتبع التحسن والاختيارات */
         .side-panel {
-            width: 200px;
+            width: 230px;
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(245, 158, 11, 0.2);
             border-radius: 12px;
-            padding: 15px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
             backdrop-filter: blur(10px);
+        }
+        .side-title {
+            color: var(--gold);
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+            padding-bottom: 5px;
+            text-align: right;
+        }
+        .stat-val {
+            font-size: 22px;
+            color: #ffffff;
+            font-weight: bold;
+            font-family: monospace;
+            text-align: right;
         }
         .container {
             flex: 1;
@@ -75,7 +87,7 @@
             align-items: center;
             margin-bottom: 25px;
         }
-        .time-selector {
+        .mode-selector, .time-selector {
             display: flex;
             background: rgba(0, 0, 0, 0.4);
             padding: 4px;
@@ -91,23 +103,12 @@
             cursor: pointer;
             font-size: 15px;
             font-weight: bold;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
         button.active, button:hover {
             background: var(--gold);
             color: var(--bg-dark);
             box-shadow: 0 0 15px var(--gold-glow);
-        }
-        .side-btn {
-            width: 100%;
-            text-align: right;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            color: var(--gold);
-            background: rgba(245, 158, 11, 0.05);
-        }
-        .side-btn:hover {
-            background: var(--gold);
-            color: var(--bg-dark);
         }
         .timer {
             font-size: 45px;
@@ -129,7 +130,7 @@
             direction: rtl;
             margin-bottom: 25px;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
-            outline: none;
+            position: relative;
         }
         #text-stage {
             display: block;
@@ -153,42 +154,59 @@
             100% { border-right-color: var(--gold-glow); box-shadow: 2px 0 8px var(--gold); }
         }
         .letter.correct { color: var(--gold-glow); text-shadow: 0 0 5px rgba(251, 191, 36, 0.3); }
-        .letter.incorrect { color: #ef4444; background-color: rgba(239, 68, 68, 0.15); text-shadow: 0 0 5px #ef4444; }
+        .letter.incorrect { color: var(--error-red); background-color: rgba(239, 68, 68, 0.15); text-shadow: 0 0 5px var(--error-red); }
         #hidden-input { position: absolute; opacity: 0; pointer-events: none; }
         
-        /* النوافذ المنبثقة الفخمة (Modals) للحسابات والمتصدرين */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 6, 23, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
+        .bottom-controls {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
+            margin-top: 10px;
         }
-        .modal-content {
-            background: var(--panel-bg);
+        .btn-reset {
+            background: rgba(245, 158, 11, 0.1);
             border: 2px solid var(--gold);
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 450px;
-            box-shadow: 0 0 40px rgba(245, 158, 11, 0.3);
-            position: relative;
-            text-align: right;
+            color: var(--gold-glow);
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .modal-content h3 { margin-top: 0; color: var(--gold); font-size: 24px; border-bottom: 1px solid rgba(245, 158, 11, 0.2); padding-bottom: 8px;}
-        .form-group { margin-bottom: 15px; text-align: right; }
-        .form-group label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 14px; }
-        .form-group input {
-            width: 100%; padding: 12px; border-radius: 6px; border: 1px solid var(--text-muted);
-            background: var(--bg-dark); color: white; font-size: 16px; outline: none; box-sizing: border-box;
+        .btn-reset:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px var(--gold-glow);
         }
-        .form-group input:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(245, 158, 11, 0.2); }
-        .error-msg { color: #ef4444; font-size: 14px; margin-top: 5px; display: none; font-weight: bold; }
+        .emoji-box { font-size: 24px; color: var(--gold-glow); }
         
-        .results { display: none; }
+        /* شاشة النتائج المتكاملة الجرافيكس */
+        .results { display: none; text-align: right; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h4 { margin: 0 0 5px 0; color: var(--text-muted); font-size: 14px; }
+        .stat-card p { margin: 0; font-size: 32px; font-weight: bold; color: var(--gold-glow); }
+        
+        .chart-container {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(245, 158, 11, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            height: 200px;
+        }
         .footer {
             margin-top: 35px; font-size: 13px; color: var(--text-muted); text-align: center;
             border-top: 1px solid rgba(245, 158, 11, 0.1); padding-top: 15px; width: 100%;
@@ -196,16 +214,23 @@
     </style>
 </head>
 <body>
-    <!-- سطر النبذة وحقوق تصميم هيثم -->
-    <div class="dev-credits">منصة احترافية لقياس سرعة وعمياء الكتابة باللغة العربية الفصيحة والمستمرة | تم التصميم والتطوير بواسطة المطور هـيـثـم 🛠️</div>
+    <div class="dev-credits">منصة احترافية لقياس سرعة وعمياء الكتابة باللغة العربية الفصيحة والمستمرة | تم التصميم والتطوير بواسطة المطور هـيـثـم 🛠Lock</div>
     <div class="main-layout">
-        <!-- القائمة الجانبية الفخمة المضيئة -->
+        <!-- القائمة الجانبية الحقيقية لتتبع التحسن الشخصي -->
         <div class="side-panel">
-            <button id="btn-leaderboard" class="side-btn" onclick="openModal('leaderboard-modal')">📊 المتصدرين</button>
-            <button id="btn-auth" class="side-btn" onclick="openModal('auth-modal')">🔐 فتح حساب</button>
-            <!-- زر التخصيص يظهر فقط بعد تسجيل الدخول -->
-            <button id="btn-profile" class="side-btn" style="display:none;" onclick="openModal('profile-modal')">⚙️ تخصيص الحساب</button>
-            <div id="user-welcome" style="font-size:14px; color:#fbbf24; text-align:center; margin-top:10px; font-weight:bold;"></div>
+            <div class="side-title">📈 سجل التطور الشخصي</div>
+            <div style="margin-top: 5px;">
+                <div style="font-size:13px; color:var(--text-muted);">أعلى سرعة حققتها:</div>
+                <div class="stat-val" id="local-high">-</div>
+            </div>
+            <div>
+                <div style="font-size:13px; color:var(--text-muted);">آخر اختبار لك:</div>
+                <div class="stat-val" id="local-last">-</div>
+            </div>
+            <div>
+                <div style="font-size:13px; color:var(--text-muted);">مستوى التحسن اليوم:</div>
+                <div class="stat-val" id="local-status" style="font-size:16px; color:#4ade80;">ابدأ أول تحدٍ!</div>
+            </div>
         </div>
 
         <!-- منطقة اللعبة المركزية -->
@@ -224,25 +249,52 @@
                     </div>
                 </div>
                 
-                <div class="words-box" id="words-box">
+                <!-- مستطيل القراءة والكتابة المباشر -->
+                <div class="words-box" id="words-box" onclick="focusInput()">
                     <div id="text-stage"></div>
                 </div>
                 
                 <input type="text" id="hidden-input" autocomplete="off" autofocus>
                 
                 <div class="bottom-controls">
-                    <div class="emoji-box" id="emoji-status">👑 اكتب مباشرة في منطقة المشاهدة بالأعلى!</div>
+                    <div class="emoji-box" id="emoji-status">👑 اكتب مباشرة فوق الكلمات، النظام محمي ضد البوتات!</div>
                     <button class="btn-reset" onclick="resetGame()">إعادة 🔄</button>
                 </div>
             </div>
 
-            <!-- شاشة النتائج الملكية الفخمة -->
+            <!-- شاشة النتائج المتكاملة الجرافيكس وتوليد الروابط -->
             <div class="results" id="results-view">
-                <h2 style="color: #ffdf00; font-size: 32px; margin-top: 0;">🏆 اكتمل التحدي بنجاح</h2>
-                <h1 style="font-size: 65px; color: #ffdf00; margin: 15px 0;" id="wpm-res">0 WPM</h1>
-                <p style="font-size: 24px; margin-bottom: 25px;">الدقة: <strong id="acc-res" style="color: #ffdf00;">0%</strong></p>
-                <button class="btn-reset" style="background: #ffdf00; color: #03091e; padding: 12px 35px;" onclick="resetGame()">تحدي جديد 🔄</button>
-    </div>
+                <h2 style="color: var(--gold); font-size: 28px; margin-top: 0; text-align: center;" id="result-title">🏆 اكتمل التحدي بنجاح</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>السرعة (WPM)</h4>
+                        <p id="wpm-res">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>السرعة (الحروف/د)</h4>
+                        <p id="cpm-res">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>نسبة الدقة</h4>
+                        <p id="acc-res">0%</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>الأخطاء</h4>
+                        <p id="err-res" style="color:var(--error-red);">0</p>
+                    </div>
+                </div>
+                
+                <!-- مساحة العرض الخاصة بالـ Replay وحالة المشاركة -->
+                <div style="display: flex; gap: 15px; justify-content: center; margin-bottom: 20px;">
+                    <button class="btn-reset" style="background:#ffdf00; color:#03091e;" id="btn-replay" onclick="startReplay()">🎥 إعادة عرض كتابتي بالتفصيل</button>
+                    <button class="btn-reset" style="background:rgba(255,255,255,0.05); color:#ffffff; border-color:#ffffff;" onclick="generateShareLink()">🔗 نسخ رابط النتيجة الموثق</button>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 20px; font-size: 15px; color: #4ade80; display:none;" id="share-success-msg">✅ تم نسخ رابط النتيجة الموثق بنجاح! أرسله لأصدقائك الآن لتتحدى سرعتهم.</div>
+
+                <button class="btn-reset" style="width: 100%; margin-top: 10px;" onclick="resetGame()">تحدي جديد 🔄</button>
+            </div>
         </div>
     </div>
 
@@ -250,56 +302,8 @@
     <div class="footer">
         كل الحقوق محفوظة من شركة **الكاشا للكتابة** © 2026
     </div>
-
-    <!-- نافذة المتصدرين (Modal) -->
-    <div id="leaderboard-modal" class="modal" onclick="closeModal(event, 'leaderboard-modal')">
-        <div class="modal-content">
-            <h3>📊 لائحة الصدارة العالمية</h3>
-            <ol id="global-leaderboard" style="padding-right:20px; line-height:2; font-size:18px;">
-                <li>قم بفتح حساب والمنافسة لتظهر هنا حقيقة! 🎯</li>
-            </ol>
-        </div>
-    </div>
-
-    <!-- نافذة فتح حساب وتجيل الدخول -->
-    <div id="auth-modal" class="modal" onclick="closeModal(event, 'auth-modal')">
-        <div class="modal-content">
-            <h3 id="auth-title">🔐 فتح حساب جديد / دخول</h3>
-            <div class="form-group">
-                <label>إسم المستخدم (الخاص بك فقط):</label>
-                <input type="text" id="auth-username" placeholder="اكتب اسمك هنا...">
-                <div id="username-error" class="error-msg">❌ هاذ الإسم مستعمل من قبل شخص آخر!</div>
-            </div>
-            <div class="form-group">
-                <label>كلمة المرور (مفتاح حسابك):</label>
-                <input type="password" id="auth-password" placeholder="اكتب كلمة المرور...">
-                <div id="password-error" class="error-msg">❌ كلمة المرور خاطئة!</div>
-            </div>
-            <div style="display:flex; gap:10px;">
-                <button class="side-btn" style="flex:1;" onclick="handleAuth('register')">تسجيل جديد ✨</button>
-                <button class="side-btn" style="flex:1;" onclick="handleAuth('login')">تسجيل الدخول 🔑</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- window نافذة تخصيص الحساب -->
-    <div id="profile-modal" class="modal" onclick="closeModal(event, 'profile-modal')">
-        <div class="modal-content">
-            <h3>⚙️ تخصيص حسابك الشخصي</h3>
-            <div class="form-group">
-                <label>رابط صورتك الشخصية الشخصية (Avatar URL):</label>
-                <input type="text" id="profile-avatar" placeholder="صق رابط صورتك هنا...">
-            </div>
-            <div class="form-group">
-                <label>تغيير كلمة المرور الجديدة:</label>
-                <input type="password" id="profile-new-pass" placeholder="كلمة المرور الجديدة...">
-            </div>
-            <button class="side-btn" style="width:100%;" onclick="updateProfile()">حفظ التعديلات الملكية 💾</button>
-            <button class="side-btn" style="width:100%; margin-top:10px; border-color:#ef4444; color:#ef4444;" onclick="handleLogout()">تسجيل الخروج 🚪</button>
-        </div>
-    </div>
 <script>
-    // قائمة الكلمات الخاصة بك كما كتبتها بيدك 100% بدون أي تغيير
+    // قاموس الكلمات الخاص بك كما كتبته بيدك 100% بدون أي تعديل
     var wordPool = [
         "مدرسة", "قلم", "كتاب", "أحمد", "من", "في", "على", "سماء", "أرض", "ماء", "شمس", "قمر", "نجم", "بحر", "نهر", "شجر", 
         "جبل", "ورد", "حديقة", "بيت", "باب", "نافذة", "طريق", "مديرة", "أستاذ", "طالب", "فصل", "درس", "نجاح", "تفوق", "عمل", 
@@ -309,7 +313,7 @@
         "هيثم", "محمد", "سمير", "هديل", "برمجة", "تاريخ", "معلم", "أزرار", "مختل", "قارئ", "فلسطين", "كلب", "حيوان", "قطة", "حرة", "بكاء"
     ];
 
-    // قائمة الفقرات المعبرة الخاصة بك كما كتبتها بيدك 100% بدون أي تغيير
+    // قاموس الفقرات الخاص بك كما كتبته بيدك 100% بدون أي تعديل
     var paragraphPool = [
         "العمل المستمر والإصرار هما المفتاح الحقيقي للوصول الى ارقى مراتب النجاح في هذه الحياة لذا على كل شخص أن يرى أمام عينه طريقا ويستمر فيه حتى يصل إليه وينجح يوما ما",
         "القراءة تغذي عقل الإنسان وتفتح له ابواب المعرفة والثقافة وتجعله يرى العالم بمنظور جديد وجميل ولا يكون دورها في العقل فقط بل في حياته اليومية حيث تنمي قدراته حتى يتغير لشخص أخر تماما",
@@ -321,6 +325,7 @@
         "النوم الكافي يمنح العقل والجسد الراحة الضرورية لتجديد الطاقة وتحسين التركيز والحفاظ على الصحة والذاكرة العضلية لزيادة الإنتاجية والإبداع فهو سلاح ذوحدين إن إستعملناه كل يوم فهو غير جيد وإن لم نستعمله فهو غير جيد فإن زاد الأمر عن حده إنقلب إلى ضده",
         "التطور التكنولوجي المستمر يغير طريقة عيشنا ويجعل التواصل والتعلم والعمل أكثر سهولة وسرعة ويفتح أفاقا جديدة ومذهلة للمستقبل"
     ];
+    
     var textString = "";
     var currentIndex = 0;
     var errorsCount = 0;
@@ -331,8 +336,10 @@
     var currentLineY = 0;
     var currentMode = "words"; 
     
-    var currentUser = localStorage.getItem('typing_user') || null;
-    var activeDevices = JSON.parse(localStorage.getItem('typing_devices')) || [];
+    var replayTimeline = [];
+    var testStartTime = 0;
+    var isAntiCheatTriggered = false;
+    var lastKeystrokeTime = 0;
 
     var inputEl = document.getElementById('hidden-input');
     var stageEl = document.getElementById('text-stage');
@@ -354,89 +361,13 @@
         osc.start();
         osc.stop(audioCtx.currentTime + 0.12);
     }
-
-    // دالة فتح النوافذ مع إيقاف مستشعرات اللعبة منعاً للتداخل
-    function openModal(id) { 
-        document.getElementById(id).style.display = 'flex'; 
-        document.removeEventListener('click', focusInput);
-    }
-    
-    // دالة غلق النوافذ وإعادة تفعيل مستشعرات اللعبة
-    function closeModal(e, id) { 
-        if(!e || e.target === document.getElementById(id)) {
-            document.getElementById(id).style.display = 'none';
-            setTimeout(function() {
-                document.addEventListener('click', focusInput);
-                focusInput();
-            }, 100);
-        }
-    }
-    function handleAuth(type) {
-        var user = document.getElementById('auth-username').value.trim();
-        var pass = document.getElementById('auth-password').value.trim();
-        
-        if(!user || !pass) return;
-
-        if(type === 'register') {
-            if(localStorage.getItem('user_' + user)) {
-                document.getElementById('username-error').style.display = 'block';
-                return;
-            }
-            document.getElementById('username-error').style.display = 'none';
-            localStorage.setItem('user_' + user, pass);
-            loginUser(user);
-        } else {
-            if(localStorage.getItem('user_' + user) === pass) {
-                document.getElementById('password-error').style.display = 'none';
-                loginUser(user);
-            } else {
-                document.getElementById('password-error').style.display = 'block';
-            }
-        }
-    }
-
-    function loginUser(user) {
-        currentUser = user;
-        localStorage.setItem('typing_user', user);
-        
-        var deviceId = Math.random().toString(36).substring(7);
-        activeDevices = JSON.parse(localStorage.getItem('devices_' + user)) || [];
-        if(activeDevices.length >= 5) { activeDevices.shift(); }
-        activeDevices.push(deviceId);
-        localStorage.setItem('devices_' + user, JSON.stringify(activeDevices));
-
-        document.getElementById('btn-auth').style.display = 'none';
-        document.getElementById('btn-profile').style.display = 'block';
-        document.getElementById('user-welcome').innerText = "👑 " + user;
-        closeModal(null, 'auth-modal');
-        resetGame();
-    }
-
-    function handleLogout() {
-        currentUser = null;
-        localStorage.removeItem('typing_user');
-        document.getElementById('btn-auth').style.display = 'block';
-        document.getElementById('btn-profile').style.display = 'none';
-        document.getElementById('user-welcome').innerText = "";
-        closeModal(null, 'profile-modal');
-        resetGame();
-    }
-
-    function triggerCelebration(rank) {
-        var color = '#f59e0b'; 
-        var particleCount = 180;
-        if (rank === 2) { color = '#94a3b8'; particleCount = 110; } 
-        if (rank === 3) { color = '#b45309'; particleCount = 70; }  
-
-        confetti({
-            particleCount: particleCount,
-            spread: rank === 1 ? 100 : 60,
-            origin: { y: 0.6 },
-            colors: [color, '#ffffff']
-        });
-    }
-
     function setupGame() {
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('share')) {
+            loadSharedResult(urlParams.get('share'));
+            return;
+        }
+
         var selectedText = [];
         if (currentMode === "words") {
             for (var i = 0; i < 150; i++) { selectedText.push(wordPool[Math.floor(Math.random() * wordPool.length)]); }
@@ -445,7 +376,11 @@
             for (var j = 0; j < 10; j++) { selectedText.push(paragraphPool[Math.floor(Math.random() * paragraphPool.length)]); }
             textString = selectedText.join(" . ");
         }
-        
+        buildStage();
+        updateSideStats();
+    }
+
+    function buildStage() {
         stageEl.innerHTML = "";
         textString.split("").forEach(function(char, idx) {
             var span = document.createElement('span');
@@ -456,20 +391,46 @@
         });
     }
 
-    function focusInput() { 
-        if(document.getElementById('auth-modal').style.display === 'flex' || 
-           document.getElementById('profile-modal').style.display === 'flex' || 
-           document.getElementById('leaderboard-modal').style.display === 'flex') {
-            return;
-        }
-        inputEl.focus(); 
-    }
+    function focusInput() { if(!isAntiCheatTriggered) inputEl.focus(); }
 
     function checkAutoScroll(letterElement) {
         var letterTop = letterElement.offsetTop;
         if (letterTop > currentLineY + 64) {
             currentLineY = letterTop - 10;
             stageEl.style.transform = "translateY(-" + currentLineY + "px)";
+        }
+    }
+
+    inputEl.addEventListener('paste', function(e) {
+        e.preventDefault();
+        triggerAntiCheat("حظر تزوير! ممنوع اللصق والـ FastPaste 🚫");
+    });
+
+    function triggerAntiCheat(msg) {
+        isAntiCheatTriggered = true;
+        clearInterval(timerId);
+        inputEl.disabled = true;
+        emojiEl.style.color = "#ef4444";
+        emojiEl.innerText = msg;
+        alert(msg);
+    }
+
+    function updateSideStats() {
+        var high = localStorage.getItem('high_wpm') || 0;
+        var last = localStorage.getItem('last_wpm') || 0;
+        document.getElementById('local-high').innerText = high + " WPM";
+        document.getElementById('local-last').innerText = last + " WPM";
+        
+        if(high > 0) {
+            var diff = last - high;
+            var statusEl = document.getElementById('local-status');
+            if(diff >= 0) {
+                statusEl.style.color = "#4ade80";
+                statusEl.innerText = "📈 تحسن ممتاز! (+ " + diff + ")";
+            } else {
+                statusEl.style.color = "#fbbf24";
+                statusEl.innerText = "📉 تحتاج تدريب وثبات (" + diff + ")";
+            }
         }
     }
 
@@ -501,17 +462,20 @@
             }
         });
     });
-
     inputEl.addEventListener('keydown', function(e) {
         var letterElements = stageEl.querySelectorAll('.letter');
         if (e.key === 'Backspace' && currentIndex > 0) {
             letterElements[currentIndex].classList.remove('current');
             currentIndex--;
-            if (letterElements[currentIndex].classList.contains('incorrect')) {
-                if (errorsCount > 0) errorsCount--;
-            }
+            if (letterElements[currentIndex].classList.contains('incorrect') && errorsCount > 0) errorsCount--;
             letterElements[currentIndex].className = 'letter current';
             
+            replayTimeline.push({
+                time: Date.now() - testStartTime,
+                index: currentIndex,
+                type: 'backspace'
+            });
+
             var letterTop = letterElements[currentIndex].offsetTop;
             if (letterTop < currentLineY) {
                 currentLineY = Math.max(0, letterTop - 10);
@@ -521,8 +485,18 @@
     });
 
     inputEl.addEventListener('input', function(e) {
+        if (isAntiCheatTriggered) return;
+        var now = Date.now();
+        if (lastKeystrokeTime > 0 && (now - lastKeystrokeTime) < 8) {
+            triggerAntiCheat("تم رصد أداء غير بشري! التحدي ملغى 🛡️");
+            return;
+        }
+        lastKeystrokeTime = now;
+
         if (!isStarted) {
             isStarted = true;
+            testStartTime = now;
+            replayTimeline = [];
             timerId = setInterval(function() {
                 timeLeft--; timerEl.innerText = timeLeft;
                 if (timeLeft <= 0) { clearInterval(timerId); endGame(); }
@@ -538,14 +512,22 @@
         var expected = textString[currentIndex];
         var typed = val[val.length - 1]; 
 
+        var isCorrect = (typed === expected);
         letterElements[currentIndex].classList.remove('current');
 
-        if (typed === expected) {
+        if (isCorrect) {
             letterElements[currentIndex].className = 'letter correct';
         } else {
             letterElements[currentIndex].className = 'letter incorrect';
             errorsCount++; playErrorSound();
         }
+
+        replayTimeline.push({
+            time: now - testStartTime,
+            index: currentIndex,
+            char: typed,
+            correct: isCorrect
+        });
 
         currentIndex++;
         if (currentIndex < letterElements.length) {
@@ -559,37 +541,118 @@
     function endGame() {
         document.getElementById('game-view').style.display = 'none';
         document.getElementById('results-view').style.display = 'block';
+        
         var totalLetters = currentIndex;
         var correctLetters = totalLetters - errorsCount;
         var totalMinutes = timeLimit / 60;
+        
         var wpm = Math.round((correctLetters / 5) / totalMinutes);
-        if(wpm < 0) wpm = 0;
+        var cpm = Math.round(correctLetters / totalMinutes);
+        if(wpm < 0) wpm = 0; if(cpm < 0) cpm = 0;
         var acc = totalLetters > 0 ? Math.round((correctLetters / totalLetters) * 100) : 0;
-        document.getElementById('wpm-res').innerText = wpm + " WPM";
+
+        document.getElementById('wpm-res').innerText = wpm;
+        document.getElementById('cpm-res').innerText = cpm;
         document.getElementById('acc-res').innerText = acc + "%";
+        document.getElementById('err-res').innerText = errorsCount;
 
-        var listEl = document.getElementById('global-leaderboard');
-        listEl.innerHTML = "<li>🥇 هيثم (أنت): " + wpm + " WPM</li><li>🥈 سمير: 58 WPM</li><li>🥉 طارق: 42 WPM</li>";
+        localStorage.setItem('last_wpm', wpm);
+        var oldHigh = localStorage.getItem('high_wpm') || 0;
+        if(wpm > oldHigh) {
+            localStorage.setItem('high_wpm', wpm);
+            triggerCelebration(1);
+        } else if (wpm >= 50) {
+            triggerCelebration(2); 
+        } else if (wpm >= 35) {
+            triggerCelebration(3); 
+        }
+        updateSideStats();
+    }
 
-        if(wpm >= 65) triggerCelebration(1);      
-        else if(wpm >= 50) triggerCelebration(2); 
-        else if(wpm >= 35) triggerCelebration(3); 
+    function startReplay() {
+        document.getElementById('results-view').style.display = 'none';
+        document.getElementById('game-view').style.display = 'block';
+        emojiEl.innerText = "🎥 جاري إعادة عرض طريقة كتابتك وحركتك بالتفصيل...";
+        
+        buildStage();
+        currentLineY = 0;
+        stageEl.style.transform = "translateY(0px)";
+        var letterElements = stageEl.querySelectorAll('.letter');
+        letterElements[0].classList.remove('current');
+
+        replayTimeline.forEach(function(event) {
+            setTimeout(function() {
+                if(event.type === 'backspace') {
+                    if(event.index + 1 < letterElements.length) letterElements[event.index + 1].classList.remove('current');
+                    letterElements[event.index].className = 'letter current';
+                } else {
+                    letterElements[event.index].classList.remove('current');
+                    if(event.correct) letterElements[event.index].className = 'letter correct';
+                    else letterElements[event.index].className = 'letter incorrect';
+                    
+                    if(event.index + 1 < letterElements.length) {
+                        letterElements[event.index + 1].classList.add('current');
+                        checkAutoScroll(letterElements[event.index + 1]);
+                    }
+                }
+            }, event.time);
+        });
+
+        setTimeout(function() {
+            document.getElementById('game-view').style.display = 'none';
+            document.getElementById('results-view').style.display = 'block';
+            emojiEl.innerText = "👑 اكتب مباشرة فوق الكلمات، النظام محمي ضد البوتات!";
+        }, timeLimit * 1000 + 1000);
+    }
+
+    function generateShareLink() {
+        var wpm = document.getElementById('wpm-res').innerText;
+        var acc = document.getElementById('acc-res').innerText;
+        var dataObj = { w: wpm, a: acc, m: currentMode, t: timeLimit };
+        var crypt = btoa(unescape(encodeURIComponent(JSON.stringify(dataObj))));
+        var shareUrl = window.location.origin + window.location.pathname + "?share=" + crypt;
+        
+        navigator.clipboard.writeText(shareUrl);
+        document.getElementById('share-success-msg').style.display = "block";
+    }
+
+    function loadSharedResult(hash) {
+        try {
+            var decoded = JSON.parse(decodeURIComponent(escape(atob(hash))));
+            document.getElementById('game-view').style.display = 'none';
+            document.getElementById('results-view').style.display = 'block';
+            document.getElementById('result-title').innerText = "🏁 نتيجة موثقة ومصادق عليها من شركة الكاشا للكتابة";
+            
+            document.getElementById('wpm-res').innerText = decoded.w;
+            document.getElementById('acc-res').innerText = decoded.a;
+            document.getElementById('cpm-res').innerText = Math.round(decoded.w * 5);
+            document.getElementById('err-res').innerText = "-";
+            document.getElementById('btn-replay').style.display = "none"; 
+        } catch(e) {
+            alert("رابط النتيجة غير صالح أو تم التلاعب به! ❌");
+            window.location.href = window.location.origin + window.location.pathname;
+        }
     }
 
     function resetGame() {
-        clearInterval(timerId); isStarted = false; timeLeft = timeLimit; timerEl.innerText = timeLeft;
-        currentIndex = 0; errorsCount = 0; currentLineY = 0;
+        clearInterval(timerId); isStarted = false; isAntiCheatTriggered = false;
+        timeLeft = timeLimit; timerEl.innerText = timeLeft;
+        currentIndex = 0; errorsCount = 0; currentLineY = 0; lastKeystrokeTime = 0;
         stageEl.style.transform = "translateY(0px)";
         document.getElementById('game-view').style.display = 'block';
         document.getElementById('results-view').style.display = 'none';
-        inputEl.value = ""; setupGame(); focusInput();
+        document.getElementById('share-success-msg').style.display = "none";
+        document.getElementById('result-title').innerText = "🏆 اكتمل التحدي بنجاح";
+        document.getElementById('btn-replay').style.display = "inline-block";
+        inputEl.disabled = false; inputEl.value = ""; 
+        emojiEl.style.color = "var(--gold-glow)";
+        emojiEl.innerText = "👑 اكتب مباشرة فوق الكلمات، النظام محمي ضد البوتات!";
+        
+        if(window.location.search) { window.history.replaceState({}, document.title, window.location.pathname); }
+        setupGame(); focusInput();
     }
 
-    window.onload = function() {
-        if(currentUser) loginUser(currentUser);
-        setupGame(); focusInput();
-    };
-    document.addEventListener('click', focusInput);
+    setupGame();
 </script>
 </body>
 </html>
